@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+    padding: 0%;
+    margin: 0%;
+}
+
+nav {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+    /* border: solid blue; */
+    padding: 20px;
+    height: 10%;
+}
+
+li {
+    padding-left: 50%;
+}
+
+menu {
+    display: inline-flex;
+    list-style-type: none;
+    align-items: center;
+    margin-right: 20px;
+    /* flex-direction: row; */
+}
+
+.referencia_python {
+    width: 9%;
+}
+
+body {
+    background-color: whitesmoke;
+}
+
+
+/* 
+main {
+    display: flex;
+    flex-direction: column;
+} */
+
+.center-log {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
