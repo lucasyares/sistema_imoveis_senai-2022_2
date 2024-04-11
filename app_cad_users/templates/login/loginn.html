@@ -1,0 +1,8 @@
+{% extends 'login/index.html' %} {% block content%}
+<form action="" method="post"> {% csrf_token %}
+    <h1>Página de Login</h1>
+    <input type="text" placeholder="user" name="loginuser">
+    <input type="password" placeholder="senha" name="senhauser">
+    <button>Login</button>
+</form>
+{% endblock %}
