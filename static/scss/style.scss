@@ -1,0 +1,15 @@
+@use "variables";
+@use "reset";
+.main-nav {
+    menu {
+        list-style: none;
+        display: flex;
+        justify-content: space-between;
+    }
+    &__logo,
+    &__menu {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+    }
+}

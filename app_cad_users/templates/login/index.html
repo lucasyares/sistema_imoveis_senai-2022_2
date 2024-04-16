@@ -6,69 +6,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static '/css/index.css' %}">
+
+
+    <link rel="stylesheet" href="https://fontgoogel.com/gyfbujayghdf">
+    <link rel="stylesheet" href="style.css">
+
     <!-- Colocar o icone -->
     <title>INDEX</title>
 </head>
 {% endblock %}
 
 <body>
-    {% block navmenu %}
-    <header>
-        <nav>
-            <!-- Colocar a logo -->
-            <menu>
-                <li><a href="/Add_Imovel">Criar</a></li>
-                <li><a href="/">Home</a></li>
-                <li>
-                    <a href="/auth_log">Login</a>
-                </li>
-                <li>
-                    <a href="/auth_cad">Cadastrar</a>
-                </li>
 
-                <li> <a href="/logout">Logout</a></li>
-                <!-- DEBUG DO LOGIN -->
+    <nav class="main_nav">
+        <menu>
+            <li><img src="https://picsum.photos/200" alt="Logo" class="main_nav__logo"></li>
+            <li><img src="https://picsum.photos/200" alt="Menu" class="main_nav__menu"></li>
+        </menu>
+    </nav>
 
-                {% if user.is_authenticated %}
-                <!-- SE estiver logado -->
-                <p>({{ user.username }})</p>
-                <!-- Mostre o nome -->
-                {% else %}
-                <!-- senão -->
-                <p>("Ninguém logado")</p>
-                <!-- mostre isso -->
-                {% endif %}
-                <!-- fim do if -->
-
-                <!-- FIM DO DEBUG DE LOGIN -->
-            </menu>
-        </nav>
-        <form action="" method="get">
-            <label for="">Sistema de busca</label>
-            <input type="text" id="search" name="search" placeholder="buscar...">
-            <button type="submit"> Buscar </button>
-        </form>
-        <br>
-    </header>
-    {% endblock %} {% block content %}
-    <main>
-        <hr> {% for imovel in imoveis_s %}
-
-        <a href="/imovel/{{imovel.id}}">{{ imovel.Name }} </a> <br>{{ imovel.Descrption }}
-        <br>
-
-        <hr> {% endfor %}
-    </main>
-    {% endblock %} {% block footer %}
-    <footer>
-        <address>
-        <span>Website created by Lucas Yares Silva</span>
-    </address>
-    </footer>
-    {% endblock%}
-
-    <!-- <script src="{% static 'js/index.js' %}"></script> -->
 </body>
 
 </html>
