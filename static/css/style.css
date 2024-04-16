@@ -133,15 +133,18 @@ table {
   border-spacing: 0;
 }
 
-.main-nav menu {
+.main_nav {
+  background-color: #012615;
+  padding: 16px;
+}
+.main_nav menu {
   list-style: none;
   display: flex;
   justify-content: space-between;
 }
-.main-nav__logo, .main-nav__menu {
-  display: inline-block;
-  width: 200px;
-  height: 200px;
+.main_nav__logo, .main_nav__menu {
+  width: 48px;
+  height: 48px;
 }
 
 /*# sourceMappingURL=style.css.map */
