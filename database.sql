@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Abr-2024 às 19:41
+-- Tempo de geração: 16-Abr-2024 às 21:21
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.1.2
 
@@ -20,6 +20,9 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `sa_system`
 --
+DROP DATABASE IF EXISTS `sa_system`;
+CREATE DATABASE IF NOT EXISTS `sa_system` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `sa_system`;
 
 -- --------------------------------------------------------
 
@@ -43,8 +46,9 @@ CREATE TABLE `app_cad_users_imoveis_s` (
 --
 
 INSERT INTO `app_cad_users_imoveis_s` (`id`, `Foto`, `Name`, `Descrption`, `Status`, `crated_at`, `update_at`, `criador_user_id`) VALUES
-(32, 'imoveis_photos/download_IX2QSu0.jfif', 'Gato feio', '1234', 'Disponível', '2024-04-11 17:31:10.196961', '2024-04-11 17:31:10.196961', 1),
-(33, 'imoveis_photos/bah_OOpaXOw.webp', 'Teste_01', 'criação do imovel com o A1', 'Disponível', '2024-04-11 17:38:12.927189', '2024-04-11 17:38:12.927189', 38);
+(32, 'imoveis_photos/download_IX2QSu0.jfif', 'Gato feio', '1234a', 'Disponível', '2024-04-11 17:31:10.196961', '2024-04-11 18:07:19.354943', 1),
+(33, 'imoveis_photos/bah_OOpaXOw.webp', 'Teste_01a', 'criação do imovel com o A1', 'Disponível', '2024-04-11 17:38:12.927189', '2024-04-11 18:04:25.968668', 38),
+(34, 'imoveis_photos/Imagem_Form_77ZJgoC.jpg', 'fgd', 'eeee', 'Disponível', '2024-04-16 18:49:13.172017', '2024-04-16 18:49:13.172017', 38);
 
 -- --------------------------------------------------------
 
@@ -147,7 +151,7 @@ INSERT INTO `auth_user` (`id`, `password`, `last_login`, `is_superuser`, `userna
 (35, 'pbkdf2_sha256$720000$5fdPzxkM9vhDuyykff82FJ$YcFUohNNaspSJP2TPdusOPPrbRQwpFyhEAlB8HxwJP4=', NULL, 0, 'aaa', '', '', '', 0, 1, '2024-03-13 17:27:09.677190'),
 (36, 'pbkdf2_sha256$720000$FrUTBl2FbOu8gMlPIX1kb9$s32FahMVG8p3zB3nYL9ZELkxSvz+uTy3441KFM6E51o=', NULL, 0, 'LucasY', '', '', '', 0, 1, '2024-03-13 17:29:04.094916'),
 (37, 'pbkdf2_sha256$720000$31p7WzEHyTl9cYxbDTvvlW$gcLuHHKra2xYDDU2Tz+F+kgKPjyLXD86mDOaeRQJoSs=', NULL, 1, 'Administrador', '', '', '', 1, 1, '2024-03-25 19:21:57.000000'),
-(38, 'pbkdf2_sha256$720000$CzJ44bcIWOwrLm3EiH6Ulc$tVwzXRoW8JIXe7zlpE2lUcb60PTCPnmRxRBiCThsfEw=', '2024-04-11 17:37:48.294400', 0, 'a1', '', '', '', 0, 1, '2024-04-11 17:07:13.166691');
+(38, 'pbkdf2_sha256$720000$CzJ44bcIWOwrLm3EiH6Ulc$tVwzXRoW8JIXe7zlpE2lUcb60PTCPnmRxRBiCThsfEw=', '2024-04-16 19:02:52.511902', 0, 'a1', '', '', '', 0, 1, '2024-04-11 17:07:13.166691');
 
 -- --------------------------------------------------------
 
@@ -312,7 +316,6 @@ CREATE TABLE `django_session` (
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('8umidns2ta7y9xkjbrg94cgdi73pqoi4', '.eJxVjEEOwiAQRe_C2hCgUMCle89AZpipVA0kpV0Z765NutDtf-_9l0iwrSVtnZc0kzgLLU6_G0J-cN0B3aHemsytrsuMclfkQbu8NuLn5XD_Dgr08q0RjbE2Tuj0qNkZiDgZrQYC9irkwfNI6KKxjIGyVk67qJiDtz5yxCzeH99AN9U:1rpCQK:N5niRwWtz7dbFxsGQOC6ls3xKaW4VF__j0abmketo_Y', '2024-04-09 19:25:28.204752'),
 ('co4i7vzvliejbqf9wxyk8zmlu8zwrx44', '.eJxVjEEOwiAQRe_C2hCgUMCle89AZpipVA0kpV0Z765NutDtf-_9l0iwrSVtnZc0kzgLLU6_G0J-cN0B3aHemsytrsuMclfkQbu8NuLn5XD_Dgr08q0RjbE2Tuj0qNkZiDgZrQYC9irkwfNI6KKxjIGyVk67qJiDtz5yxCzeH99AN9U:1rk7K1:PP8eDemp-CAY5oC62WYTenq1onrQxODSIfoYtkL9VLA', '2024-03-26 18:57:57.900208'),
-('nifaeuwvbg3cqvb7lnrrkvvgwmmxkpb0', '.eJxVjEEOwiAQRe_C2hCgUMCle89AZpipVA0kpV0Z765NutDtf-_9l0iwrSVtnZc0kzgLLU6_G0J-cN0B3aHemsytrsuMclfkQbu8NuLn5XD_Dgr08q0RjbE2Tuj0qNkZiDgZrQYC9irkwfNI6KKxjIGyVk67qJiDtz5yxCzeH99AN9U:1ruyNx:_RrrBneutVCdehQIlCD0JlgibIqwiwsACPPSaojP214', '2024-04-25 17:38:53.765200'),
 ('s4g9atib1fe5ss84793qk2xnwhmhdyoe', 'e30:1rk6RU:QmoGWxtJ6bV3Yz3ahbgcShBx8Su-K1ZkUA-50bGV9Jo', '2024-03-26 18:01:36.620409'),
 ('z0zquad6p2pqr1n8qfpdin5s4schj607', 'e30:1rk6GD:sbD70ttsxb_M8Hdev1ruRi6kiroNQKToGdTZ2iTmmrM', '2024-03-26 17:49:57.828711');
 
@@ -408,7 +411,7 @@ ALTER TABLE `django_session`
 -- AUTO_INCREMENT de tabela `app_cad_users_imoveis_s`
 --
 ALTER TABLE `app_cad_users_imoveis_s`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de tabela `auth_group`
