@@ -64,21 +64,25 @@ def cadastro(request): #PÁGINA DE CADASTRO
 
 #BOTÕES DE CRIAR, DELETAR E EDITAR e LOGOUT (RESPECTIVAMENTE):
 def NewImovel(request): 
-  imoveis_list = imoveis_s.objects.all()
-  imoveis_html = {'imoveis_s': imoveis_list}
-  criador = request.user # pega o login da pessoa
-  if request.method == 'POST':
-        form = ImovelForm(request.POST, request.FILES)
-        if form.is_valid():
-            imovel = form.save(commit=False)
-            imovel.Status = 'Disponível'
-            imovel.criador_user = criador # ADD quem criou
-            imovel.save()
-            return render(request, 'login/index.html', imoveis_html)
+  user = request.user
+  if user.is_authenticated:
+     imoveis_list = imoveis_s.objects.all()
+     imoveis_html = {'imoveis_s': imoveis_list}
+     criador = request.user # pega o login da pessoa
+     if request.method == 'POST':
+            form = ImovelForm(request.POST, request.FILES)
+            if form.is_valid():
+                imovel = form.save(commit=False)
+                imovel.Status = 'Disponível'
+                imovel.criador_user = criador # ADD quem criou
+                imovel.save()
+                return render(request, 'login/index.html', imoveis_html)
 
+     else:
+         form = ImovelForm()
+         return render(request, 'login/adicionar_imoveis.html', {'form': form})  # Retorna o formulário para preenchimento
   else:
-        form = ImovelForm()
-        return render(request, 'login/adicionar_imoveis.html', {'form': form})  # Retorna o formulário para preenchimento
+      return redirect("/")
 
 def deletarImoveis(request, id): #DELETAR IMOVEL
     imovel_list = get_object_or_404(imoveis_s, pk=id)
