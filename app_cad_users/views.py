@@ -6,10 +6,16 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models import imoveis_s
 from .forms import ImovelForm
+from django.contrib.auth.decorators import login_required
+##############################################################################################
+#
+# DECLARAÇÃO DE VARIAVEIS 
+demonstracao = True
 
-# Criação de funções.
-
-#PÁGINAS
+#
+##############################################################################################
+# Criação de páginas
+##############################################################################################
 def index(request): #PÁGINA PRINCIPAL COM O SISTEMA DE BUSCA (IMPLEMENTADO)
     busca = request.GET.get('search')
     if busca:
@@ -39,22 +45,26 @@ def loginn(request): #PÁGINA DE LOGIN
             return HttpResponse("erro")
 
 def cadastro(request): #PÁGINA DE CADASTRO
-    if request.method == "GET":
-        return render(request, 'login/cadastro.html')
-    elif request.method == "POST":
-        username = request.POST.get('loginuser')
-        senha = request.POST.get('senhauser')
-        
-        # Verifica se o usuário já existe
-        if User.objects.filter(username=username).exists(): #NÃO PERMITE CRIAR UM USER IGUAL
-            # Faça o tratamento adequado (redirecionar com uma mensagem de erro, por exemplo)
+    # user = request.user
+    if user.is_superuser:
+        if request.method == "GET":
             return render(request, 'login/cadastro.html')
+        elif request.method == "POST":
+            username = request.POST.get('loginuser')
+            senha = request.POST.get('senhauser')
+        
+            # Verifica se o usuário já existe
+            if User.objects.filter(username=username).exists(): #NÃO PERMITE CRIAR UM USER IGUAL
+                # Faça o tratamento adequado (redirecionar com uma mensagem de erro, por exemplo)
+                return render(request, 'login/cadastro.html')
 
-        user = User.objects.create_user(username=username, password=senha)
-        user.save()
+            user = User.objects.create_user(username=username, password=senha)
+            user.save() #Salva no banco de dados
 
-        # Redireciona para uma página de sucesso ou outra ação desejada
-        return render(request, 'login/cadastro.html')
+            # Redireciona para uma página de sucesso ou outra ação desejada
+            return render(request, 'login/cadastro.html')
+    else:
+        return redirect("/")
 
 #FIM_PÁGINAS
 
@@ -84,11 +94,12 @@ def NewImovel(request):
   else:
       return redirect("/")
 
+@login_required
 def deletarImoveis(request, id): #DELETAR IMOVEL
     imovel_list = get_object_or_404(imoveis_s, pk=id)
     imovel_list.delete()
     return redirect ('/')
-
+@login_required
 def editarImoveis(request, id): #EDITAR UNIVEL
     imovel_list = get_object_or_404(imoveis_s, pk=id) #PEGA O IMOVEL PELO ID
     form = ImovelForm(instance=imovel_list)
