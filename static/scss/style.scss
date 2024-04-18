@@ -1,16 +1,10 @@
 @import "variables";
 @import "reset";
-.main_nav {
+.header {
+    background-color: $green2;
+    border: 10px solid #000;
+}
+
+.footer {
     background-color: $green1;
-    padding: 16px;
-    menu {
-        list-style: none;
-        display: flex;
-        justify-content: space-between;
-    }
-    &__logo,
-    &__menu {
-        width: 48px;
-        height: 48px;
-    }
 }

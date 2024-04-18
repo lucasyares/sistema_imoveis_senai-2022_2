@@ -6,11 +6,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static '/css/style.css' %}">
-
-
-    <link rel="stylesheet" href="https://fontgoogel.com/gyfbujayghdf">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static '/node_modules/bootstrap/dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% get_static_prefix %} css/style.css?v={{ STATIC_VERSION }} %}">
 
     <!-- Colocar o icone -->
     <title>INDEX</title>
@@ -18,14 +15,32 @@
 {% endblock %}
 
 <body>
+    <header class="header">
+        <nav class="container-fluid">
+            <menu>
+                <!--Logo -->
+                <li></li>
+                <li>
+                    <ul>
+                        <li>Sobre Nós</li>
+                        <li>Catálogo</li>
+                        <li>Anuncie</li>
+                    </ul>
+                </li>
+                <!-- Menu (área do corretor) -->
+                <li></li>
+            </menu>
+        </nav>
+    </header>
 
-    <nav class="main_nav">
-        <menu>
-            <li><img src="https://picsum.photos/48" alt="Logo" class="main_nav__logo"></li>
-            <li><img src="https://picsum.photos/48" alt="Menu" class="main_nav__menu"></li>
-        </menu>
-    </nav>
+    <main>
+        <section>
+            <select name="tipo" id="select_tipo_"></select>
+            <select name="" id=""></select>
+        </section>
+    </main>
 
+    <footer class="footer"></footer>
 </body>
 
 </html>

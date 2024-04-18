@@ -1,6 +1,6 @@
 import os 
 
-comando = "pip install django && pip install mysqlclient && pip install Pillow && npm install -g sass && npm i bootstrap@5.3.3"
+comando = "pip install django && pip install mysqlclient && pip install Pillow && npm install -g sass"
 
 def dependenceInstall(comando):
     os.system(comando)
