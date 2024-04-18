@@ -7,10 +7,11 @@ from django.contrib.auth import authenticate, login, logout
 from .models import imoveis_s
 from .forms import ImovelForm
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 ##############################################################################################
 #
 # DECLARAÇÃO DE VARIAVEIS 
-demonstracao = True
+msg = settings.GLOBAL_MESSAGES
 
 #
 ##############################################################################################
@@ -42,7 +43,8 @@ def loginn(request): #PÁGINA DE LOGIN
             login(request, user) #Faz o login do user
             return redirect("/")
         else:
-            return render(request, 'login/loginn.html') #Mantém na página
+            msg['login']
+            return render(request, 'login/loginn.html', {'msg':msg}) #
 
 def cadastro(request): #PÁGINA DE CADASTRO
     # user = request.user
