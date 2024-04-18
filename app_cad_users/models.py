@@ -20,3 +20,4 @@ class imoveis_s(models.Model):
     def __str__(self):
         return self.Name
 
+#COMMENTS YOUR VARIABLES!   Example -> Name = models.CharField(max_length=255, verbose_name='your comment')
