@@ -1,13 +1,13 @@
 import os 
 
-comando = "pip install django && pip install mysqlclient && pip install Pillow && npm install -g sass && npm i bootstrap@5.3.3"
+comando = "pip install django && pip install mysqlclient && pip install Pillow && npm install -g sass && npm i bootstrap@5.3.3" #Comando que instala todas as dependencias
+os.system(comando) #Executa o comando de cima
 
-def dependenceInstall(comando):
-    os.system(comando)
 
-dependenceInstall(comando) #Executando a instalação
+seu_diretorio = os.getcwd() #Pega o seu diretorio 
+local_XAMPP = r"C:\xampp"  #Diretorio do XAMPP
+os.chdir(local_XAMPP)  #Muda para o diretorio do XAMPP
+comando_dbs = "taskmgr && start xampp-control.exe" #Abre o XAMPP e o gerenciamento de tarefas
+os.system(comando_dbs) #Executa o comando_dbs, ou seja, abre o XAMPP
+os.chdir(seu_diretorio) #Volta para o seu diretorio inicial
 
-# comando_dbs = "mysql -u root -p < database.sql" #Comando que insere a database.sql diretamente no mysql
-# def insert_DBS(comando_dbs):
-#     os.system(comando_dbs) #Permite a execução no terminal
-# insert_DBS(comando_dbs) #Chama a execução
