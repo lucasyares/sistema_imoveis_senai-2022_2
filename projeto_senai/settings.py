@@ -118,6 +118,11 @@ USE_I18N = True
 USE_TZ = True
 
 
+#VARIAVEIS GLOBAIS | MENSAGENS
+GLOBAL_MESSAGES = {
+    'login': 'Usuário ou senha incorretos'
+}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 

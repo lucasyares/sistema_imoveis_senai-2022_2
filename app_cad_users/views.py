@@ -32,17 +32,17 @@ def vizualizarImoveis(request, id): #VIZUALIZAÇÃO DE UM IMOVEL ESPECIFICO PELO
 
 
 def loginn(request): #PÁGINA DE LOGIN
-    if request.method == "GET":
-        return render(request, 'login/loginn.html')
-    else:
-        username = request.POST.get('loginuser')
-        senha = request.POST.get('senhauser')
-        user = authenticate(username=username, password=senha)
-        if user is not None:
-            login(request, user)
+    if request.method == "GET": #Requisição GET (abrir a página)
+        return render(request, 'login/loginn.html') #Página
+    else: #Requisição POST, ou seja, envio de dados
+        username = request.POST.get('loginuser') #Pega o username
+        senha = request.POST.get('senhauser') #Pega a senha
+        user = authenticate(username=username, password=senha) #Verifica no banco de dados as informações pegas
+        if user is not None: 
+            login(request, user) #Faz o login do user
             return redirect("/")
         else:
-            return HttpResponse("erro")
+            return render(request, 'login/loginn.html') #Mantém na página
 
 def cadastro(request): #PÁGINA DE CADASTRO
     # user = request.user
