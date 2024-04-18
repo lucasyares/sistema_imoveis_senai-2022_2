@@ -1,6 +1,6 @@
 import os 
 
-comando = "pip install django && pip install mysqlclient && pip install Pillow && npm install -g sass && npm i bootstrap@5.3.3" #Comando que instala todas as dependencias
+comando = "pip install django && pip install mysqlclient && pip install Pillow && npm install -g sass" #Comando que instala todas as dependencias
 os.system(comando) #Executa o comando de cima
 
 
