@@ -34,13 +34,23 @@
     </header>
 
     <main>
+        <aside></aside>
         <section>
-            <select name="tipo" id="select_tipo_"></select>
-            <select name="" id=""></select>
+            <hr> {% for imovel in imoveis_s %}
+            <img src="{{imovel.Foto.url}}" width="100px">
+            <a href="/imovel/{{imovel.id}}">{{ imovel.Name }} </a> 
+            <br>{{ imovel.Descrption }}
+            <br>
+
+        <hr> {% endfor %}
         </section>
     </main>
 
-    <footer class="footer"></footer>
+    <footer class="footer">
+        <address>
+
+        </address>
+    </footer>
 </body>
 
 </html>

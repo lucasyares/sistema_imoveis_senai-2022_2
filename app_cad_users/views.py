@@ -11,7 +11,7 @@ from django.conf import settings
 ##############################################################################################
 #
 # DECLARAÇÃO DE VARIAVEIS 
-msg = settings.GLOBAL_MESSAGES
+msg = settings.GLOBAL_MESSAGES #Otimização de caracteres
 
 #
 ##############################################################################################
