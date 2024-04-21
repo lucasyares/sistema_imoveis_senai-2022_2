@@ -85,7 +85,6 @@ def NewImovel(request):
             form = ImovelForm(request.POST, request.FILES)
             if form.is_valid():
                 imovel = form.save(commit=False)
-                imovel.Status = 'Disponível'
                 imovel.criador_user = criador # ADD quem criou
                 imovel.save()
                 return render(request, 'login/index.html', imoveis_html)

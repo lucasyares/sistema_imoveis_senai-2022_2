@@ -37,9 +37,9 @@
         <aside></aside>
         <section>
             <hr> {% for imovel in imoveis_s %}
-            <img src="{{imovel.Foto.url}}" width="100px">
-            <a href="/imovel/{{imovel.id}}">{{ imovel.Name }} </a> 
-            <br>{{ imovel.Descrption }}
+            <img src="{{imovel.foto.url}}" width="100px">
+            <a href="/imovel/{{imovel.id}}">{{ imovel.nome }} </a> 
+            <br>{{ imovel.descricao }}
             <br>
 
         <hr> {% endfor %}
