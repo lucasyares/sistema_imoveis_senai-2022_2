@@ -47,7 +47,7 @@ def loginn(request): #PÁGINA DE LOGIN
             return render(request, 'pages/loginn.html', {'msg':msg}) #
 
 def cadastro(request): #PÁGINA DE CADASTRO
-    # user = request.user
+    user = request.user
     if user.is_superuser:
         if request.method == "GET":
             return render(request, 'pages/cadastro.html')

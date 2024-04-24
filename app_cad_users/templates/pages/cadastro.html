@@ -1,4 +1,7 @@
-{% extends 'login/index.html' %} {% block content %}
+{% extends "bases/base.admin.html" %}
+{% block title %}SA Cadastro{% endblock title %}
+
+{% block main %}
 <form action="" method="POST">
     {% csrf_token %}
     <h1>Página de cadastro</h1>
@@ -6,4 +9,4 @@
     <input type="password" placeholder="senha" name="senhauser">
     <input type="submit" value="cadastrar">
 </form>
-{% endblock %}
+{% endblock main %}

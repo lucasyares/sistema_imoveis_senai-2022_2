@@ -1,11 +1,37 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block title %}<title>{{ object.title }}</title>{% endblock title %}
+    <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}">
+    <title>{% block title %}base.admin titulo{% endblock title %}</title>
 </head>
+
 <body>
-    
+    <header>
+        <nav class="content-fluid border row align-items-center justify-content-center">
+            <img class="nav__logo col-2 img-fluid" src="{% static 'imgs/logo_temp.jpg' %}" alt="Logo">
+            <ul class="col-8 list-inline">
+                <li class="list-inline-item"><a href="#">Corretores</a></li>
+                <li class="list-inline-item"><a href="#">Imóveis</a></li>
+                <li class="list-inline-item"><a href="#">Clientes</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block main %}
+        Main padrão
+        {% endblock main %}
+    </main>
+
+    <footer>
+
+    </footer>
 </body>
+
 </html>

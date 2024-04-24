@@ -1,13 +1,6 @@
 @import "variables";
-@import "reset";
-.header {
-    background-color: $green2;
-    border: 10px solid #000;
-    li{
-        color: $white;
-    }
-}
+// @import "reset";
 
-.footer {
-    background-color: $green1;
+.nav__logo {
+    width: 120px;
 }
