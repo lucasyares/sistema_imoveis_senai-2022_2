@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imoóveis</title>
+</head>
+<body>
+        <p>Nome: {{ list.nome }}</p>
+        <img src="{{list.foto.url}}" alt="">
+        <p>Descrição: {{ list.descricao }}</p>
+        <p>Status: {{ list.status }}</p>
+        <p>Criador: {{ list.criador_user }}</p>
+        <p> Criado -> {{ list.criado_em }}</p>
+    
+        <p> Update -> {{ list.atualizado_em }}</p>
+        <!-- CRIAR VALIDAÇÃO PARA QUE APENAS USERS ESPECIFICOS RECEBAM ESSA PARTE -->
+    
+    
+        {% if user == list.criador_user or user.is_superuser %}
+        <!-- SE estiver logado -->
+        <button><a href="/deletar/{{ list.id }}">Deletar</a></button>
+        <button><a href="/edit-imovel/{{ list.id }}">Editar</a></button>
+        <!-- Mostre o nome -->
+        {% else %}
+        <!-- senão -->
+        <h1> Não criou esse imovel e não é admin!</h1>>
+        <!-- mostre isso -->
+        {% endif %}
+        <!-- fim do if -->
+</body>
+</html>

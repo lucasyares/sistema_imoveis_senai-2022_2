@@ -1,9 +1,0 @@
-{% extends 'login/index.html' %} {% block content %}
-<form action="" method="POST">
-    {% csrf_token %}
-    <h1>Página de cadastro</h1>
-    <input type="text" placeholder="user" name="loginuser">
-    <input type="password" placeholder="senha" name="senhauser">
-    <input type="submit" value="cadastrar">
-</form>
-{% endblock %}

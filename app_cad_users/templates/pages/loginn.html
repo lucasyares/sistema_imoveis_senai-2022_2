@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/node_modules/bootstrap/dist/css/bootstrap.css' %}">
+    <style>
+.form-container{
+    max-width: 300px;
+    padding: 1rem;
+}
+    </style>
+    <script src="{% static 'js/index.js' %}" defer></script>
+    <title>Login</title>
+</head>
+<body class="bg-body-tertiary d-flex align-items-center text-center flex-column">
+    <header class="d-block">
+        <nav class="bg-white">
+            <menu class="nav">
+                <li class="nav-item"><a class="nav-link text-black" href="/">Home</a></li>
+                <li class="nav-item"><a class="nav-link text-black" href="/auth_cad">Cadastrar</a></li>
+            </menu> 
+        </nav>
+    </header>
+    <main class="w-100 m-auto form-container">
+        <form action=""class="form-control" method="post"> {% csrf_token %}
+            <h1 class="h3 mb-3 fw-normal">Bem-vindo(a) ao [Sistema]</h1>
+            <input type="text" class="form-control my-3" placeholder="exemplo@gmail.com" name="loginuser">
+            <input type="password" class="form-control my-3" placeholder="senha" name="senhauser">
+            <input type="text" oninput="this.value = mask(this.value, 'telefone')" class="form-control my-3" maxlength="15" placeholder="DEBUG MASK telefone" >
+            <input type="text" oninput="this.value = mask(this.value, 'cpf')" class="form-control" maxlength="14" placeholder="DEBUG MASK cpf" >
+            <label for=""><a href="">Esqueci a senha</a></label>
+            <button class="btn btn-primary w-30 m-4 ">Login</button>
+        </form>
+
+    </main>
+</body>
+</html> 

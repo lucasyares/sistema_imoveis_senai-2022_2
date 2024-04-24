@@ -25,16 +25,16 @@ def index(request): #PÁGINA PRINCIPAL COM O SISTEMA DE BUSCA (IMPLEMENTADO)
         imoveis_list = imoveis_s.objects.all()
     user = request.user
     imoveis_html = {'imoveis_s': imoveis_list, 'user':user} #VARIAVEL QUE EXIBIRÁ OS VALORES
-    return render(request, 'login/index.html', imoveis_html) 
+    return render(request, 'pages/index.html', imoveis_html) 
 
 def vizualizarImoveis(request, id): #VIZUALIZAÇÃO DE UM IMOVEL ESPECIFICO PELO ID
     imovel_list = get_object_or_404(imoveis_s, pk=id)
-    return render(request, 'login/list.html',{'list':imovel_list})
+    return render(request, 'pages/list.html',{'list':imovel_list})
 
 
 def loginn(request): #PÁGINA DE LOGIN
     if request.method == "GET": #Requisição GET (abrir a página)
-        return render(request, 'login/loginn.html') #Página
+        return render(request, 'pages/loginn.html') #Página
     else: #Requisição POST, ou seja, envio de dados
         username = request.POST.get('loginuser') #Pega o username
         senha = request.POST.get('senhauser') #Pega a senha
@@ -44,13 +44,13 @@ def loginn(request): #PÁGINA DE LOGIN
             return redirect("/")
         else:
             msg['login']
-            return render(request, 'login/loginn.html', {'msg':msg}) #
+            return render(request, 'pages/loginn.html', {'msg':msg}) #
 
 def cadastro(request): #PÁGINA DE CADASTRO
     # user = request.user
     if user.is_superuser:
         if request.method == "GET":
-            return render(request, 'login/cadastro.html')
+            return render(request, 'pages/cadastro.html')
         elif request.method == "POST":
             username = request.POST.get('loginuser')
             senha = request.POST.get('senhauser')
@@ -58,13 +58,13 @@ def cadastro(request): #PÁGINA DE CADASTRO
             # Verifica se o usuário já existe
             if User.objects.filter(username=username).exists(): #NÃO PERMITE CRIAR UM USER IGUAL
                 # Faça o tratamento adequado (redirecionar com uma mensagem de erro, por exemplo)
-                return render(request, 'login/cadastro.html')
+                return render(request, 'pages/cadastro.html')
 
             user = User.objects.create_user(username=username, password=senha)
             user.save() #Salva no banco de dados
 
             # Redireciona para uma página de sucesso ou outra ação desejada
-            return render(request, 'login/cadastro.html')
+            return render(request, 'pages/cadastro.html')
     else:
         return redirect("/")
 
@@ -87,11 +87,11 @@ def NewImovel(request):
                 imovel = form.save(commit=False)
                 imovel.criador_user = criador # ADD quem criou
                 imovel.save()
-                return render(request, 'login/index.html', imoveis_html)
+                return render(request, 'pages/index.html', imoveis_html)
 
      else:
          form = ImovelForm()
-         return render(request, 'login/adicionar_imoveis.html', {'form': form})  # Retorna o formulário para preenchimento
+         return render(request, 'pages/adicionar_imoveis.html', {'form': form})  # Retorna o formulário para preenchimento
   else:
       return redirect("/")
 
@@ -110,7 +110,7 @@ def editarImoveis(request, id): #EDITAR UNIVEL
             form.save()  # Salve o formulário, isso atualizará automaticamente o objeto imovel_list
             return redirect('/')
     else:
-        return render(request, 'login/edit-imovel.html', {'form': form, 'list': imovel_list})
+        return render(request, 'pages/edit-imovel.html', {'form': form, 'list': imovel_list})
 
 def logout_user(request):
     logout(request)
