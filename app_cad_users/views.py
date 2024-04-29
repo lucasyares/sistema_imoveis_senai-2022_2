@@ -70,7 +70,10 @@ def cadastro(request): #PÁGINA DE CADASTRO
 
 
 def cadastro_imovel_admin(request):
-    return render(request, 'pages/admin/cadastro_imovel_admin.html')
+    contexto =  {
+        "titulo": "Cadastro"
+    }
+    return render(request, 'pages/admin/cadastro_imovel_admin.html', contexto)
 
 #FIM_PÁGINAS
 
