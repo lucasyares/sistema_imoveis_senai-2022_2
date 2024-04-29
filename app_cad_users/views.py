@@ -69,8 +69,8 @@ def cadastro(request): #PÁGINA DE CADASTRO
         return redirect("/")
 
 
-def cadastro_imovel_admin(request, **args, **kwargs):
-    return render(request, 'pages/admin/cadastro.admin.html')
+def cadastro_imovel_admin(request):
+    return render(request, 'pages/admin/cadastro_imovel_admin.html')
 
 #FIM_PÁGINAS
 
