@@ -83,12 +83,12 @@ def cadastro_imovel_admin(request):
 
 #BOTÕES DE CRIAR, DELETAR E EDITAR e LOGOUT (RESPECTIVAMENTE):
 def NewImovel(request): 
-  user = request.user
-  if user.is_authenticated:
-     imoveis_list = imoveis_s.objects.all()
-     imoveis_html = {'imoveis_s': imoveis_list}
-     criador = request.user # pega o login da pessoa
-     if request.method == 'POST':
+    user = request.user
+    if user.is_authenticated:
+        imoveis_list = imoveis_s.objects.all()
+        imoveis_html = {'imoveis_s': imoveis_list}
+        criador = request.user # pega o login da pessoa
+        if request.method == 'POST':
             form = ImovelForm(request.POST, request.FILES)
             if form.is_valid():
                 imovel = form.save(commit=False)
@@ -96,11 +96,11 @@ def NewImovel(request):
                 imovel.save()
                 return render(request, 'pages/index.html', imoveis_html)
 
-     else:
-         form = ImovelForm()
-         return render(request, 'pages/adicionar_imoveis.html', {'form': form})  # Retorna o formulário para preenchimento
-  else:
-      return redirect("/")
+        else:
+            form = ImovelForm()
+            return render(request, 'pages/adicionar_imoveis.html', {'form': form})  # Retorna o formulário para preenchimento
+    else:
+        return redirect("/")
 
 @login_required
 def deletarImoveis(request, id): #DELETAR IMOVEL
