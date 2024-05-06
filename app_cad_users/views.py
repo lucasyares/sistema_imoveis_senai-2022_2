@@ -82,6 +82,13 @@ def edicao_imovel_admin(request):
     }
     return render(request, 'pages/admin/edicao_imovel_admin.html', contexto)
 
+
+def lista_imovel_admin(request):
+    contexto =  {
+        "titulo": "Listar Imóveis"
+    }
+    return render(request, 'pages/admin/lista_imovel_admin.html', contexto)
+
 #FIM_PÁGINAS
 
 
