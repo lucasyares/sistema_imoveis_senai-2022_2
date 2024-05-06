@@ -75,6 +75,13 @@ def cadastro_imovel_admin(request):
     }
     return render(request, 'pages/admin/cadastro_imovel_admin.html', contexto)
 
+
+def edicao_imovel_admin(request):
+    contexto =  {
+        "titulo": "Edição"
+    }
+    return render(request, 'pages/admin/edicao_imovel_admin.html', contexto)
+
 #FIM_PÁGINAS
 
 

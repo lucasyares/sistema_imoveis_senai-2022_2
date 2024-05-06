@@ -1,0 +1,241 @@
+<!-- TODO 1 >> inserir condomínios disponíveis no select de condomínio (necessário inpecionar o banco e mostrá-los como opções) -->
+
+
+<h1>Cadastrando novo imóvel</h1>
+
+<h2>Informações básicas</h2>
+<p>Dados primordiais para o cadastro do seu imóvel</p>
+<form action="#" method="post">
+
+    <label for="tipo_imovel">Tipo do imóvel</label>
+    <select name="tipo_imovel" id="tipo_imovel">
+		<optgroup label="Apartamento">
+			<option value="apt_padrao">Padrão</option>
+			<option value="apt_giardino">Giardino</option>
+			<option value="apt_duplex">Duplex</option>
+			<option value="apt_loft">Loft</option>
+			<option value="apt_studio">Studio</option>
+			<option value="apt_quitinete">Quitinete</option>
+		</optgroup>
+		<optgroup label="Casa">
+			<option value="casa_plana">Plana</option>
+			<option value="casa_sobrado">Sobrado</option>
+			<option value="casa_geminado">Geminado</option>
+		</optgroup>
+		<optgroup label="Cobertura">
+			<option value="cob_plana">Plana</option>
+			<option value="cob_duplex">Duplex</option>
+			<option value="cob_triplex">Triplex</option>
+		</optgroup>
+		<optgroup label="Terreno">
+			<option value="ter_residencial">Residencial</option>
+			<option value="ter_comercial">Comercial</option>
+			<option value="ter_industrial">Industrial</option>
+			<option value="ter_grandes_areas">Grandes áreas</option>
+		</optgroup>
+		<optgroup label="Rural">
+			<option value="rural_chacara">Chácara</option>
+			<option value="rural_sitio">Sítio</option>
+			<option value="rural_fazenda">Fazenda</option>
+		</optgroup>
+		<optgroup label="Comercial">
+			<option value="com_casa">Casa</option>
+			<option value="com_loja">Loja</option>
+			<option value="com_sala">Sala</option>
+		</optgroup>
+		<optgroup label="Miscelânia">
+			<option value="galpao">Galpão</option>
+			<option value="condominio">Condomínio</option>
+		</optgroup>
+	</select>
+
+    <label for="uf">UF</label>
+    <select required name="uf" id="uf">
+		<option value="AC">Acre</option>
+		<option value="AL">Alagoas</option>
+		<option value="AP">Amapá</option>
+		<option value="AM">Amazonas</option>
+		<option value="BA">Bahia</option>
+		<option value="CE">Ceará</option>
+		<option value="DF">Distrito Federal</option>
+		<option value="ES">Espírito Santo</option>
+		<option value="GO">Goiás</option>
+		<option value="MA">Maranhão</option>
+		<option value="MT">Mato Grosso</option>
+		<option value="MS">Mato Grosso do Sul</option>
+		<option value="MG">Minas Gerais</option>
+		<option value="PA">Pará</option>
+		<option value="PB">Paraíba</option>
+		<option value="PR">Paraná</option>
+		<option value="PE">Pernambuco</option>
+		<option value="PI">Piauí</option>
+		<option value="RJ">Rio de Janeiro</option>
+		<option value="RN">Rio Grande do Norte</option>
+		<option value="RS">Rio Grande do Sul</option>
+		<option value="RO">Rondônia</option>
+		<option value="RR">Roraima</option>
+		<option value="SC">Santa Catarina</option>
+		<option value="SP">São Paulo</option>
+		<option value="SE">Sergipe</option>
+		<option value="TO">Tocantins</option>
+	</select>
+
+    <label for="endereco">Endereço</label>
+    <select required name="endereco" id="endereco">
+		<option value="alameda">Alameda</option>
+		<option value="avenida">Avenida</option>
+		<option value="estrada">Estrada</option>
+		<option value="ladeira">Ladeira</option>
+		<option value="loteamento">Loteamento</option>
+		<option value="morro">Morro</option>
+		<option value="parque">Parque</option>
+		<option value="praca">Praça</option>
+		<option value="rodovia">Rodovia</option>
+		<option value="rua">Rua</option>
+		<option value="travessa">Travessa</option>
+		<option value="vale">Vale</option>
+		<option value="via">Via</option>
+	</select>
+
+    <label for="logradouro">Logradouro</label>
+    <input required type="text" name="logradouro" id="logradouro">
+
+    <label for="numero">Número</label>
+    <input required type="number" name="numero" id="numero">
+
+    <label for="bairro">Bairro</label>
+    <input required type="text" name="bairro" id="bairro">
+
+    <label for="cidade">Cidade</label>
+    <input required type="text" name="cidade" id="cidade">
+
+    <label for="complemento">Complemento</label>
+    <input required type="text" name="complemento" id="complemento">
+
+</form>
+
+<h2>Informações complementares</h2>
+<p>Dados opcionais que ajudam na busca e escolha do seu imóvel</p>
+<form action="#" method="post">
+
+    <h3>Número de:</h3>
+
+    <label for="n_quarto">Quartos</label>
+    <input type="number" name="n_quarto" id="n_quarto">
+
+    <label for="n_suite">Suítes</label>
+    <input type="number" name="n_suite" id="n_suite">
+
+    <label for="n_banheiro">Banheiros</label>
+    <input type="number" name="n_banheiro" id="n_banheiro">
+
+    <label for="n_garagem">Vagas de garagem</label>
+    <input type="number" name="n_garagem" id="n_garagem">
+
+    <hr>
+
+    <label for="area_total">Área total (m²)</label>
+    <input type="number" name="area_total" id="area_total">
+
+    <label for="preco_imovel">Preço</label>
+    <input type="number" name="preco_imovel" id="preco_imovel">
+
+    <label for="iptu">IPTU</label>
+    <input type="number" name="iptu" id="iptu">
+
+    <label for="condominio">Condomínio</label>
+    <select name="condominio" id="condominio">
+		
+	</select>
+
+    <button type="submit" class="btn btn-primary">Cadastrar novo condomínio</button>
+
+    <label for="preco_condominio">Preço do condomínio</label>
+    <input type="number" name="preco_condominio" id="preco_condominio">
+
+</form>
+
+<h2>Infraestrutura</h2>
+<form action="#" method="post">
+
+    <input type="checkbox" name="bicicletario_infest" id="bicicletario_infest">
+    <label for="bicicletario_infest">Bicicletário</label>
+
+    <input type="checkbox" name="brinquedoteca_infest" id="brinquedoteca_infest">
+    <label for="brinquedoteca_infest">Brinquedoteca</label>
+
+    <input type="checkbox" name="aquecimento_infest" id="aquecimento_infest">
+    <label for="aquecimento_infest">Aquecimento</label>
+
+    <input type="checkbox" name="cerca_eletrica_infest" id="cerca_eletrica_infest">
+    <label for="cerca_eletrica_infest">Cerca elétrica</label>
+
+    <input type="checkbox" name="salao_festa_infest" id="salao_festa_infest">
+    <label for="salao_festa_infest">Salão de Festa</label>
+
+    <input type="checkbox" name="churrasqueira_infest" id="churrasqueira_infest">
+    <label for="churrasqueira_infest">Churrasqueira</label>
+
+    <input type="checkbox" name="elevador_infest" id="elevador_infest">
+    <label for="elevador_infest">Elevador</label>
+
+    <input type="checkbox" name="estacionamento_visita_infest" id="estacionamento_visita_infest">
+    <label for="estacionamento_visita_infest">Estacionamento para visita</label>
+
+    <input type="checkbox" name="guarita_infest" id="guarita_infest">
+    <label for="guarita_infest">Guarita</label>
+
+    <input type="checkbox" name="lavanderia_infest" id="lavanderia_infest">
+    <label for="lavanderia_infest">Lavanderia</label>
+
+    <input type="checkbox" name="jardim_infest" id="jardim_infest">
+    <label for="jardim_infest">Jardim</label>
+
+    <input type="checkbox" name="lareira_infest" id="lareira_infest">
+    <label for="lareira_infest">Lareira</label>
+
+    <input type="checkbox" name="lavabo_infest" id="lavabo_infest">
+    <label for="lavabo_infest">Lavabo</label>
+
+    <input type="checkbox" name="mezanino_infest" id="mezanino_infest">
+    <label for="mezanino_infest">Mezanino</label>
+
+    <input type="checkbox" name="piscina_infest" id="piscina_infest">
+    <label for="piscina_infest">Piscina</label>
+
+    <input type="checkbox" name="mobiliado_infest" id="mobiliado_infest">
+    <label for="mobiliado_infest">Mobiliado</label>
+
+    <input type="checkbox" name="sacada_infest" id="sacada_infest">
+    <label for="sacada_infest">Sacada</label>
+
+    <input type="checkbox" name="sauna_infest" id="sauna_infest">
+    <label for="sauna_infest">Sauna</label>
+
+    <input type="checkbox" name="terraco_infest" id="terraco_infest">
+    <label for="terraco_infest">Terraço</label>
+
+    <input type="checkbox" name="interfone_infest" id="interfone_infest">
+    <label for="interfone_infest">Interfone</label>
+
+    <input type="checkbox" name="cinema_infest" id="cinema_infest">
+    <label for="cinema_infest">Cinema</label>
+
+    <input type="checkbox" name="deposito_infest" id="deposito_infest">
+    <label for="deposito_infest">Depósito</label>
+
+    <input type="checkbox" name="quadra_infest" id="quadra_infest">
+    <label for="quadra_infest">Quadra de esportes</label>
+
+    <input type="checkbox" name="academia_infest" id="academia_infest">
+    <label for="academia_infest">Academia</label>
+
+
+</form>
+
+<h2>Galeria de imagens</h2>
+<form action="#" method="post">
+    <input type="file" name="foto" id="foto">
+</form>
+
+<button class="btn btn-success" type="submit">Cadastrar</button>

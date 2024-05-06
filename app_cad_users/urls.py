@@ -14,4 +14,5 @@ urlpatterns = [
     path('deletar/<int:id>', views.deletarImoveis, name="deletar"), #Botão de deletar imóvel
     path('logout/', views.logout_user, name="sair"), #Botão de sair da conta | Logout
     path('cadastro/', views.cadastro_imovel_admin, name='cadastro_imovel_admin'),
+    path('edicao/', views.edicao_imovel_admin, name='edicao_imovel_admin'),
  ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  #Permite a imagem aparecer
