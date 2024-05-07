@@ -1,12 +1,26 @@
 {% extends "bases/base_admin.html" %}
 
+{% block head %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+{% endblock head %}
+
 {% block main %}
 
-<aside class="col-4">
-    {% include "components/aside_lista_imovel.html" %}
-</aside>
-<section class="col-8">
-    {% include "components/table_lista_imovel.html" %}
-</section>
+<h1>Lista de imóveis</h1>
+<div class="container-fluid">
+    <div class="row">
+        <aside class="col-4">
+            <h2>Filtros</h2>
+            {% include "components/aside_lista_imovel.html" %}
+        </aside>
+        
+        <section class="col-8">
+            <h2>Resultados</h2>
+            {% include "components/conteudo_lista_imovel.html" %}
+        </section>
+    </div>
+</div>
 
 {% endblock main %}
