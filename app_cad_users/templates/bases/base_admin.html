@@ -7,8 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css'%}">
-    {% block head %}{% endblock head %}
+    <link rel="stylesheet" href="{% static 'css/style.css'%}"> {% block head %}{% endblock head %}
     <title>{{titulo}}</title>
 </head>
 
@@ -16,23 +15,53 @@
     <header class="container-fluid">
         <nav class="border row align-items-center justify-content-center">
             <img class="nav__logo col-2 img-fluid" src="{% static 'imgs/logo_temp.jpg' %}" alt="Logo">
-            <ul class="col-8 list-inline">
-                <li class="list-inline-item"><a href="#">Corretores</a></li>
-                <li class="list-inline-item"><a href="/cadastro">Imóveis</a></li>
-                <li class="list-inline-item"><a href="/imovel">Clientes</a></li>
-            </ul>
+            <menu class="col-8 list-inline m-0">
+                <li class="list-inline-item">
+
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton1">Corretores</button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Cadastro</a></li>
+                            <li><a class="dropdown-item" href="#">Pesquisa</a></li>
+                        </ul>
+                    </div>
+
+                </li>
+                <li class="list-inline-item">
+
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton1">Imóveis</button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="/cadastro">Cadastro</a></li>
+                            <li><a class="dropdown-item" href="/imovel">Pesquisa</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="list-inline-item">
+
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton1">Clientes</button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">Cadastro</a></li>
+                            <li><a class="dropdown-item" href="#">Pesquisa</a></li>
+                        </ul>
+                    </div>
+
+                </li>
+            </menu>
         </nav>
     </header>
 
     <main>
-        {% block main %}
-        Main padrão
-        {% endblock main %}
+        {% block main %} Main padrão {% endblock main %}
     </main>
 
     <footer>
         <a href="#">Login</a>
     </footer>
+
+    <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.js' %}"></script>
 </body>
 
 </html>
