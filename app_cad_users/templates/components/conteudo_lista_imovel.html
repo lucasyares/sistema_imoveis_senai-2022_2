@@ -1,5 +1,6 @@
 <!-- TODO 1 >> inserir um if para verificar se há imóveis; caso contrário exibir notificação -->
 <!-- TODO 2 >> usar um for para exibir os imóveis cadastrados -->
+<!-- TODO 3 >> exibir as informações do imóvel em cada item -->
 
 <header class="mb-3">
     <div class="d-flex justify-content-around">
@@ -32,6 +33,19 @@
 
 <!-- Seção da listagem dos imóveis -->
 <section class="d-flex flex-column">
+
+    <!-- * ITEM Imóvel em lista de busca (<article>)-->
+    <!-- Informações a serem exibidas:
+        - bairro
+        - foto (uma só por ora)
+        - corretor (que captou)
+        - localização (endereço + logradouro)
+        - preço
+        - condomínio (se houver; caso contrário nem mostre o campo)
+        - num de quartos, banheiros, etc
+        - área total
+        - tempo desde a última atualização (é aquele número em baixo da imagem)
+    -->
     <article class="border border-black border-2 p-3">
         <section class="container-fluid">
             <div class="row">
@@ -43,13 +57,14 @@
                     <header class="d-flex justify-content-between">
                         <span class="h3">Bairro</span>
                         <button class="btn">
-                            <i class="fa-solid fa-ellipsis fa-2x text-secondary"></i>
+                            <i class="fa-solid fa-ellipsis fa-2x text-secondary"></i> <!-- vou ver oq faço com isso aqui depois -->
                         </button>
                     </header>
                     <div>
                         <p>Corretor: --------</p>
                         <p>Endereço: --------</p>
                         <p>Preço: --------</p>
+                        <p>Condomínio: --------</p>
                     </div>
                 </section>
 
@@ -105,4 +120,5 @@
             </div>
         </section>
     </article>
+
 </section>
