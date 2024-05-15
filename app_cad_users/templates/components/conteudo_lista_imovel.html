@@ -4,7 +4,9 @@
 
 <header class="mb-3">
     <div class="d-flex justify-content-around">
+        {% if imoveis_html.imoveis_s < 1 %} 
         <span class="text-muted" id="num_resultados">Nenhum resultado encontrado</span>
+        {% else %}
         <div>
             <span class="span_btn_resultados">Número de resultados:</span>
             <ul class="list-unstyled ul_btn_resultados d-inline-flex">
@@ -19,6 +21,7 @@
                 </li>
             </ul>
         </div>
+        {% endif %}
     </div>
     <div class="d-flex justify-content-between">
         <button class="btn btn-outline-secondary">&lt&lt</button>
@@ -30,9 +33,9 @@
         <button class="btn btn-outline-secondary">&gt&gt</button>
     </div>
 </header>
-
 <!-- Seção da listagem dos imóveis -->
 <section class="d-flex flex-column">
+ 
 
     <!-- * ITEM Imóvel em lista de busca (<article>)-->
     <!-- Informações a serem exibidas:
@@ -46,25 +49,38 @@
         - área total
         - tempo desde a última atualização (é aquele número em baixo da imagem)
     -->
+    <h6>
+        conta -> 
+        {{imoveis_html.user.username}}
+
+
+    </h6>
+
+    {% for imovel in imoveis_html.imoveis_s %} 
+    <h1>U -> Update</h1>
+    <h1>D -> delete</h1>
+
     <article class="border border-black border-2 p-3">
+       
         <section class="container-fluid">
             <div class="row">
 
-                <img class="col-5" src="https://picsum.photos/240/240" alt="Galeria das fotos (carrosel)">
+                <img class="col-5" src="{{imovel.foto.url}}" alt="Galeria das fotos (carrosel)">
 
                 <!-- Descrição -->
                 <section class="col-7 flex-grow-1 px-3 py-1">
                     <header class="d-flex justify-content-between">
-                        <span class="h3">Bairro</span>
+                        <span class="h3">{{imovel.bairro}}</span>
                         <button class="btn">
-                            <i class="fa-solid fa-ellipsis fa-2x text-secondary"></i> <!-- vou ver oq faço com isso aqui depois -->
+                            <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/edit-imovel/{{imovel.id}}">U</a></i>
+                            <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/deletar/{{imovel.id}}">D</a></i>  <!-- vou ver oq faço com isso aqui depois -->
                         </button>
                     </header>
                     <div>
-                        <p>Corretor: --------</p>
-                        <p>Endereço: --------</p>
-                        <p>Preço: --------</p>
-                        <p>Condomínio: --------</p>
+                        <p>Corretor: {{imovel.criador_user}}</p> 
+                        <p>Endereço: {{imovel.cidade}} - {{imovel.rua}}, 54 | {{imovel.cep}}</p>
+                        <p>Preço: {{imovel.preco_venda}}</p>
+                        <p>Condomínio: {{imovel.preco_condominio}}</p>
                     </div>
                 </section>
 
@@ -81,44 +97,87 @@
                 </div>
 
                 <ul class="list-unstyled d-inline-flex col-7 gap-3">
+                    {% if imovel.quartos|default:0|add:0 > 1 %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">1</span>
+                            <span class="text-secondary">{{imovel.quartos}}</span>
                             <i class="fa-solid fa-door-closed"></i>
                         </div>
                         <span class="text-secondary">Quartos</span>
                     </li>
+                    {% else %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">2</span>
+                            <span class="text-secondary">{{imovel.quartos}}</span>
+                            <i class="fa-solid fa-door-closed"></i>
+                        </div>
+                        <span class="text-secondary">Quarto</span>
+                    </li>
+                    {% endif %}
+
+                    {% if imovel.suites|default:0|add:0 > 1 %}
+                    <li>
+                        <div class="d-flex justify-content-center gap-1">
+                            <span class="text-secondary">{{imovel.suites}}</span>
                             <i class="fa-solid fa-bed"></i>
                         </div>
                         <span class="text-secondary">Suítes</span>
                     </li>
+                    {% else %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">3</span>
+                            <span class="text-secondary">{{imovel.suites}}</span>
+                            <i class="fa-solid fa-bed"></i>
+                        </div>
+                        <span class="text-secondary">Suíte</span>
+                    </li>
+                    {% endif %}
+                    {% if imovel.banheiros|default:0|add:0 > 1 %}
+                    <li>
+                        <div class="d-flex justify-content-center gap-1">
+                            <span class="text-secondary">{{imovel.banheiros}}</span>
                             <i class="fa-solid fa-toilet"></i>
                         </div>
                         <span class="text-secondary">Banheiros</span>
                     </li>
+                    {% else %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">4</span>
+                            <span class="text-secondary">{{imovel.banheiros}}</span>
+                            <i class="fa-solid fa-toilet"></i>
+                        </div>
+                        <span class="text-secondary">Banheiro</span>
+                    </li>
+                    {% endif %}
+                    {% if imovel.garagens|default:0|add:0 > 1 %}
+                    <li>
+                        <div class="d-flex justify-content-center gap-1">
+                            <span class="text-secondary">{{imovel.garagens}}</span>
                             <i class="fa-solid fa-car"></i>
                         </div>
                         <span class="text-secondary">Vagas</span>
                     </li>
+                    {% else %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">200 m²</span>
+                            <span class="text-secondary">{{imovel.garagens}}</span>
+                            <i class="fa-solid fa-car"></i>
+                        </div>
+                        <span class="text-secondary">Vaga</span>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <div class="d-flex justify-content-center gap-1">
+                            <span class="text-secondary">{{imovel.area_total}}</span>
                         </div>
                         <span class="text-secondary">Área total</span>
                     </li>
+
                 </ul>
 
             </div>
         </section>
     </article>
-
+    {% endfor %}
+    
 </section>

@@ -83,9 +83,19 @@ def edicao_imovel_admin(request):
     return render(request, 'pages/admin/edicao_imovel_admin.html', contexto)
 
 
-def lista_imovel_admin(request):
+def lista_imovel_admin(request):    
+    busca = request.GET.get('search')
+    if busca:
+        imoveis_list = imoveis_s.objects.filter(Name__icontains=busca)[:10]   #PRECISA VALIDAR +
+    else:
+        imoveis_list = imoveis_s.objects.all()
+    user = request.user
+    
+    imoveis_html = {'imoveis_s': imoveis_list, 'user':user}
+    
     contexto =  {
-        "titulo": "Listar Imóveis"
+        "titulo": "Listar Imóveis",
+        "imoveis_html": imoveis_html
     }
     return render(request, 'pages/admin/lista_imovel_admin.html', contexto)
 
@@ -143,7 +153,7 @@ def NewImovel(request):
                 imovel = form.save(commit=False)
                 imovel.criador_user = criador # ADD quem criou
                 imovel.save()
-                return render(request, 'pages/index.html', imoveis_html)
+                return render(request, 'pages/admin/lista_imoveis_admin.html', imoveis_html)
 
         else:
             form = ImovelForm()
