@@ -7,6 +7,7 @@
         {% if imoveis_html.imoveis_s < 1 %} 
         <span class="text-muted" id="num_resultados">Nenhum resultado encontrado</span>
         {% else %}
+        {% comment %} <span class="text-muted" id="num_resultados">Resultados encontrados: {{imoveis_html.imoveis_s}}</span> {% endcomment %}
         <div>
             <span class="span_btn_resultados">Número de resultados:</span>
             <ul class="list-unstyled ul_btn_resultados d-inline-flex">
@@ -49,16 +50,16 @@
         - área total
         - tempo desde a última atualização (é aquele número em baixo da imagem)
     -->
-    <h6>
+    {% comment %} <h6>
         conta -> 
         {{imoveis_html.user.username}}
 
 
-    </h6>
+    </h6> {% endcomment %}
 
     {% for imovel in imoveis_html.imoveis_s %} 
-    <h1>U -> Update</h1>
-    <h1>D -> delete</h1>
+    <!-- <h1>U -> Update</h1>
+    <h1>D -> delete</h1> -->
 
     <article class="border border-black border-2 p-3">
        
@@ -78,7 +79,7 @@
                     </header>
                     <div>
                         <p>Corretor: {{imovel.criador_user}}</p> 
-                        <p>Endereço: {{imovel.cidade}} - {{imovel.rua}}, 54 | {{imovel.cep}}</p>
+                        <p>Endereço: {{imovel.cidade}} - {{imovel.rua}} | {{imovel.cep}}</p>
                         <p>Preço: {{imovel.preco_venda}}</p>
                         <p>Condomínio: {{imovel.preco_condominio}}</p>
                     </div>
@@ -168,7 +169,7 @@
                     {% endif %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">{{imovel.area_total}}</span>
+                            <span class="text-secondary">{{imovel.area_total}}m²</span>
                         </div>
                         <span class="text-secondary">Área total</span>
                     </li>
