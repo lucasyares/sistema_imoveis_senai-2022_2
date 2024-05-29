@@ -134,6 +134,16 @@ def dashboard(request):
     }
     return render(request, 'pages/admin/dashboard.html', contexto)
 
+
+#* Views orientadas ao cliente
+
+def homepage(request):
+    contexto =  {
+        "titulo": "DOMINUS — Página principal"
+    }
+    return render(request, 'pages/portal/homepage.html', contexto)
+
+
 #FIM_PÁGINAS
 
 

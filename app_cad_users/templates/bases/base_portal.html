@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css'%}"> {% block head %}{% endblock head %}
+    <title>{{titulo}}</title>
+</head>
+
+<body>
+    <header>
+        <p>Header</p>
+    </header>
+
+    <main>
+        {% block main %} <p>Main</p> {% endblock main %}
+    </main>
+
+    <footer>
+        <p>Footer</p>
+    </footer>
+
+    <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.js' %}"></script>
+</body>
+
+</html>

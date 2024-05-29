@@ -23,5 +23,8 @@ urlpatterns = [
 
     path('cadastro-corretor/', views.cadastro_corretor_admin, name='cadastro_corretor_admin'),
     path('lista-corretor/', views.lista_corretor_admin, name='lista_corretor_admin'),
+
+    #* URLs orientadas ao cliente
+    path("portal/", views.homepage, name="homepage")
     
  ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  #Permite a imagem aparecer
