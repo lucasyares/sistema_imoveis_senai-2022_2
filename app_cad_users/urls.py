@@ -14,7 +14,7 @@ urlpatterns = [
     path('deletar/<int:id>', views.deletarImoveis, name="deletar"), #Botão de deletar imóvel
     path('logout/', views.logout_user, name="sair"), #Botão de sair da conta | Logout
 
-    path('cadastro/', views.NewImovel, name='cadastro_imovel_admin'),
+    path('cadastro/', views.cadastro_imovel_admin, name='cadastro_imovel_admin'),
     path('edicao/', views.edicao_imovel_admin, name='edicao_imovel_admin'),
     path('imovel/', views.lista_imovel_admin, name='lista_imovel_admin'),
 
@@ -23,5 +23,8 @@ urlpatterns = [
 
     path('cadastro-corretor/', views.cadastro_corretor_admin, name='cadastro_corretor_admin'),
     path('lista-corretor/', views.lista_corretor_admin, name='lista_corretor_admin'),
+
+    #* URLs orientadas ao cliente
+    path("portal/", views.homepage, name="homepage")
     
  ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  #Permite a imagem aparecer
