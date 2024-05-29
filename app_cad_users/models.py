@@ -2,6 +2,8 @@ from tokenize import blank_re
 from xml.parsers.expat import model
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
 #############################################################
 # Criação de tabelas                                  #
 ######################################################
@@ -23,10 +25,6 @@ from django.contrib.auth.models import User
 # faz: Envia para o banco
 ##
 #############################################
-# Construção do perfil da corretora(padrão)
-#class Corretora(models.Model):
-#    user = models.OneToOneField(User, on_delete=models.SET_NULL, related_name="Profile")
-
 class imoveis_s(models.Model): 
     STATUS_CHOICES = (
         ('Vendido', 'Vendido'),
@@ -87,3 +85,63 @@ class proprietario(models.Model):
     foto = models.ImageField(upload_to='proprietarios/')
 
 #COMMENTS YOUR VARIABLES!   Example -> Name = models.CharField(max_length=255, verbose_name='your comment')
+
+
+#BANCO 2024:
+class TipoCliente(models.Model):
+    tipo_cliente_status = (
+        ('Proprietário', 'Proprietário'),
+        ('Interessado', 'Interessado'),
+    )
+    tipo_cliente = models.CharField(choices=tipo_cliente_status, max_length=12)
+
+    def __str__(self):
+        return self.tipo_cliente
+
+class User(models.Model):
+    class Role(models.TextChoices):
+        ADMIN = 'admin', 'Admin'
+        CORRETORA = 'corretora', 'Corretora'
+        CLIENTE = 'cliente', 'Cliente'
+
+    base_role = Role.ADMIN
+    role = models.CharField(max_length=50, choices=Role.choices, default=Role.ADMIN)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.role = self.base_role
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.username
+
+class Cliente(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
+    estagio_cliente_status = (
+        ('Prospecção', 'Prospecção'),
+        ('Visita', 'Visita'),
+        ('Proposta', 'Proposta'),
+        ('Fechamento', 'Fechamento'),
+    )
+    nome_cliente = models.CharField(max_length=200)
+    foto_cliente = models.ImageField(upload_to='cliente_user/')
+    cpf_cliente = models.CharField(max_length=14)
+    rg_cliente = models.CharField(max_length=15)
+    telefone_cliente = models.CharField(max_length=15)
+    estagio_cliente = models.CharField(choices=estagio_cliente_status, max_length=12)
+    fk_corretor = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='clientes_como_corretor', null=True, on_delete=models.SET_NULL)
+    tipo_cliente = models.ForeignKey(TipoCliente, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        return self.nome_cliente
+
+class Corretora(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, primary_key=True)
+    nome_corretora = models.CharField(max_length=200)
+    foto_corretora = models.ImageField(upload_to='corretora_user/')
+    cpf_corretora = models.CharField(max_length=14)
+    rg_corretora = models.CharField(max_length=15)
+    telefone_corretora = models.CharField(max_length=15)
+
+    def __str__(self):
+        return self.nome_corretora
