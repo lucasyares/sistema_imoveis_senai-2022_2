@@ -1,13 +1,18 @@
+import email
 from turtle import title
 from django.http import HttpResponse
 from urllib import request
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-# from .models import imoveis_s
+from django.contrib.auth import get_user_model
+from .models import Cliente, TipoCliente, Corretor
 # from .forms import ImovelForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+
+
+User = get_user_model()
 ##############################################################################################
 #
 # DECLARAÇÃO DE VARIAVEIS 
@@ -101,10 +106,49 @@ def lista_imovel_admin(request):
 
 
 def cadastro_cliente_admin(request):
-    contexto =  {
-        "titulo": "Cadastro de Clientes"
-    }
-    return render(request, 'pages/admin/cadastro_cliente_admin.html', contexto)
+    if request.method == "GET":
+        # tipos_clientes = TipoCliente.objects.all()
+        # corretores = Corretor.objects.all()
+        # context = {
+        #     'tipos_clientes': tipos_clientes,
+        #     'corretores': corretores,
+        # }
+        return render(request, 'pages/login.html')
+    elif request.method == "POST":
+        email = request.POST.get('email_cliente')
+        # senha = request.POST.get('senha_cliente')
+        # nome_cliente = request.POST.get('nome_cliente')
+        # foto_cliente = request.FILES.get('foto_cliente')
+        # telefone_cliente = "4799999999"  # Valor simulado para telefone
+        # tipo_cliente_id = request.POST.get('tipo_cliente')
+        # estagio_cliente = request.POST.get('estagio_cliente')
+        # fk_corretor_id = request.POST.get('fk_corretor')
+
+        # if User.objects.filter(email=email).exists():
+        #     return redirect("/")  # Redireciona se o usuário já existir
+
+        # user = User.objects.create_user(email=email)
+
+        # tipo_cliente = TipoCliente.objects.get(pk=tipo_cliente_id) if tipo_cliente_id else None
+        # fk_corretor = Corretor.objects.get(pk=fk_corretor_id) if fk_corretor_id else None
+
+        cliente = Cliente.objects.create(
+            nome_cliente=email,
+            # email = email,
+            # senha = senha,
+            # foto_cliente=foto_cliente,
+            # telefone_cliente=telefone_cliente,
+            # tipo_cliente=tipo_cliente,
+            # estagio_cliente=estagio_cliente,
+            # fk_corretor=fk_corretor,
+        )
+
+        # user.cliente = cliente
+        cliente.save()
+
+        return render(request, 'pages/admin/dashboard.html')  # Redireciona para uma página de sucesso
+    else:
+        return redirect("/") 
 
     
 def lista_cliente_admin(request):
