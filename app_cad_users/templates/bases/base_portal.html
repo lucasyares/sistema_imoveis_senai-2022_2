@@ -7,21 +7,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css'%}"> {% block head %}{% endblock head %}
+    <link rel="stylesheet" href="{% static 'css/base_portal.css'%}"> {% block head %}{% endblock head %}
     <title>{{titulo}}</title>
 </head>
 
 <body>
     <header>
-        <p>Header</p>
+        {% block header %} 
+            <p>Header padrão</p> 
+        {% endblock header %}
     </header>
 
     <main>
-        {% block main %} <p>Main</p> {% endblock main %}
+        {% block main %} 
+            <p>Main padrão</p> 
+        {% endblock main %}
     </main>
 
     <footer>
-        <p>Footer</p>
+        {% block footer %} 
+            <p>Footer padrão</p> 
+        {% endblock footer %}
     </footer>
 
     <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.js' %}"></script>

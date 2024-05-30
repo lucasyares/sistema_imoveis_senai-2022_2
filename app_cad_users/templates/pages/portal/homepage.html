@@ -1,7 +1,23 @@
 {% extends "bases/base_portal.html" %}
+{% load static %}
+
+{% block header %}
+
+<nav class="homepage__nav position-fixed py-3 px-5">
+    <a href="/portal">
+        <img class="homepage__nav__logo" src="{% static "imgs/logo1.png" %}" alt="Logo">
+    </a>
+    <menu>
+        <li>
+            <button></button>
+        </li>
+    </menu>
+</nav>
+
+{% endblock header %}
 
 {% block main %}
 
-
+<section class="cover"></section>
 
 {% endblock main %}
