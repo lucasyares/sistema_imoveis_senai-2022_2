@@ -1,0 +1,20 @@
+.homepage {
+    &__nav {
+        width: 100%;
+        &__logo {
+            width: 100px;
+        }
+
+        &__links * {
+            color: $palette-1-4-hex;
+            font: bold $txt-sz-6 $josefin;
+        }
+    }
+}
+
+.cover {
+    height: 100vh;
+    background-image: url(/static/imgs/bg_portal.jpg);
+    background-position: center center;
+    background-size: cover;
+}
