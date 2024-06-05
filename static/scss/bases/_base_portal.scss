@@ -1,20 +1,55 @@
-.homepage {
-    &__nav {
-        width: 100%;
-        &__logo {
-            width: 100px;
-        }
+.homepage__nav {
+    width: 100%;
+    background: linear-gradient(180deg, #000d, #0000);
 
-        &__links * {
-            color: $palette-1-4-hex;
-            font: bold $txt-sz-6 $josefin;
+    transition: 0.3s;
+    z-index: 1;
+
+    &--pequeno {
+        background: $palette-1-4-hex;
+        box-shadow: 0 4px 8px #000d;
+
+        .homepage__nav__logo {
+            width: 140px;
         }
+    }
+
+    &__logo {
+        width: 100px;
+        -webkit-filter: drop-shadow(5px 5px 5px #111);
+        filter: drop-shadow(5px 5px 5px #111);
+    }
+
+    &__links * {
+        color: white;
+        text-shadow: 3px 3px 2px #111;
+        font: bold $txt-sz-6 $josefin;
+    }
+
+    &__menu {
+        -webkit-filter: drop-shadow(3px 3px 2px #111);
+        filter: drop-shadow(3px 3px 2px #111);
     }
 }
 
 .cover {
     height: 100vh;
-    background-image: url(/static/imgs/bg_portal.jpg);
+    background-image: url(/static/imgs/bg_portal_edit.jpg);
     background-position: center center;
     background-size: cover;
+}
+
+.searchbox {
+    margin-top: 25vh;
+    width: 60%;
+    height: 65%;
+    box-shadow: 0 0 32px #000a;
+    
+    background-color: $palette-2-1-hex-transparent;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
+    &__h1 {
+        font: bold $txt-sz-8 $josefin;
+    }
 }

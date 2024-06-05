@@ -16,20 +16,50 @@ input[type=number] {
 
 .homepage__nav {
   width: 100%;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8666666667), rgba(0, 0, 0, 0));
+  transition: 0.3s;
+  z-index: 1;
+}
+.homepage__nav--pequeno {
+  background: #2F5932;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8666666667);
+}
+.homepage__nav--pequeno .homepage__nav__logo {
+  width: 140px;
 }
 .homepage__nav__logo {
   width: 100px;
+  -webkit-filter: drop-shadow(5px 5px 5px #111);
+  filter: drop-shadow(5px 5px 5px #111);
 }
 .homepage__nav__links * {
-  color: #2F5932;
+  color: white;
+  text-shadow: 3px 3px 2px #111;
   font: bold 28px "Josefin Slab", serif;
+}
+.homepage__nav__menu {
+  -webkit-filter: drop-shadow(3px 3px 2px #111);
+  filter: drop-shadow(3px 3px 2px #111);
 }
 
 .cover {
   height: 100vh;
-  background-image: url(/static/imgs/bg_portal.jpg);
+  background-image: url(/static/imgs/bg_portal_edit.jpg);
   background-position: center center;
   background-size: cover;
+}
+
+.searchbox {
+  margin-top: 25vh;
+  width: 60%;
+  height: 65%;
+  box-shadow: 0 0 32px rgba(0, 0, 0, 0.6666666667);
+  background-color: rgba(247, 240, 209, 0.8);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.searchbox__h1 {
+  font: bold 40px "Josefin Slab", serif;
 }
 
 /*# sourceMappingURL=style.css.map */
