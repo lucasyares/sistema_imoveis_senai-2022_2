@@ -22,7 +22,7 @@
 
     &__links * {
         color: white;
-        text-shadow: 3px 3px 2px #111;
+        text-shadow: 2px 2px 2px #111;
         font: bold $txt-sz-6 $josefin;
     }
 
@@ -44,12 +44,31 @@
     width: 60%;
     height: 65%;
     box-shadow: 0 0 32px #000a;
-    
+
     background-color: $palette-2-1-hex-transparent;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
 
     &__h1 {
         font: bold $txt-sz-8 $josefin;
+    }
+
+    &__select {
+        font-family: $arvo;
+        font-size: $txt-sz-5;
+        font-weight: bold;
+
+        filter: drop-shadow(5px 5px 50px #1111);
+
+        label {
+            background-color: $palette-1-4-hex;
+            color: white;
+            border-radius: 0.4em 0 0 0.4em;
+        }
+
+        select {
+            border: none;
+            border-radius: 0 0.4em 0.4em 0;
+        }
     }
 }
