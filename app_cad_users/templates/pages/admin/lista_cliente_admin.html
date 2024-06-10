@@ -2,6 +2,20 @@
 
 {% block main %}
 
+<p>----------------------------------------------------</p>
+{% for user in users %}
+<h1>Conta:</h1>
+<p>ID: {{user.cliente.id}}</p>
+<p>Email: {{user.email}}</p>
+<p>Senha: {{user.password}}</p>
+<p>Nome: {{user.cliente.nome_cliente}}</p>
+{% if user.cliente.telefone_cliente  %}
+<p>Telefone: {{user.cliente.telefone_cliente}}</p>
+{% else %}
+<p>Telefone: Não tem</p>
+{% endif %}
 
+<p>----------------------------------------------------</p>
+{% endfor %}
 
 {% endblock main %}

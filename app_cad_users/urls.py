@@ -7,15 +7,15 @@ urlpatterns = [
     
     path('', views.dashboard, name="dashboard"), #Página principal
     path('imovel/<int:id>', views.vizualizarImoveis, name="imoveis-view"), #Vizualização geral de um imóvel
-    path('auth_log/', views.loginn, name="login"), #Login
+    path('auth_log/', views.login_user, name="login"), #Login
     path('auth_cad/', views.cadastro, name="cadastro"), # Cadastro
     path('Add_Imovel/', views.NewImovel, name="adicionar-imoveis"), #Adicionar Imóvel
     path('edit-imovel/<int:id>', views.editarImoveis, name="editar"), #Editar Imóvel
-    path('deletar/<int:id>', views.deletarImoveis, name="deletar"), #Botão de deletar imóvel
     path('logout/', views.logout_user, name="sair"), #Botão de sair da conta | Logout
 
     path('cadastro/', views.cadastro_imovel_admin, name='cadastro_imovel_admin'),
-    path('edicao/', views.edicao_imovel_admin, name='edicao_imovel_admin'),
+    path('deletar/<int:id>', views.deletar_imovel_admin, name="deletar"), #Botão de deletar imóvel
+    path('edicao/<int:id>', views.edicao_imovel_admin, name='edicao_imovel_admin'),
     path('imovel/', views.lista_imovel_admin, name='lista_imovel_admin'),
 
     path('cadastro-cliente/', views.cadastro_cliente_admin, name='cadastro_cliente_admin'),

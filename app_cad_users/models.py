@@ -46,6 +46,7 @@ class Endereco(models.Model):
     bairro_endereco = models.CharField(max_length=255, db_column='bairro_endereco')
     cidade_endereco = models.CharField(max_length=255, db_column='cidade_endereco')
     cep_endereco = models.CharField(max_length=255, db_column='cep_endereco')
+    uf_endereco = models.CharField(max_length=255, db_column='uf_endereco')
 
     class Meta:
         db_table = 'endereco'
@@ -114,14 +115,14 @@ class Imovel(models.Model):
     data_criacao_imovel = models.DateTimeField(auto_now_add=True, db_column='data_criacao_imovel')
     data_atualizacao_imovel = models.DateTimeField(auto_now=True, null=True, blank=True, db_column='data_atualizacao_imovel')
     fk_proprietario = models.ForeignKey(Cliente, on_delete=models.CASCADE, db_column='fk_proprietario')
-    fk_corretor = models.OneToOneField(Corretor, on_delete=models.CASCADE, db_column='fk_corretor')
+    fk_corretor = models.ForeignKey(Corretor, on_delete=models.CASCADE, db_column='fk_corretor')
     fk_endereco = models.ForeignKey(Endereco, on_delete=models.CASCADE, db_column='fk_endereco')
     complemento_endereco_imovel = models.CharField(max_length=255, null=True, blank=True, db_column='complemento_endereco_imovel')
     area_total_imovel = models.FloatField(null=True, blank=True, db_column='area_total_imovel')
     area_privativa_imovel = models.FloatField(null=True, blank=True, db_column='area_privativa_imovel')
     fk_empreendimento = models.ForeignKey(Empreendimento, on_delete=models.SET_NULL, null=True, blank=True, db_column='fk_empreendimento')
     preco_imovel = models.FloatField(db_column='preco_imovel')
-    fk_tipo_imovel = models.ForeignKey(TipoImovel, on_delete=models.CASCADE, db_column='fk_tipo_imovel')
+    fk_subtipo_imovel = models.ForeignKey(SubtipoImovel, on_delete=models.CASCADE, db_column='fk_subtipo_imovel')
     num_quarto_imovel = models.IntegerField(db_column='num_quarto_imovel')
     num_suite_imovel = models.IntegerField(db_column='num_suite_imovel')
     num_banheiro_imovel = models.IntegerField(db_column='num_banheiro_imovel')
@@ -190,14 +191,14 @@ class Conta(models.Model):
         db_table = 'conta'
 
 class FotoImovel(models.Model):
-    url_foto_imovel = models.CharField(max_length=255, db_column='url_foto_imovel')
+    url_foto_imovel = models.ImageField(upload_to='imoveis/',max_length=255, db_column='url_foto_imovel')
     fk_imovel = models.ForeignKey(Imovel, on_delete=models.CASCADE, db_column='fk_imovel')
 
     class Meta:
         db_table = 'foto_imovel'
 
 class FotoEmpreendimento(models.Model):
-    url_foto_empreendimento = models.CharField(max_length=255, db_column='url_foto_empreendimento')
+    url_foto_empreendimento = models.ImageField(upload_to='empreendimentos/',max_length=255, db_column='url_foto_empreendimento')
     fk_empreendimento = models.ForeignKey(Empreendimento, on_delete=models.CASCADE, db_column='fk_empreendimento')
 
     class Meta:

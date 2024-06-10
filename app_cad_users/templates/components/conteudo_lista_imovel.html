@@ -57,30 +57,29 @@
 
     </h6> {% endcomment %}
 
-    {% for imovel in imoveis_html.imoveis_s %} 
+    {% for imovel, foto in imoveis_com_foto.items %}
+
     <!-- <h1>U -> Update</h1>
     <h1>D -> delete</h1> -->
 
     <article class="border border-black border-2 p-3">
        
         <section class="container-fluid">
-            <div class="row">
-
-                <img class="col-5" src="{{imovel.foto.url}}" alt="Galeria das fotos (carrosel)">
-
+            <div class="row"> 
+                        <img class="col-5" src="{{ foto.url_foto_imovel.url }}" alt="Galeria das fotos (carrossel)">
                 <!-- Descrição -->
                 <section class="col-7 flex-grow-1 px-3 py-1">
                     <header class="d-flex justify-content-between">
-                        <span class="h3">{{imovel.bairro}}</span>
+                        <span class="h3">{{imovel.fk_endereco.bairro_endereco}}</span>
                         <button class="btn">
-                            <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/edit-imovel/{{imovel.id}}">U</a></i>
+                            <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/edicao/{{imovel.id}}">U</a></i>
                             <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/deletar/{{imovel.id}}">D</a></i>  <!-- vou ver oq faço com isso aqui depois -->
                         </button>
                     </header>
                     <div>
-                        <p>Corretor: {{imovel.criador_user}}</p> 
-                        <p>Endereço: {{imovel.cidade}} - {{imovel.rua}} | {{imovel.cep}}</p>
-                        <p>Preço: {{imovel.preco_venda}}</p>
+                        <p>Proprietário: {{imovel.fk_proprietario.nome_cliente}}</p> 
+                        <p>Endereço: {{imovel.fk_endereco.cidade_endereco}} - {{imovel.fk_endereco.bairro_endereco}} | {{imovel.fk_endereco.cep_endereco}}</p>
+                        <p>Preço: {{imovel.preco_imovel}}</p>
                         <p>Condomínio: {{imovel.preco_condominio}}</p>
                     </div>
                 </section>
@@ -98,10 +97,10 @@
                 </div>
 
                 <ul class="list-unstyled d-inline-flex col-7 gap-3">
-                    {% if imovel.quartos|default:0|add:0 > 1 %}
+                    {% if imovel.num_quarto_imovel|default:0|add:0 > 1 %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">{{imovel.quartos}}</span>
+                            <span class="text-secondary">{{imovel.num_quarto_imovel}}</span>
                             <i class="fa-solid fa-door-closed"></i>
                         </div>
                         <span class="text-secondary">Quartos</span>
@@ -109,17 +108,17 @@
                     {% else %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">{{imovel.quartos}}</span>
+                            <span class="text-secondary">{{imovel.num_quarto_imovel}}</span>
                             <i class="fa-solid fa-door-closed"></i>
                         </div>
                         <span class="text-secondary">Quarto</span>
                     </li>
                     {% endif %}
 
-                    {% if imovel.suites|default:0|add:0 > 1 %}
+                    {% if imovel.num_suite_imovel|default:0|add:0 > 1 %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">{{imovel.suites}}</span>
+                            <span class="text-secondary">{{imovel.num_suite_imovel}}</span>
                             <i class="fa-solid fa-bed"></i>
                         </div>
                         <span class="text-secondary">Suítes</span>
@@ -127,16 +126,16 @@
                     {% else %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">{{imovel.suites}}</span>
+                            <span class="text-secondary">{{imovel.num_suite_imovel}}</span>
                             <i class="fa-solid fa-bed"></i>
                         </div>
                         <span class="text-secondary">Suíte</span>
                     </li>
                     {% endif %}
-                    {% if imovel.banheiros|default:0|add:0 > 1 %}
+                    {% if imovel.num_banheiro_imovel|default:0|add:0 > 1 %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">{{imovel.banheiros}}</span>
+                            <span class="text-secondary">{{imovel.num_banheiro_imovel}}</span>
                             <i class="fa-solid fa-toilet"></i>
                         </div>
                         <span class="text-secondary">Banheiros</span>
@@ -144,16 +143,16 @@
                     {% else %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">{{imovel.banheiros}}</span>
+                            <span class="text-secondary">{{imovel.num_banheiro_imovel}}</span>
                             <i class="fa-solid fa-toilet"></i>
                         </div>
                         <span class="text-secondary">Banheiro</span>
                     </li>
                     {% endif %}
-                    {% if imovel.garagens|default:0|add:0 > 1 %}
+                    {% if imovel.num_garagem_imovel|default:0|add:0 > 1 %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">{{imovel.garagens}}</span>
+                            <span class="text-secondary">{{imovel.num_garagem_imovel}}</span>
                             <i class="fa-solid fa-car"></i>
                         </div>
                         <span class="text-secondary">Vagas</span>
@@ -161,7 +160,7 @@
                     {% else %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">{{imovel.garagens}}</span>
+                            <span class="text-secondary">{{imovel.num_garagem_imovel}}</span>
                             <i class="fa-solid fa-car"></i>
                         </div>
                         <span class="text-secondary">Vaga</span>
@@ -169,7 +168,7 @@
                     {% endif %}
                     <li>
                         <div class="d-flex justify-content-center gap-1">
-                            <span class="text-secondary">{{imovel.area_total}}m²</span>
+                            <span class="text-secondary">{{imovel.area_total_imovel}}m²</span>
                         </div>
                         <span class="text-secondary">Área total</span>
                     </li>

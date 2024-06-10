@@ -26,13 +26,23 @@
         </nav>
     </header>
     <main class="w-100 m-auto form-container">
+      {% if user.cliente  %}
+      {{user.cliente.nome_cliente}}
+      {% elif user.corretors  %}
+      {{user.corretora.nome_corretora}}
+      {% else %}
+      {{user.admin.nome_admin}}
+
+      {% endif %}
         <form action=""class="form-control" method="post" enctype="multipart/form-data"> {% csrf_token %}
             <h1 class="h3 mb-3 fw-normal">Bem-vindo(a) ao [Sistema]</h1>
-            <input type="text" class="form-control my-3" placeholder="Seu nome" name="nome_cliente" required>
-            <input type="text" class="form-control my-3" oninput="this.value = mask(this.value, 'telefone')" placeholder="(47) xxxxx-xxxx" name="telefone_cliente" required>
-            <input type="email" class="form-control my-3" placeholder="exemplo@gmail.com" name="email_cliente" required>
-            <input type="password" class="form-control my-3" placeholder="senha" name="senha_cliente" required>
-            <input type="file"  class="form-control my-3" name="foto_cliente" accept="image/*" required>
+            <input type="email" class="form-control my-3" placeholder="exemplo@gmail.com" name="email_corretor" required>
+            <input type="text" class="form-control my-3" placeholder="Nome corretor" name="nome_corretor" required>
+            <input type="tel" class="form-control my-3" placeholder="(xx) xxxxx-xxxx" name="telefone_corretor" required>
+            <input type="text" class="form-control my-3" placeholder="xxx.xxx.xxx-xx" name="cpf_corretor" required>
+            <input type="text" class="form-control my-3" placeholder="RG" name="rg_corretor" required>
+            <input type="password" class="form-control my-3" placeholder="senha" name="senha_corretor" required>
+            <input type="file" name="foto_corretor" id="fotos">
             <label for=""><a href="">Esqueci a senha</a></label>
             <button class="btn btn-primary w-30 m-4 ">Cadastrar</button>
         </form>

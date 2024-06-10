@@ -10,7 +10,7 @@
 		<optgroup label="{{tipo.nome_tipo_imovel}}">
             {% for subtipo in  subtipos %}
             {% if subtipo.fk_tipo_imovel.id == tipo.id  %}
-			<option value="{{subtipo.id}}">{{subtipo.nome_subtipo_imovel}}</option>
+			<option value="{{subtipo.id}}" {% if subtipo.id == imovel.fk_subtipo_imovel.id %}selected{% endif %}>{{subtipo.nome_subtipo_imovel}}</option>
             {% endif %}
             {% endfor %}
 		</optgroup>
@@ -20,68 +20,74 @@
     <label for="clientes">Proprietário</label>
     <select name="fk_proprietario" id="clientes">
         {% for cliente in clientes  %}
-			<option value="{{cliente.id }}">{{cliente.nome_cliente}}</option>
+        <option value="{{ cliente.id }}" {% if cliente.id == imovel.fk_proprietario_id %}selected{% endif %}>
+            {{ cliente.nome_cliente }}
+        </option>
+
         {% endfor %}
 	
 	</select>
     <label for="clientes">Corretor</label>
     <select name="fk_corretor" id="clientes">
         {% for corretor in corretores  %}
-			<option value="{{corretor.id }}">{{corretor.nome_corretor}}</option>
+        <option value="{{ corretor.id }}" {% if corretor.id == imovel.fk_corretor %}selected{% endif %}>
+            {{ corretor.nome_corretor }}
+        </option>
+
         {% endfor %}
 	
 	</select>
 
     <label for="uf">UF</label>
     <select required name="uf" id="uf">
-		<option value="AC">Acre</option>
-		<option value="AL">Alagoas</option>
-		<option value="AP">Amapá</option>
-		<option value="AM">Amazonas</option>
-		<option value="BA">Bahia</option>
-		<option value="CE">Ceará</option>
-		<option value="DF">Distrito Federal</option>
-		<option value="ES">Espírito Santo</option>
-		<option value="GO">Goiás</option>
-		<option value="MA">Maranhão</option>
-		<option value="MT">Mato Grosso</option>
-		<option value="MS">Mato Grosso do Sul</option>
-		<option value="MG">Minas Gerais</option>
-		<option value="PA">Pará</option>
-		<option value="PB">Paraíba</option>
-		<option value="PR">Paraná</option>
-		<option value="PE">Pernambuco</option>
-		<option value="PI">Piauí</option>
-		<option value="RJ">Rio de Janeiro</option>
-		<option value="RN">Rio Grande do Norte</option>
-		<option value="RS">Rio Grande do Sul</option>
-		<option value="RO">Rondônia</option>
-		<option value="RR">Roraima</option>
-		<option value="SC">Santa Catarina</option>
-		<option value="SP">São Paulo</option>
-		<option value="SE">Sergipe</option>
-		<option value="TO">Tocantins</option>
-	</select>
+        <option value="AC" {% if imovel.fk_endereco.uf_endereco == "AC" %}selected{% endif %}>Acre</option>
+        <option value="AL" {% if imovel.fk_endereco.uf_endereco == "AL" %}selected{% endif %}>Alagoas</option>
+        <option value="AP" {% if imovel.fk_endereco.uf_endereco == "AP" %}selected{% endif %}>Amapá</option>
+        <option value="AM" {% if imovel.fk_endereco.uf_endereco == "AM" %}selected{% endif %}>Amazonas</option>
+        <option value="BA" {% if imovel.fk_endereco.uf_endereco == "BA" %}selected{% endif %}>Bahia</option>
+        <option value="CE" {% if imovel.fk_endereco.uf_endereco == "CE" %}selected{% endif %}>Ceará</option>
+        <option value="DF" {% if imovel.fk_endereco.uf_endereco == "DF" %}selected{% endif %}>Distrito Federal</option>
+        <option value="ES" {% if imovel.fk_endereco.uf_endereco == "ES" %}selected{% endif %}>Espírito Santo</option>
+        <option value="GO" {% if imovel.fk_endereco.uf_endereco == "GO" %}selected{% endif %}>Goiás</option>
+        <option value="MA" {% if imovel.fk_endereco.uf_endereco == "MA" %}selected{% endif %}>Maranhão</option>
+        <option value="MT" {% if imovel.fk_endereco.uf_endereco == "MT" %}selected{% endif %}>Mato Grosso</option>
+        <option value="MS" {% if imovel.fk_endereco.uf_endereco == "MS" %}selected{% endif %}>Mato Grosso do Sul</option>
+        <option value="MG" {% if imovel.fk_endereco.uf_endereco == "MG" %}selected{% endif %}>Minas Gerais</option>
+        <option value="PA" {% if imovel.fk_endereco.uf_endereco == "PA" %}selected{% endif %}>Pará</option>
+        <option value="PB" {% if imovel.fk_endereco.uf_endereco == "PB" %}selected{% endif %}>Paraíba</option>
+        <option value="PR" {% if imovel.fk_endereco.uf_endereco == "PR" %}selected{% endif %}>Paraná</option>
+        <option value="PE" {% if imovel.fk_endereco.uf_endereco == "PE" %}selected{% endif %}>Pernambuco</option>
+        <option value="PI" {% if imovel.fk_endereco.uf_endereco == "PI" %}selected{% endif %}>Piauí</option>
+        <option value="RJ" {% if imovel.fk_endereco.uf_endereco == "RJ" %}selected{% endif %}>Rio de Janeiro</option>
+        <option value="RN" {% if imovel.fk_endereco.uf_endereco == "RN" %}selected{% endif %}>Rio Grande do Norte</option>
+        <option value="RS" {% if imovel.fk_endereco.uf_endereco == "RS" %}selected{% endif %}>Rio Grande do Sul</option>
+        <option value="RO" {% if imovel.fk_endereco.uf_endereco == "RO" %}selected{% endif %}>Rondônia</option>
+        <option value="RR" {% if imovel.fk_endereco.uf_endereco == "RR" %}selected{% endif %}>Roraima</option>
+        <option value="SC" {% if imovel.fk_endereco.uf_endereco == "SC" %}selected{% endif %}>Santa Catarina</option>
+        <option value="SP" {% if imovel.fk_endereco.uf_endereco == "SP" %}selected{% endif %}>São Paulo</option>
+        <option value="SE" {% if imovel.fk_endereco.uf_endereco == "SE" %}selected{% endif %}>Sergipe</option>
+        <option value="TO" {% if imovel.fk_endereco.uf_endereco == "TO" %}selected{% endif %}>Tocantins</option>
+    </select>
  <div id="alert-doc">
     <p id="alert-cep"></p>
  </div>
     <label for="cep">CEP</label>
-    <input required type="text" name="cep" id="cep">
+    <input required type="text" name="cep" id="cep" value="{{imovel.fk_endereco.cep_endereco}}">
 
     <label for="logradouro">Logradouro</label>
-    <input required type="text" name="logradouro" id="logradouro">
+    <input required type="text" name="logradouro" id="logradouro" value="{{imovel.fk_endereco.logradouro_endereco}}">
 
     <label for="numero">Número</label>
-    <input required type="number" name="numero" id="numero">
+    <input required type="number" name="numero" id="numero" value="{{imovel.fk_endereco.numero_endereco}}">
 
     <label for="bairro">Bairro</label>
-    <input required type="text" name="bairro" id="bairro">
+    <input required type="text" name="bairro" id="bairro" value="{{imovel.fk_endereco.bairro_endereco}}">
 
     <label for="cidade">Cidade</label>
-    <input required type="text" name="cidade" id="cidade">
+    <input required type="text" name="cidade" id="cidade" value="{{imovel.fk_endereco.cidade_endereco}}">
 
     <label for="complemento">Complemento</label>
-    <input required type="text" name="complemento" id="complemento">
+    <input required type="text" name="complemento" id="complemento" value="{{imovel.complemento_endereco_imovel}}">
     
 
 
@@ -91,27 +97,27 @@
     <h3>Número de:</h3>
 
     <label for="n_quarto">Quartos</label>
-    <input type="number" name="n_quarto" id="n_quarto">
+    <input type="number" name="n_quarto" id="n_quarto" value="{{imovel.num_quarto_imovel}}">
 
     <label for="n_suite">Suítes</label>
-    <input type="number" name="n_suite" id="n_suite">
+    <input type="number" name="n_suite" id="n_suite"  value="{{imovel.num_suite_imovel}}">
 
     <label for="n_banheiro">Banheiros</label>
-    <input type="number" name="n_banheiro" id="n_banheiro">
+    <input type="number" name="n_banheiro" id="n_banheiro"  value="{{imovel.num_banheiro_imovel}}">
 
     <label for="n_garagem">Vagas de garagem</label>
-    <input type="number" name="n_garagem" id="n_garagem">
+    <input type="number" name="n_garagem" id="n_garagem" value="{{imovel.num_garagem_imovel}}">
 
     <hr>
 
     <label for="area_total">Área total (m²)</label>
-    <input type="number" name="area_total" id="area_total">
+    <input type="number" name="area_total" id="area_total"  value="{{imovel.area_total_imovel}}">
 
     <label for="preco_imovel">Preço</label>
-    <input type="number" name="preco_imovel" id="preco_imovel">
+    <input type="number" name="preco_imovel" id="preco_imovel"  value="{{imovel.preco_imovel}}">
 
     <label for="iptu">IPTU</label>
-    <input type="number" name="iptu" id="iptu">
+    <input type="number" name="iptu" id="iptu" >
 
     <label for="condominio">Condomínio</label>
     <select name="condominio" id="condominio">
@@ -199,8 +205,17 @@
     <label for="academia_infest">Academia</label>
 
 
-    <input type="file" name="fotos[]" id="fotos" multiple accept="image/*">
-    <button class="btn btn-success" type="submit">Cadastrar</button>
+    <input type="file" name="novas_fotos[]" id="novas_fotos" multiple accept="image/*">
+    
+    <!-- Lista de fotos existentes com opção para editar ou remover -->
+    <h3>Fotos Atuais:</h3>
+    {% for foto in imagem %}
+        <div>
+            <img src="{{ foto.url_foto_imovel.url }}"  style="height:400px; width=300px;" alt="Foto do Imóvel">
+            <input type="checkbox" name="remover_foto[]" value="{{ foto.id }}"> Remover
+        </div>
+    {% endfor %}
+    <button class="btn btn-success" type="submit">Editar</button>
 </form>
 <script>
     
