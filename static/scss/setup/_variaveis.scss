@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Kameron:wght@400..700&display=swap');
+
 //* Colors
 $palette-1-1-hex: #364559;
 $palette-1-2-hex: #5687A6;
@@ -10,3 +12,22 @@ $palette-2-2-hex: #EBE0BB;
 $palette-2-3-hex: #B3DEE4;
 $palette-2-4-hex: #559CB8;
 $palette-2-5-hex: #003366;
+
+$palette-2-1-hex-transparent: #F7F0D1CC;
+
+//* Spacing
+$size: 16px;
+
+$txt-sz-1: 0.5 * $size;
+$txt-sz-2: 0.75 * $size;
+$txt-sz-3: $size;
+$txt-sz-4: 1.25 * $size;
+$txt-sz-5: 1.5 * $size;
+$txt-sz-6: 1.75 * $size;
+$txt-sz-7: 2 * $size;
+$txt-sz-8: 2.5 * $size;
+
+//* Fonts and text
+$josefin: "Josefin Slab", serif; // long text
+$kameron: "Kameron", serif; // short text
+$arvo: "Arvo", serif; // highlights
