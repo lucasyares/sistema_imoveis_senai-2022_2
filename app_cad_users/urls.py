@@ -26,5 +26,6 @@ urlpatterns = [
 
     #* URLs orientadas ao cliente
     path("portal/", views.homepage, name="homepage")
+
     
  ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  #Permite a imagem aparecer
