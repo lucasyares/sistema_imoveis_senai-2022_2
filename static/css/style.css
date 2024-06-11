@@ -76,5 +76,8 @@ input[type=number] {
   border: none;
   border-radius: 0 0.4em 0.4em 0;
 }
+.searchbox__select input {
+  border: none;
+}
 
 /*# sourceMappingURL=style.css.map */
