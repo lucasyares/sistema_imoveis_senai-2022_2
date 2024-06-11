@@ -65,7 +65,7 @@ input[type=number] {
   font-family: "Arvo", serif;
   font-size: 24px;
   font-weight: bold;
-  filter: drop-shadow(5px 5px 50px rgba(17, 17, 17, 0.0666666667));
+  filter: drop-shadow(2px 2px 5px #111);
 }
 .searchbox__select label {
   background-color: #2F5932;

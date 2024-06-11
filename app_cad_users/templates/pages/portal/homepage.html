@@ -1,8 +1,11 @@
+<!-- TODO #1: Textos muito longos quebram o <select> -->
+
 {% extends "bases/base_portal.html" %}
 {% load static %}
 {% block header %}
 
-<nav id="homepage__nav" class="homepage__nav position-fixed py-3 px-5 d-flex justify-content-between align-items-center">
+<nav id="homepage__nav"
+    class="homepage__nav position-fixed py-3 px-5 d-flex justify-content-between align-items-center">
     <a href="/portal">
         <img id="homepage__nav__logo" class="homepage__nav__logo" src="{% static 'imgs/logo4.png' %}" alt="Logo">
     </a>
@@ -28,14 +31,14 @@
 
 <section class="cover d-flex justify-content-center">
     <div class="searchbox rounded-5 d-flex align-items-center flex-column py-4">
+
         <h1 class="searchbox__h1 m-0">Encontre o imóvel dos seus sonhos</h1>
         <div>
             <div class="searchbox__select d-inline-flex">
                 <label class="py-1 px-2" for="">Cidade</label>
                 <select class="px-1" name="" id="">
-                    {% for bairro in bairros %}
-                    <option value="">{{bairro}}</option>
-                    {% endfor %}
+                    <option value="">template</option>
+                    <option value="">template</option>
                 </select>
             </div>
         </div>
