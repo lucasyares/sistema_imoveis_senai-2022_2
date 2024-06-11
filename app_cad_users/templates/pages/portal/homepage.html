@@ -33,8 +33,9 @@
             <div class="searchbox__select d-inline-flex">
                 <label class="py-1 px-2" for="">Cidade</label>
                 <select class="px-1" name="" id="">
-                    <option value="">template</option>
-                    <option value="">template</option>
+                    {% for bairro in bairros %}
+                    <option value="">{{bairro}}</option>
+                    {% endfor %}
                 </select>
             </div>
         </div>

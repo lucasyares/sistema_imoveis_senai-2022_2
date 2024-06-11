@@ -387,10 +387,35 @@ def dashboard(request):
 #* Views orientadas ao cliente
 
 def homepage(request):
-    contexto =  {
-        "titulo": "DOMINUS — Página principal"
-    }
+    if request.method == 'GET':
+        # endereco = Endereco.objects.values().distinct()
+        bairro = Endereco.objects.all()
+       
+
+# Criando um conjunto vazio para armazenar os endereços únicos
+        bairro_unicos = set()
+        cidade_unicos = set()
+
+# Iterando sobre cada objeto Endereco
+        for endereco in bairro:
+    # Convertendo o objeto Endereco em uma tupla para usar como chave no conjunto
+            bairro_tupla = (endereco.bairro_endereco)
+            cidade_tubla = (endereco.cidade_endereco)
+    # Adicionando a tupla ao conjunto
+            bairro_unicos.add(bairro_tupla)
+            cidade_unicos.add(cidade_tubla)
+# Convertendo o conjunto de volta para uma lista, se necessário
+        bairro_unicos_lista = list(bairro_unicos)
+        cidade_unicos_lista = list(cidade_unicos)
+
+        contexto =  {
+           "titulo": "DOMINUS — Página principal",
+           'bairros':bairro_unicos_lista,
+           'cidades':cidade_unicos_lista,
+      }
+        return render(request, 'pages/portal/homepage.html', contexto)   
     return render(request, 'pages/portal/homepage.html', contexto)
+   
 
 
 #FIM_PÁGINAS
