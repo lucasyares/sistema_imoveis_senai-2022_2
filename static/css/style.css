@@ -72,12 +72,26 @@ input[type=number] {
   color: white;
   border-radius: 0.4em 0 0 0.4em;
 }
-.searchbox__select select, .searchbox__select #input-2-preco {
+.searchbox__select select, .searchbox__select #preco-last-input, .searchbox__select #preco-input-area {
   border: none;
   border-radius: 0 0.4em 0.4em 0;
 }
+.searchbox__select #preco-input-area {
+  background-color: #fff;
+}
+.searchbox__select #preco-input-area span {
+  text-align: center;
+}
 .searchbox__select input {
   border: none;
+}
+.searchbox #btn-buscar {
+  font-family: "Arvo", serif;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #559CB8;
+  color: #003366;
+  filter: drop-shadow(2px 2px 5px #111);
 }
 
 /*# sourceMappingURL=style.css.map */
