@@ -86,6 +86,10 @@
         input {
             border: none;
         }
+
+        input:focus {
+            outline: none;
+        }
     }
 
     #btn-buscar {
