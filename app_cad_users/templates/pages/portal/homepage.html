@@ -39,17 +39,21 @@
                 <div class="searchbox__select d-inline-flex col-6">
                     <label class="py-1 px-2" for="">Cidade</label>
                     <select class="px-1 flex-grow-1">
-                        <option value="">template</option>
-                        <option value="">template</option>
-                        {% comment %} <option value="">Vila Bela da Santíssima Trindade</option> {% endcomment %}
+                        {% for cidade in cidades%}
+                        <option value="{{cidade}}">{{cidade}}</option>
+                        {% endfor %}
+                      
+                      
                     </select>
                 </div>
 
                 <div class="searchbox__select d-inline-flex col-6">
                     <label class="py-1 px-2" for="">Bairro</label>
                     <select class="px-1 flex-grow-1">
-                        <option value="">template</option>
-                        <option value="">template</option>
+                        {% for bairro in bairros  %}
+                        <option value="">{{bairro}}</option>
+                        {% endfor %}
+                    
                     </select>
                 </div>
             </div>
@@ -58,8 +62,9 @@
                 <div class="searchbox__select d-inline-flex col-8">
                     <label class="py-1 px-2" for="">Tipo de Imóvel</label>
                     <select class="px-1 flex-grow-1">
-                        <option value="">template</option>
-                        <option value="">template</option>
+                        {% for tipo in tipos%}
+                        <option value="">{{tipo.nome_tipo_imovel}}</option>
+                        {% endfor %}
                     </select>
                 </div>
             </div>
