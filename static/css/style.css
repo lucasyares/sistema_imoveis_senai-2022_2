@@ -72,7 +72,7 @@ input[type=number] {
   color: white;
   border-radius: 0.4em 0 0 0.4em;
 }
-.searchbox__select select {
+.searchbox__select select, .searchbox__select #input-2-preco {
   border: none;
   border-radius: 0 0.4em 0.4em 0;
 }
