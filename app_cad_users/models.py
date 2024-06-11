@@ -104,12 +104,20 @@ class Cliente(models.Model):
     nome_cliente = models.CharField(max_length=255, db_column='nome_cliente')
     foto_cliente = models.ImageField(upload_to='clientes/', null=True, blank=True, db_column='foto_cliente')
     telefone_cliente = models.CharField(max_length=255, null=True, blank=True, db_column='telefone_cliente')
-    tipo_cliente = models.ForeignKey(TipoCliente, on_delete=models.SET_NULL, null=True, db_column='tipo_cliente')
     estagio_cliente = models.CharField(max_length=255, db_column='estagio_cliente')
     fk_corretor = models.ForeignKey(Corretor, on_delete=models.SET_NULL, null=True, blank=True, db_column='fk_corretor')
 
     class Meta:
         db_table = 'cliente'
+
+
+class AssocClienteTipo(models.Model):
+    fk_tipo_cliente = models.ForeignKey(TipoCliente, on_delete=models.CASCADE, db_column='fk_tipo_cliente')
+    fk_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, db_column='fk_cliente')
+
+    class Meta:
+        db_table = 'assoc_cliente_tipo'
+
 
 class Imovel(models.Model):
     data_criacao_imovel = models.DateTimeField(auto_now_add=True, db_column='data_criacao_imovel')
