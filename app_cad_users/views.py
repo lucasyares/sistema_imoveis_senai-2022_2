@@ -411,7 +411,7 @@ def homepage(request):
         contexto =  {
            "titulo": "DOMINUS — Página principal",
            'bairros':bairro_unicos_lista,
-           'cidades':cidade_unicos_lista,
+           'cidades':cidade_unicos_lista
       }
         return render(request, 'pages/portal/homepage.html', contexto)   
     return render(request, 'pages/portal/homepage.html', contexto)
