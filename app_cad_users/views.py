@@ -390,6 +390,7 @@ def homepage(request):
     if request.method == 'GET':
         # endereco = Endereco.objects.values().distinct()
         bairro = Endereco.objects.all()
+        tipo = TipoImovel.objects.all()
        
 
 # Criando um conjunto vazio para armazenar os endereços únicos
@@ -411,7 +412,8 @@ def homepage(request):
         contexto =  {
            "titulo": "DOMINUS — Página principal",
            'bairros':bairro_unicos_lista,
-           'cidades':cidade_unicos_lista
+           'cidades':cidade_unicos_lista,
+           'tipos': tipo,
       }
         return render(request, 'pages/portal/homepage.html', contexto)   
     return render(request, 'pages/portal/homepage.html', contexto)

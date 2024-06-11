@@ -33,13 +33,52 @@
     <div class="searchbox rounded-5 d-flex align-items-center flex-column py-4">
 
         <h1 class="searchbox__h1 m-0">Encontre o imóvel dos seus sonhos</h1>
-        <div>
-            <div class="searchbox__select d-inline-flex">
-                <label class="py-1 px-2" for="">Cidade</label>
-                <select class="px-1" name="" id="">
-                    <option value="">template</option>
-                    <option value="">template</option>
-                </select>
+        <div class="align-self-stretch mx-5">
+
+            <div class="row mt-3">
+                <div class="searchbox__select d-inline-flex col-6">
+                    <label class="py-1 px-2" for="">Cidade</label>
+                    <select class="px-1 flex-grow-1">
+                        {% for cidade in cidades%}
+                        <option value="{{cidade}}">{{cidade}}</option>
+                        {% endfor %}
+                      
+                      
+                    </select>
+                </div>
+
+                <div class="searchbox__select d-inline-flex col-6">
+                    <label class="py-1 px-2" for="">Bairro</label>
+                    <select class="px-1 flex-grow-1">
+                        {% for bairro in bairros  %}
+                        <option value="">{{bairro}}</option>
+                        {% endfor %}
+                    
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="row mt-4 justify-content-center">
+                <div class="searchbox__select d-inline-flex col-8">
+                    <label class="py-1 px-2" for="">Tipo de Imóvel</label>
+                    <select class="px-1 flex-grow-1">
+                        {% for tipo in tipos%}
+                        <option value="">{{tipo.nome_tipo_imovel}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <div class="row mt-4 justify-content-center">
+                <div class="searchbox__select d-inline-flex">
+                    <label class="py-1 px-2" for="">Faixa de Preço</label>
+                    <div class="flex-grow-1">
+                        <input class="col-5" type="text" name="" id="">
+                        <span class="col-2">até</span>
+                        <input class="col-5" type="text" name="" id="">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
