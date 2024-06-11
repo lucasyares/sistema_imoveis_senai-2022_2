@@ -2,6 +2,15 @@
 
 {% block main %}
 
+{% for user in users %}
+{{user.corretor.nome_corretor}}
+{{user.corretor.cpf_corretor}}
+{{user.corretor.rg_corretor}}
+{% if user.corretor.id %}
+{{user.email}}
+<img class="col-5" src="{{user.corretor.foto_corretor.url}}" alt="Galeria das fotos (carrossel)">
+{% endif %}
 
+{% endfor %}
 
 {% endblock main %}

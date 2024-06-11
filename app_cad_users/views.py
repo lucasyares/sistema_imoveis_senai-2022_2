@@ -12,6 +12,7 @@ from .models import Cliente, TipoCliente, Corretor, Conta, Endereco, Imovel, Sub
 # from .forms import ImovelForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.core.paginator import Paginator
 
 
 User = get_user_model()
@@ -271,23 +272,29 @@ def deletar_imovel_admin(request, id): #DELETAR IMOVEL
     imovel.delete()
     return redirect ('/')
 
+from django.core.paginator import Paginator
+from django.shortcuts import render
+
 def lista_imovel_admin(request):
     busca = request.GET.get('search')
     if busca:
         imoveis_list = Imovel.objects.filter(Name__icontains=busca)[:10]
     else:
-        imoveis_list = Imovel.objects.all()
+        imoveis_list = Imovel.objects.all()[:10]  # Limit to 10 items for demonstration purposes
 
-    imoveis_com_foto = {}
+    imoveis_com_foto = []
 
     for imovel in imoveis_list:
         foto = FotoImovel.objects.filter(fk_imovel=imovel.id).first()
         if foto:
-            imoveis_com_foto[imovel] = foto
+            imoveis_com_foto.append((imovel, foto))
 
+    paginator = Paginator(imoveis_com_foto, 2)  # Show 2 items per page
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     contexto = {
         "titulo": "Listar Imóveis",
-        "imoveis_com_foto": imoveis_com_foto,
+        "imoveis_com_foto": page_obj,
     }
     return render(request, 'pages/admin/lista_imovel_admin.html', contexto)
 
@@ -371,15 +378,22 @@ def cadastro_corretor_admin(request):
         return redirect("/") 
     
 def lista_corretor_admin(request):
+    user = User.objects.all()
     contexto =  {
-        "titulo": "Lista de Corretores"
+        "titulo": "Lista de Corretores",
+        'users':user,
     }
     return render(request, 'pages/admin/lista_corretor_admin.html', contexto)
 
 
 def dashboard(request):
+    clientes = Cliente.objects.all()
+    paginator = Paginator(clientes,1)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     contexto =  {
-        "titulo": "Dashboard"
+        "titulo": "Dashboard",
+        'clientes':page_obj
     }
     return render(request, 'pages/admin/dashboard.html', contexto)
 

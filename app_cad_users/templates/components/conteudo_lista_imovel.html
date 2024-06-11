@@ -24,15 +24,7 @@
         </div>
         {% endif %}
     </div>
-    <div class="d-flex justify-content-between">
-        <button class="btn btn-outline-secondary">&lt&lt</button>
-        <div>
-            <button class="btn text-secondary btn-outline-secondary">1</button>
-            <button class="btn text-secondary">2</button>
-            <button class="btn text-secondary">3</button>
-        </div>
-        <button class="btn btn-outline-secondary">&gt&gt</button>
-    </div>
+
 </header>
 <!-- Seção da listagem dos imóveis -->
 <section class="d-flex flex-column">
@@ -57,7 +49,7 @@
 
     </h6> {% endcomment %}
 
-    {% for imovel, foto in imoveis_com_foto.items %}
+    {% for imovel, foto in imoveis_com_foto %}
 
     <!-- <h1>U -> Update</h1>
     <h1>D -> delete</h1> -->
@@ -179,5 +171,22 @@
         </section>
     </article>
     {% endfor %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if imoveis_com_foto.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ imoveis_com_foto.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ imoveis_com_foto.number }} of {{ imoveis_com_foto.paginator.num_pages }}.
+            </span>
+    
+            {% if imoveis_com_foto.has_next %}
+                <a href="?page={{ imoveis_com_foto.next_page_number }}">next</a>
+                <a href="?page={{ imoveis_com_foto.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
     
 </section>
