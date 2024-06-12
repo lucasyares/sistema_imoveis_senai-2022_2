@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOMINUS - SOBRE NÓS</title>
+    <link rel="stylesheet" href="SobreNos.css">
+
+    
+       
+</head>
+
+<body>
+    <header class="cor">
+        <h1>SOBRE NÓS</h1>
+    </header>
+    <main>
+        <div class="quadrado">
+            <div class="quadrado_SobreNos">
+                <div class="quadrado_esquerdo">
+                    <div class="quadrao_esquerda_titulo">
+                        <h2>Compre Agora Sua<br> nova casa lhe espera!</h2>
+                    </div>
+                    <div class="quadrado_texto">
+                        <p>Somos uma imobiliária dedicada a ajudar nossos clientes a encontrar o lar perfeito. Nossa equipe 
+                            de especialistas está comprometida em oferecer as melhores opções de imóveis e 
+                            terrenos, garantindo que você encontre a propriedade dos seus sonhos.
+                            <br>
+                            <br>
+                            Oferecemos uma ampla variedade de opções, desde apartamentos a casas espaçosas, e terrenos para construção.
+                            Nossa missão é tornar o processo de compra ou venda o mais tranquilo possível, proporcionando uma experiência personalizada e eficiente.
+                            <br>
+                            <br>
+                            Entre em contato conosco para explorar nossas opções e encontrar o lugar ideal para você e sua família. 
+                            Estamos ansiosos para ajudá-lo a realizar seus objetivos imobiliários!.
+                    </div>
+                    </p>
+                </div>
+                <div class="quadrado_direito">
+                    <img src="https://img.freepik.com/fotos-gratis/villa-com-piscina-de-luxo-espetacular-design-contemporaneo-arte-digital-imoveis-casa-casa-e-propriedade-ge_1258-150749.jpg"
+                        width="100%">
+                </div>
+            </div>
+        </div>
+        <div class="tirante_anuncio_Verde">
+            <div class="tirante_anuncio_Verde_text cor">
+                <h2>
+                    Compre imóveis em toda Joinville e região
+                    <b>a partir de R$100.000</b>
+                </h2>
+            </div>
+        </div>
+        <div class="quadrado_perguntas_frequentes">
+            <div class="lado_esquerdo_titulo">
+                <h2 class="titulo_perguntas_frequentes">
+                    <br>
+                    Perguntas
+                    frequentes
+                    <br>
+                </h2>
+            </div>
+            <div class="lado_direito">
+                <div class="elementor-widget-container">
+                    <style>
+                        .faq-lm-div {
+                            display: flex;
+                            flex-direction: column;
+                        }
+
+                        .faq-lm-div {
+                            gap: 10px;
+                        }
+                    </style>
+                    <div class="faq-lm-div">
+                        <div class="faq-lm">
+                            <div class="accordion" id="MudarCor">
+                                <h2 class="titulo_pergunta cor">
+                                    Qual é a idade mínima para comprar um imóvel?
+                                </h2>
+                            </div>
+                            <div class="resposta_da_pergunta">
+                                <p>A idade mínima é de 20 anos com comprovante de renda.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="faq-lm">
+                            <div class="accordion">
+                                <h2 class='titulo_pergunta cor'>
+                                    Tenho que pagar uma entrada?
+                                </h2>
+                            </div>
+                            <div class="resposta_da_pergunta">
+                                <p>Sim, é necessário pagar um valor correspondente a 15% do valor original.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="faq-lm">
+                            <div class="accordion">
+                                <h2 class="titulo_pergunta cor">
+                                    O IPTU é pago a parte?
+                                </h2>
+                            </div>
+                            <div class="resposta_da_pergunta">
+                                <p>Sim, após a assinatura do contrato, o IPTU é de responsabilidade do comprador.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="faq-lm">
+                            <div class="accordion">
+                                <h2 class="titulo_pergunta cor">
+                                    Vocês tem imóveis mobilhados?
+                                </h2>
+                            </div>
+                            <div class="resposta_da_pergunta">
+                                <p>Não, a mobilha é de responsablidade o comprador.</p>
+                            </div>
+                        </div>
+                        <div class="faq-lm">
+                            <div class="accordion">
+                                <h2 class="titulo_pergunta cor">
+                                    Vendem terrenos sem nada construido??
+                                </h2>
+                            </div>
+                            <div class="resposta_da_pergunta">
+                                <p>Sim, vendemos tanto terrenos vazios, quanto imóveis já prontos.</p>
+                            </div>
+                        </div>
+                        <div class="faq-lm">
+                            <div class="accordion">
+                                <h2 class="titulo_pergunta cor">
+                                    Qual a região em que atuam?
+                                </h2>
+                            </div>
+                            <div class="resposta_da_pergunta">
+                                <p>Apenas em Joinville e áreas próximas.</p>
+                            </div>
+                        </div>
+                        <div class="faq-lm">
+                            <div class="accordion">
+                                <h2 class="titulo_pergunta cor">
+                                    Vendem imóveis dentro de condomínios? e apartamentos?
+                                </h2>
+                            </div>
+                            <div class="resposta_da_pergunta ">
+                                <p>Sim, vendemos móveis dentro de condomínios e também apartamentos.</p>
+                            </div>
+                        </div>
+                        <script>
+                            var MudarCor = document.getElementById("MudarCor");
+                            var corOriginal = getComputedStyle(MudarCor).color;
+
+                            MudarCor.addEventListener("click", function () {
+                                if (MudarCor.style.color === corOriginal) {
+                                    MudarCor.style.color = "red"; // Altere para a cor desejada
+                                } else {
+                                    MudarCor.style.color = corOriginal;
+                                }
+                            });
+
+                            var acc = document.querySelectorAll(".accordion");
+                            var i;
+                            for (i = 0; i < acc.length; i++) {
+                                acc[i].addEventListener("click", function () {
+                                    this.classList.toggle("active");
+                                    var panel = this.nextElementSibling;
+                                    if (panel.style.maxHeight) {
+                                        panel.style.maxHeight = null;
+                                    } else {
+                                        panel.style.maxHeight = panel.scrollHeight + "px";
+                                    }
+                                });
+                            }
+                        </script>
+                        <script
+                            type="application/ld+json">{"@context":"https:\/\/schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the minimum age to rent our cars?","acceptedAnswer":{"@type":"Answer","text":"The minimum driver age for our cars is 25 years old."}},{"@type":"Question","name":"Do I have to pay a deposit?","acceptedAnswer":{"@type":"Answer","text":"Yes, the deposit varies between 2000\u20ac and 8000\u20ac depending on the car that is rented."}},{"@type":"Question","name":"Which driving licenses are accepted?","acceptedAnswer":{"@type":"Answer","text":"&#8220;EU Driving Licences\nValid driving licences of all EU countries are accepted\n\nAll Other Licences\nDriving Licences printed with non Roman Alphabet (Arabic, Japanese, Cyrillic etc) must be complemented by an International driving license.\n&#8220;"}},{"@type":"Question","name":"Are you vehicles automatic or manual?","acceptedAnswer":{"@type":"Answer","text":"All ourt cars have automatic transmission."}},{"@type":"Question","name":"How long can I rent a car?","acceptedAnswer":{"@type":"Answer","text":"You can rent our cars between 30 minutes to months."}},{"@type":"Question","name":"Where do you deliver the car?","acceptedAnswer":{"@type":"Answer","text":"We deliver the car in Portugal, Spain and France."}},{"@type":"Question","name":"Do I have to pay for exceeding the mileage limit?","acceptedAnswer":{"@type":"Answer","text":"Yes. The amount varies by car, starting at 2\u20ac per Km for exceeding the mileage limit."}}]}</script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

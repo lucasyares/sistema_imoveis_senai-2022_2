@@ -1,0 +1,133 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.meuBotao {
+    margin-right: 2%; 
+    border-radius: 10px;
+    border: none;
+    min-width: 100px;
+    width: 15%;
+    height: 40%;
+    margin-right: 11.6%;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #FFD700; 
+    color: #333;
+    transition: background-color 0.3s ease;
+}
+
+.meu-botao:hover {
+    background-color: #FFA500; 
+}
+
+.TextoBot{
+    color: white; 
+    font-family: Arial;
+    font-weight: bold;
+    padding: 14px;
+
+}
+
+.containerPesquisa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh; 
+    background-color: #f0f0f0;
+}
+
+.pesquisaInput {
+    width: 60%;
+    padding: 17px 20px;
+    border: none;
+    font-size: 16px;
+    outline: none;
+    border-radius: 25px;
+}
+
+.icone {
+    margin-left: 10px;
+    font-size: 40px;
+    color: #333;
+}
+
+.container{
+    display: flex;
+}
+
+.filtros{
+    background-color: #f0f0f0;
+    width: 26%;
+    display: none;
+}
+
+.filtrosSelect{
+    height: 50px;
+    width: 50%;
+    margin-left: 60px;
+    margin-top: 20px;
+    border-radius: 25px;
+}
+
+#selectBairro, #selectCidade, #selectTipo, #selectSubtipo, #selectEmpreendimento{
+    border-radius: 25px;
+    padding: 5px;
+    width: 170px;
+}
+
+.containerFiltrosInput{
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 9%;
+    width: 70%;
+    border-radius: 10px;
+    background-color: gray;
+    padding: 20px;
+}
+
+.containerFiltros{
+    background-color: white;
+    width: 100%;
+    border-radius: 25px;
+    margin-bottom: 20px;
+}
+
+.filtroInput{
+    margin-top: 12px;
+    margin-left: 20px;
+    width: 80%; 
+    border: none; 
+    outline: none; 
+    margin-bottom: 5%;
+}
+
+.containerCheckbox {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    margin-left: 9%;
+    width: 70%;
+    padding: 20px;
+}
+.checkboxColuna {
+    flex: 50%;
+}
+
+
+.geral{
+    background-color: gray;
+    height: 900px;
+    width: 65%;
+    margin-top: 70px;
+    border-radius: 25px;
+}
+
+.center {
+    justify-content: center;
+}
+
