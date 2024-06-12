@@ -1,4 +1,4 @@
-@mixin fonte-searchbox {
+@mixin fonte-destaque {
     font-family: $arvo;
     font-size: $txt-sz-5;
     font-weight: bold;
@@ -60,7 +60,7 @@
     }
 
     &__select {
-        @include fonte-searchbox;
+        @include fonte-destaque;
 
         filter: drop-shadow(2px 2px 5px #111);
 
@@ -93,7 +93,7 @@
     }
 
     #btn-buscar {
-        @include fonte-searchbox;
+        @include fonte-destaque;
 
         background-color: $palette-2-4-hex;
         color: $palette-2-5-hex;
@@ -113,13 +113,16 @@
 
 #menu-lateral {
     transition: 0.3s;
-    // display: none;
-    // width: 30vw;
-    width: 0;
+    width: 30vw;
     height: 100vh;
     position: fixed;
-    right: 0;
+    right: -30vw;
     top: 0;
     background-color: $palette-2-2-hex;
     z-index: 2;
+
+    a {
+        @include fonte-destaque();
+        color: $palette-1-5-hex;
+    }
 }

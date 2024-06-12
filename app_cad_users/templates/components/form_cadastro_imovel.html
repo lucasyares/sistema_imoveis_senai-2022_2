@@ -1,5 +1,5 @@
 <!-- TODO 1 >> inserir condomínios disponíveis no select de condomínio (necessário inpecionar o banco e mostrá-los como opções) -->
-
+{% load static %}
 <h2>Informações básicas</h2>
 <p>Dados primordiais para o cadastro do seu imóvel</p>
 <form method="post" enctype="multipart/form-data" >
@@ -107,8 +107,8 @@
     <label for="area_total">Área total (m²)</label>
     <input type="number" name="area_total" id="area_total">
 
-    <label for="preco_imovel">Preço</label>
-    <input type="number" name="preco_imovel" id="preco_imovel">
+    <label for="preco_imovel">Preço R$</label>
+    <input value="R$ 0,00" type="text" name="preco_imovel" id="preco_imovel" oninput="this.value = mask(this.value, 'money')">
 
     <label for="iptu">IPTU</label>
     <input type="number" name="iptu" id="iptu">
@@ -205,6 +205,8 @@
 <script>
     
     $(document).ready(function() {
+
+        // CEP
         $('#cep').mask('00000-000'); // Exemplo de máscara de CEP
 
         $('#cep').on('change', function() {
@@ -237,4 +239,5 @@
     });
 </script>
 
+<script src="{% static 'js/mask.js' %}"></script>
 

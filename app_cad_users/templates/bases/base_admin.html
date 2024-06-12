@@ -11,7 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script>
-          function hide(elementId) {
+        function hide(elementId) {
         $('#' + elementId).hide();
     }
 
@@ -32,14 +32,13 @@
 </head>
 
 <body>
-    <header class="container-fluid">
-        <nav class="border row">
+    <header class="main-header">
+        <nav class="w-100 nav px-3 py-3">
             <a class="col-2 g-0" href="/"><img class="nav__logo col-2 img-fluid" src="{% static 'imgs/logo2.png' %}" alt="Logo"></a>
             <menu class="col-8 m-0 d-inline-flex align-items-center gap-3 list-unstyled">
                 <li>
-
                     <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton1">Corretores</button>
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton1">Corretores</button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                             <li><a class="dropdown-item" href="/cadastro-corretor">Cadastro</a></li>
                             <li><a class="dropdown-item" href="/lista-corretor">Pesquisa</a></li>
@@ -50,7 +49,7 @@
                 <li>
 
                     <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton2">Imóveis</button>
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton2">Imóveis</button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
                             <li><a class="dropdown-item" href="/cadastro">Cadastro</a></li>
                             <li><a class="dropdown-item" href="/imovel">Pesquisa</a></li>
@@ -61,7 +60,7 @@
                 <li>
 
                     <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton3">Clientes</button>
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton3">Clientes</button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
                             <li><a class="dropdown-item" href="/cadastro-cliente">Cadastro</a></li>
                             <li><a class="dropdown-item" href="/lista-cliente">Pesquisa</a></li>
