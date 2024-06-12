@@ -97,4 +97,24 @@ input[type=number] {
   filter: drop-shadow(2px 2px 5px #111);
 }
 
+#menu-fundo {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6666666667);
+  position: fixed;
+  z-index: 2;
+}
+
+#menu-lateral {
+  transition: 0.3s;
+  width: 0;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  background-color: #EBE0BB;
+  z-index: 2;
+}
+
 /*# sourceMappingURL=style.css.map */

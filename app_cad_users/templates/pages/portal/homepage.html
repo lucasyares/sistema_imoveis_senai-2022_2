@@ -15,7 +15,7 @@
         <li class="align-self-center"><a class="text-decoration-none" href="/portal">Contato</a></li>
         <li class="align-self-center"><a class="text-decoration-none" href="/portal">Institucional</a></li>
     </menu>
-    <button id="btn-menu" class="btn align-self-center">
+    <button onclick="exibirMenuLateral();" id="btn-menu" class="btn align-self-center">
         <svg class="homepage__nav__menu" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="grid"
             role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="50px">
             <path fill="#FFF"
@@ -28,6 +28,12 @@
 {% endblock header %}
 
 {% block main %}
+
+<div onclick="esconderMenuLateral();" id="menu-fundo"></div>
+
+<aside id="menu-lateral">
+    <!-- <p>lol</p> -->
+</aside>
 
 <section class="cover d-flex justify-content-center">
 
