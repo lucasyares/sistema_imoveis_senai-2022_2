@@ -119,7 +119,7 @@
 
             <label for="preco_imovel">Preço R$</label>
             <input value="R$ 0,00" type="text" name="preco_imovel" id="preco_imovel"
-                oninput="this.value = mask(this.value, 'money')">
+                oninput="">
 
             <label for="iptu">IPTU</label>
             <input type="number" name="iptu" id="iptu">
@@ -136,78 +136,11 @@
 
 
             <h2>Infraestrutura</h2>
-
-            <input type="checkbox" name="bicicletario_infest" id="bicicletario_infest">
-            <label for="bicicletario_infest">Bicicletário</label>
-
-            <input type="checkbox" name="brinquedoteca_infest" id="brinquedoteca_infest">
-            <label for="brinquedoteca_infest">Brinquedoteca</label>
-
-            <input type="checkbox" name="aquecimento_infest" id="aquecimento_infest">
-            <label for="aquecimento_infest">Aquecimento</label>
-
-            <input type="checkbox" name="cerca_eletrica_infest" id="cerca_eletrica_infest">
-            <label for="cerca_eletrica_infest">Cerca elétrica</label>
-
-            <input type="checkbox" name="salao_festa_infest" id="salao_festa_infest">
-            <label for="salao_festa_infest">Salão de Festa</label>
-
-            <input type="checkbox" name="churrasqueira_infest" id="churrasqueira_infest">
-            <label for="churrasqueira_infest">Churrasqueira</label>
-
-            <input type="checkbox" name="elevador_infest" id="elevador_infest">
-            <label for="elevador_infest">Elevador</label>
-
-            <input type="checkbox" name="estacionamento_visita_infest" id="estacionamento_visita_infest">
-            <label for="estacionamento_visita_infest">Estacionamento para visita</label>
-
-            <input type="checkbox" name="guarita_infest" id="guarita_infest">
-            <label for="guarita_infest">Guarita</label>
-
-            <input type="checkbox" name="lavanderia_infest" id="lavanderia_infest">
-            <label for="lavanderia_infest">Lavanderia</label>
-
-            <input type="checkbox" name="jardim_infest" id="jardim_infest">
-            <label for="jardim_infest">Jardim</label>
-
-            <input type="checkbox" name="lareira_infest" id="lareira_infest">
-            <label for="lareira_infest">Lareira</label>
-
-            <input type="checkbox" name="lavabo_infest" id="lavabo_infest">
-            <label for="lavabo_infest">Lavabo</label>
-
-            <input type="checkbox" name="mezanino_infest" id="mezanino_infest">
-            <label for="mezanino_infest">Mezanino</label>
-
-            <input type="checkbox" name="piscina_infest" id="piscina_infest">
-            <label for="piscina_infest">Piscina</label>
-
-            <input type="checkbox" name="mobiliado_infest" id="mobiliado_infest">
-            <label for="mobiliado_infest">Mobiliado</label>
-
-            <input type="checkbox" name="sacada_infest" id="sacada_infest">
-            <label for="sacada_infest">Sacada</label>
-
-            <input type="checkbox" name="sauna_infest" id="sauna_infest">
-            <label for="sauna_infest">Sauna</label>
-
-            <input type="checkbox" name="terraco_infest" id="terraco_infest">
-            <label for="terraco_infest">Terraço</label>
-
-            <input type="checkbox" name="interfone_infest" id="interfone_infest">
-            <label for="interfone_infest">Interfone</label>
-
-            <input type="checkbox" name="cinema_infest" id="cinema_infest">
-            <label for="cinema_infest">Cinema</label>
-
-            <input type="checkbox" name="deposito_infest" id="deposito_infest">
-            <label for="deposito_infest">Depósito</label>
-
-            <input type="checkbox" name="quadra_infest" id="quadra_infest">
-            <label for="quadra_infest">Quadra de esportes</label>
-
-            <input type="checkbox" name="academia_infest" id="academia_infest">
-            <label for="academia_infest">Academia</label>
+            {% for infra in infra_imoveis %}
+            <input value="{{infra.id}}" type="checkbox" name="infras[]">
+            
+            <label>{{infra.nome_infraestrutura_imovel}}</label>
+            {% endfor %}
 
 
             <input type="file" name="fotos[]" id="fotos" multiple accept="image/*">
