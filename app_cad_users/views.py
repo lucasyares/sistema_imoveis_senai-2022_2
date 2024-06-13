@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
-from .models import Cliente, TipoCliente, Corretor, Conta, Endereco, Imovel, SubtipoImovel, FotoImovel, TipoImovel
+from .models import Cliente, TipoCliente, Corretor, Conta, Endereco, Imovel, SubtipoImovel, FotoImovel, TipoImovel, AssocClienteTipo
 # from .forms import ImovelForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -173,6 +173,16 @@ def cadastro_imovel_admin(request):
         cliente = Cliente.objects.get(pk=cliente_id)
         subtipo_imovel = SubtipoImovel.objects.get(pk=subtipo_imovel_id)
         corretor = Corretor.objects.get(pk=corretor_id) 
+        
+        #COLOCANDO O CLIENTE COMO PROPRIETARIO
+        proprietarios = AssocClienteTipo.objects.filter(fk_cliente = cliente, fk_tipo_cliente=1)
+        if proprietarios.exists():
+            alert_developer = "Cliente já é proprietário"
+        else:
+            cliete_proprietario = AssocClienteTipo.objects.create(fk_tipo_cliente=1, fk_cliente=cliente)
+            cliete_proprietario.save()
+             
+        
 
         # CRIAÇÃO DO IMOVEL
         imovel = Imovel.objects.create(
@@ -300,7 +310,6 @@ def lista_imovel_admin(request):
 
 
 def cadastro_cliente_admin(request): #INCOMPLETO
-    user_logado = request.user
     if request.method == "GET":
         # tipos_clientes = TipoCliente.objects.all()
         # corretores = Corretor.objects.all()
@@ -309,29 +318,54 @@ def cadastro_cliente_admin(request): #INCOMPLETO
         #     'corretores': corretores,
         # }
         return render(request, 'pages/login.html')
-    elif request.method == "POST":
+
+def cadastro_cliente_sistema(request):
         nome_cliente = request.POST.get('nome_cliente')
         email = request.POST.get('email_cliente')
         senha = request.POST.get('senha_cliente')
         telefone_cliente = request.POST.get('telefone_cliente')
         foto_cliente = request.FILES.get('foto_cliente')
+        tipo = request.POST.get('tipo_cliente')
 
         if User.objects.filter(email=email).exists():
             return redirect("/")  # Redireciona se o usuário já existir
-
-        cliente = Cliente.objects.create(
+        user_logado = request.user
+        if user_logado.is_authenticated and user_logado.corretor_id != None:
+            corretor = Corretor.objects.get(pk=user_logado.corretor.id)
+            estagio_cliente = request.POST.get('estagio_cliente')
+            cliente = Cliente.objects.create(
             nome_cliente=nome_cliente,
             foto_cliente=foto_cliente,
             telefone_cliente=telefone_cliente,
-            tipo_cliente=2,
+            estagio_cliente=estagio_cliente,
+            fk_corretor = corretor
+             )  
+        else:
+            if tipo:
+                cliente = Cliente.objects.create(
+            nome_cliente=nome_cliente,
+            foto_cliente=foto_cliente,
+            telefone_cliente=telefone_cliente,
             estagio_cliente="Prospecção",
-           )  
+            fk_corretor = None
+             ) 
+            else:
+                cliente = Cliente.objects.create(
+            nome_cliente=nome_cliente,
+            foto_cliente=foto_cliente,
+            telefone_cliente=telefone_cliente,
+            fk_corretor = None
+             ) 
+                 
+        if tipo:
+                tipo_save = AssocClienteTipo.objects.create(fk_tipo_cliente=2, fk_cliente=cliente)
+                tipo_save.save()
+            
+            
         user = User.objects.create_user(email=email, password=senha, cliente=cliente)
         user.cliente = cliente #Os dados do email e senha vão para user
         cliente.save()
-
-        return render(request, 'pages/admin/dashboard.html')  # Redireciona para uma página de sucesso
-    else:
+        
         return redirect("/") 
 
     

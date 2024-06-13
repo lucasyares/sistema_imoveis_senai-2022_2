@@ -63,10 +63,12 @@
                 <section class="col-7 flex-grow-1 px-3 py-1">
                     <header class="d-flex justify-content-between">
                         <span class="h3">{{imovel.fk_endereco.bairro_endereco}}</span>
+                        {% if user.corretor.id ==  imovel.fk_corretor.id or user.admin_id%}
                         <button class="btn">
                             <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/edicao/{{imovel.id}}">U</a></i>
                             <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/deletar/{{imovel.id}}">D</a></i>  <!-- vou ver oq faço com isso aqui depois -->
-                        </button>
+                            </button>
+                        {% endif %}
                     </header>
                     <div>
                         <p>Proprietário: {{imovel.fk_proprietario.nome_cliente}}</p> 
