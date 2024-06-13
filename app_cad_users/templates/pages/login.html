@@ -32,6 +32,16 @@
             <input type="text" class="form-control my-3" oninput="this.value = mask(this.value, 'telefone')" placeholder="(47) xxxxx-xxxx" name="telefone_cliente" required>
             <input type="email" class="form-control my-3" placeholder="exemplo@gmail.com" name="email_cliente" required>
             <input type="password" class="form-control my-3" placeholder="senha" name="senha_cliente" required>
+            {% if user.corretor %}
+            <select name="estagio_cliente">
+                <option value="Visita">Visita</option>
+                <option value="Proposta">Proposta</option>
+                <option value="Prospecção">Prospecção</option>
+                <option value="Fechamento">Fechamento</option>
+            </select>
+            {% endif %}
+            <label>Buscando imóvel?</label>
+            <input type="checkbox" name="tipo_cliente">
             <input type="file"  class="form-control my-3" name="foto_cliente" accept="image/*" required>
             <label for=""><a href="">Esqueci a senha</a></label>
             <button class="btn btn-primary w-30 m-4 ">Cadastrar</button>

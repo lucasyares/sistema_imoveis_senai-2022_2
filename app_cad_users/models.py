@@ -104,7 +104,7 @@ class Cliente(models.Model):
     nome_cliente = models.CharField(max_length=255, db_column='nome_cliente')
     foto_cliente = models.ImageField(upload_to='clientes/', null=True, blank=True, db_column='foto_cliente')
     telefone_cliente = models.CharField(max_length=255, null=True, blank=True, db_column='telefone_cliente')
-    estagio_cliente = models.CharField(max_length=255, db_column='estagio_cliente')
+    estagio_cliente = models.CharField(max_length=255, null=True,db_column='estagio_cliente')
     fk_corretor = models.ForeignKey(Corretor, on_delete=models.SET_NULL, null=True, blank=True, db_column='fk_corretor')
 
     class Meta:
