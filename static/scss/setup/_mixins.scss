@@ -1,0 +1,12 @@
+@mixin soft-shadow {
+    filter: drop-shadow(2px 2px 5px #111);
+}
+
+@mixin soft-text-shadow {
+    text-shadow: 2px 2px 2px #111;
+}
+
+@mixin logo-shadow {
+    -webkit-filter: drop-shadow(5px 5px 5px #111);
+    filter: drop-shadow(5px 5px 5px #111);
+}

@@ -1,4 +1,4 @@
-@mixin fonte-searchbox {
+@mixin fonte-destaque {
     font-family: $arvo;
     font-size: $txt-sz-5;
     font-weight: bold;
@@ -22,19 +22,17 @@
 
     &__logo {
         width: 100px;
-        -webkit-filter: drop-shadow(5px 5px 5px #111);
-        filter: drop-shadow(5px 5px 5px #111);
+        @include logo-shadow;
     }
 
     &__links * {
         color: white;
-        text-shadow: 2px 2px 2px #111;
+        @include soft-text-shadow;
         font: bold $txt-sz-6 $josefin;
     }
 
     &__menu {
-        -webkit-filter: drop-shadow(3px 3px 2px #111);
-        filter: drop-shadow(3px 3px 2px #111);
+        @include soft-shadow;
     }
 }
 
@@ -60,9 +58,8 @@
     }
 
     &__select {
-        @include fonte-searchbox;
-
-        filter: drop-shadow(2px 2px 5px #111);
+        @include fonte-destaque;
+        @include soft-shadow;
 
         label {
             background-color: $palette-1-4-hex;
@@ -93,12 +90,12 @@
     }
 
     #btn-buscar {
-        @include fonte-searchbox;
+        @include fonte-destaque;
 
         background-color: $palette-2-4-hex;
         color: $palette-2-5-hex;
         
-        filter: drop-shadow(2px 2px 5px #111);
+        @include soft-shadow;
     }
 }
 
@@ -113,13 +110,16 @@
 
 #menu-lateral {
     transition: 0.3s;
-    // display: none;
-    // width: 30vw;
-    width: 0;
+    width: 30vw;
     height: 100vh;
     position: fixed;
-    right: 0;
+    right: -30vw;
     top: 0;
     background-color: $palette-2-2-hex;
     z-index: 2;
+
+    a {
+        @include fonte-destaque();
+        color: $palette-1-5-hex;
+    }
 }

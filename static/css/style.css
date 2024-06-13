@@ -10,8 +10,23 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.nav__logo {
+.main-nav {
+  background-color: #BDBFBF;
+  filter: drop-shadow(2px 2px 5px #111);
+}
+.main-nav__logo {
   width: 120px;
+}
+.main-nav .dropdown {
+  font: normal 16px "Arvo", serif;
+}
+.main-nav .dropdown .btn {
+  filter: drop-shadow(2px 2px 5px #111);
+  background-color: #2F5932;
+  border: none;
+}
+.main-nav .dropdown .btn:hover {
+  background-color: #224026;
 }
 
 .homepage__nav {
@@ -38,8 +53,7 @@ input[type=number] {
   font: bold 28px "Josefin Slab", serif;
 }
 .homepage__nav__menu {
-  -webkit-filter: drop-shadow(3px 3px 2px #111);
-  filter: drop-shadow(3px 3px 2px #111);
+  filter: drop-shadow(2px 2px 5px #111);
 }
 
 .cover {
@@ -108,13 +122,19 @@ input[type=number] {
 
 #menu-lateral {
   transition: 0.3s;
-  width: 0;
+  width: 30vw;
   height: 100vh;
   position: fixed;
-  right: 0;
+  right: -30vw;
   top: 0;
   background-color: #EBE0BB;
   z-index: 2;
+}
+#menu-lateral a {
+  font-family: "Arvo", serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #224026;
 }
 
 /*# sourceMappingURL=style.css.map */

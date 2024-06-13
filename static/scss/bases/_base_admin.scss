@@ -1,3 +1,24 @@
-.nav__logo {
-    width: 120px;
+.main-nav {
+    background-color: $palette-1-3-hex;
+    @include soft-shadow;
+
+    &__logo {
+        width: 120px;
+        // @include logo-shadow;
+    }
+
+    .dropdown {
+
+        font: normal $txt-sz-3 $arvo;
+
+        .btn {
+            @include soft-shadow;
+            background-color: $palette-1-4-hex;
+            border: none;
+            
+            &:hover {
+                background-color: $palette-1-5-hex;
+            }
+        }
+    }
 }
