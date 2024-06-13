@@ -1,215 +1,231 @@
 <!-- TODO 1 >> inserir condomínios disponíveis no select de condomínio (necessário inpecionar o banco e mostrá-los como opções) -->
 {% load static %}
-<h2>Informações básicas</h2>
-<p>Dados primordiais para o cadastro do seu imóvel</p>
-<form method="post" enctype="multipart/form-data" >
-    {% csrf_token %}
-    <label for="tipo_imovel">Tipo do imóvel</label>
-    <select name="tipo_imovel" id="tipo_imovel">
-        {% for tipo in tipos  %}
-		<optgroup label="{{tipo.nome_tipo_imovel}}">
-            {% for subtipo in  subtipos %}
-            {% if subtipo.fk_tipo_imovel.id == tipo.id  %}
-			<option value="{{subtipo.id}}">{{subtipo.nome_subtipo_imovel}}</option>
-            {% endif %}
-            {% endfor %}
-		</optgroup>
-        {% endfor %}
-	
-	</select>
-    <label for="clientes">Proprietário</label>
-    <select name="fk_proprietario" id="clientes">
-        {% for cliente in clientes  %}
-			<option value="{{cliente.id }}">{{cliente.nome_cliente}}</option>
-        {% endfor %}
-	
-	</select>
-    <label for="clientes">Corretor</label>
-    <select name="fk_corretor" id="clientes">
-        {% for corretor in corretores  %}
-			<option value="{{corretor.id }}">{{corretor.nome_corretor}}</option>
-        {% endfor %}
-	
-	</select>
 
-    <label for="uf">UF</label>
-    <select required name="uf" id="uf">
-		<option value="AC">Acre</option>
-		<option value="AL">Alagoas</option>
-		<option value="AP">Amapá</option>
-		<option value="AM">Amazonas</option>
-		<option value="BA">Bahia</option>
-		<option value="CE">Ceará</option>
-		<option value="DF">Distrito Federal</option>
-		<option value="ES">Espírito Santo</option>
-		<option value="GO">Goiás</option>
-		<option value="MA">Maranhão</option>
-		<option value="MT">Mato Grosso</option>
-		<option value="MS">Mato Grosso do Sul</option>
-		<option value="MG">Minas Gerais</option>
-		<option value="PA">Pará</option>
-		<option value="PB">Paraíba</option>
-		<option value="PR">Paraná</option>
-		<option value="PE">Pernambuco</option>
-		<option value="PI">Piauí</option>
-		<option value="RJ">Rio de Janeiro</option>
-		<option value="RN">Rio Grande do Norte</option>
-		<option value="RS">Rio Grande do Sul</option>
-		<option value="RO">Rondônia</option>
-		<option value="RR">Roraima</option>
-		<option value="SC">Santa Catarina</option>
-		<option value="SP">São Paulo</option>
-		<option value="SE">Sergipe</option>
-		<option value="TO">Tocantins</option>
-	</select>
- <div id="alert-doc">
-    <p id="alert-cep"></p>
- </div>
-    <label for="cep">CEP</label>
-    <input required type="text" name="cep" id="cep">
+<section class="d-flex justify-content-center">
+    <div class="form-cadastro col-6 flex-column">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="nav-item"><button data-bs-toggle="basico" data-bs-target="#basico" class="nav-link active">Básico</button></li>
+            <li class="nav-item"><button data-bs-toggle="complemento" data-bs-target="#complemento" class="nav-link">Complementar</button></li>
+            <li class="nav-item"><button data-bs-toggle="infraestrutura" data-bs-target="#infraestrutura" class="nav-link">Infraestrutura</button></li>
+            <li class="nav-item"><button data-bs-toggle="galeria" data-bs-target="#galeria" class="nav-link">Galeria</button></li>
+        </ul>
 
-    <label for="logradouro">Logradouro</label>
-    <input required type="text" name="logradouro" id="logradouro">
+        <form class="p-3 border border-top-0" method="post" enctype="multipart/form-data">
+            <h2>Informações básicas</h2>
+            <p>Dados primordiais para o cadastro do seu imóvel</p>
+            {% csrf_token %}
+            <label for="tipo_imovel">Tipo do imóvel</label>
+            <select name="tipo_imovel" id="tipo_imovel">
+                {% for tipo in tipos %}
+                <optgroup label="{{tipo.nome_tipo_imovel}}">
+                    {% for subtipo in subtipos %}
+                    {% if subtipo.fk_tipo_imovel.id == tipo.id %}
+                    <option value="{{subtipo.id}}">{{subtipo.nome_subtipo_imovel}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </optgroup>
+                {% endfor %}
 
-    <label for="numero">Número</label>
-    <input required type="number" name="numero" id="numero">
+            </select>
+            <label for="clientes">Proprietário</label>
+            <select name="fk_proprietario" id="clientes">
+                {% for cliente in clientes %}
+                <option value="{{cliente.id }}">{{cliente.nome_cliente}}</option>
+                {% endfor %}
 
-    <label for="bairro">Bairro</label>
-    <input required type="text" name="bairro" id="bairro">
+            </select>
+            <label for="clientes">Corretor</label>
+            <select name="fk_corretor" id="clientes">
+                {% for corretor in corretores %}
+                <option value="{{corretor.id }}">{{corretor.nome_corretor}}</option>
+                {% endfor %}
 
-    <label for="cidade">Cidade</label>
-    <input required type="text" name="cidade" id="cidade">
+            </select>
 
-    <label for="complemento">Complemento</label>
-    <input required type="text" name="complemento" id="complemento">
-    
+            <label for="uf">UF</label>
+            <select required name="uf" id="uf">
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+            </select>
+            <div id="alert-doc">
+                <p id="alert-cep"></p>
+            </div>
+            <label for="cep">CEP</label>
+            <input required type="text" name="cep" id="cep">
 
+            <label for="logradouro">Logradouro</label>
+            <input required type="text" name="logradouro" id="logradouro">
 
-<h2>Informações complementares</h2>
-<p>Dados opcionais que ajudam na busca e escolha do seu imóvel</p>
+            <label for="numero">Número</label>
+            <input required type="number" name="numero" id="numero">
 
-    <h3>Número de:</h3>
+            <label for="bairro">Bairro</label>
+            <input required type="text" name="bairro" id="bairro">
 
-    <label for="n_quarto">Quartos</label>
-    <input type="number" name="n_quarto" id="n_quarto">
+            <label for="cidade">Cidade</label>
+            <input required type="text" name="cidade" id="cidade">
 
-    <label for="n_suite">Suítes</label>
-    <input type="number" name="n_suite" id="n_suite">
-
-    <label for="n_banheiro">Banheiros</label>
-    <input type="number" name="n_banheiro" id="n_banheiro">
-
-    <label for="n_garagem">Vagas de garagem</label>
-    <input type="number" name="n_garagem" id="n_garagem">
-
-    <hr>
-
-    <label for="area_total">Área total (m²)</label>
-    <input type="number" name="area_total" id="area_total">
-
-    <label for="preco_imovel">Preço R$</label>
-    <input value="R$ 0,00" type="text" name="preco_imovel" id="preco_imovel" oninput="this.value = mask(this.value, 'money')">
-
-    <label for="iptu">IPTU</label>
-    <input type="number" name="iptu" id="iptu">
-
-    <label for="condominio">Condomínio</label>
-    <select name="condominio" id="condominio">
-		
-	</select>
-
-    <button type="submit" class="btn btn-primary">Cadastrar novo condomínio</button>
-
-    <label for="preco_condominio">Preço do condomínio</label>
-    <input type="number" name="preco_condominio" id="preco_condominio">
+            <label for="complemento">Complemento</label>
+            <input required type="text" name="complemento" id="complemento">
 
 
-<h2>Infraestrutura</h2>
 
-    <input type="checkbox" name="bicicletario_infest" id="bicicletario_infest">
-    <label for="bicicletario_infest">Bicicletário</label>
+            <h2>Informações complementares</h2>
+            <p>Dados opcionais que ajudam na busca e escolha do seu imóvel</p>
 
-    <input type="checkbox" name="brinquedoteca_infest" id="brinquedoteca_infest">
-    <label for="brinquedoteca_infest">Brinquedoteca</label>
+            <h3>Número de:</h3>
 
-    <input type="checkbox" name="aquecimento_infest" id="aquecimento_infest">
-    <label for="aquecimento_infest">Aquecimento</label>
+            <label for="n_quarto">Quartos</label>
+            <input type="number" name="n_quarto" id="n_quarto">
 
-    <input type="checkbox" name="cerca_eletrica_infest" id="cerca_eletrica_infest">
-    <label for="cerca_eletrica_infest">Cerca elétrica</label>
+            <label for="n_suite">Suítes</label>
+            <input type="number" name="n_suite" id="n_suite">
 
-    <input type="checkbox" name="salao_festa_infest" id="salao_festa_infest">
-    <label for="salao_festa_infest">Salão de Festa</label>
+            <label for="n_banheiro">Banheiros</label>
+            <input type="number" name="n_banheiro" id="n_banheiro">
 
-    <input type="checkbox" name="churrasqueira_infest" id="churrasqueira_infest">
-    <label for="churrasqueira_infest">Churrasqueira</label>
+            <label for="n_garagem">Vagas de garagem</label>
+            <input type="number" name="n_garagem" id="n_garagem">
 
-    <input type="checkbox" name="elevador_infest" id="elevador_infest">
-    <label for="elevador_infest">Elevador</label>
+            <hr>
 
-    <input type="checkbox" name="estacionamento_visita_infest" id="estacionamento_visita_infest">
-    <label for="estacionamento_visita_infest">Estacionamento para visita</label>
+            <label for="area_total">Área total (m²)</label>
+            <input type="number" name="area_total" id="area_total">
 
-    <input type="checkbox" name="guarita_infest" id="guarita_infest">
-    <label for="guarita_infest">Guarita</label>
+            <label for="preco_imovel">Preço R$</label>
+            <input value="R$ 0,00" type="text" name="preco_imovel" id="preco_imovel"
+                oninput="this.value = mask(this.value, 'money')">
 
-    <input type="checkbox" name="lavanderia_infest" id="lavanderia_infest">
-    <label for="lavanderia_infest">Lavanderia</label>
+            <label for="iptu">IPTU</label>
+            <input type="number" name="iptu" id="iptu">
 
-    <input type="checkbox" name="jardim_infest" id="jardim_infest">
-    <label for="jardim_infest">Jardim</label>
+            <label for="condominio">Condomínio</label>
+            <select name="condominio" id="condominio">
 
-    <input type="checkbox" name="lareira_infest" id="lareira_infest">
-    <label for="lareira_infest">Lareira</label>
+            </select>
 
-    <input type="checkbox" name="lavabo_infest" id="lavabo_infest">
-    <label for="lavabo_infest">Lavabo</label>
+            <button type="submit" class="btn btn-primary">Cadastrar novo condomínio</button>
 
-    <input type="checkbox" name="mezanino_infest" id="mezanino_infest">
-    <label for="mezanino_infest">Mezanino</label>
-
-    <input type="checkbox" name="piscina_infest" id="piscina_infest">
-    <label for="piscina_infest">Piscina</label>
-
-    <input type="checkbox" name="mobiliado_infest" id="mobiliado_infest">
-    <label for="mobiliado_infest">Mobiliado</label>
-
-    <input type="checkbox" name="sacada_infest" id="sacada_infest">
-    <label for="sacada_infest">Sacada</label>
-
-    <input type="checkbox" name="sauna_infest" id="sauna_infest">
-    <label for="sauna_infest">Sauna</label>
-
-    <input type="checkbox" name="terraco_infest" id="terraco_infest">
-    <label for="terraco_infest">Terraço</label>
-
-    <input type="checkbox" name="interfone_infest" id="interfone_infest">
-    <label for="interfone_infest">Interfone</label>
-
-    <input type="checkbox" name="cinema_infest" id="cinema_infest">
-    <label for="cinema_infest">Cinema</label>
-
-    <input type="checkbox" name="deposito_infest" id="deposito_infest">
-    <label for="deposito_infest">Depósito</label>
-
-    <input type="checkbox" name="quadra_infest" id="quadra_infest">
-    <label for="quadra_infest">Quadra de esportes</label>
-
-    <input type="checkbox" name="academia_infest" id="academia_infest">
-    <label for="academia_infest">Academia</label>
+            <label for="preco_condominio">Preço do condomínio</label>
+            <input type="number" name="preco_condominio" id="preco_condominio">
 
 
-    <input type="file" name="fotos[]" id="fotos" multiple accept="image/*">
-    <button class="btn btn-success" type="submit">Cadastrar</button>
-</form>
+            <h2>Infraestrutura</h2>
+
+            <input type="checkbox" name="bicicletario_infest" id="bicicletario_infest">
+            <label for="bicicletario_infest">Bicicletário</label>
+
+            <input type="checkbox" name="brinquedoteca_infest" id="brinquedoteca_infest">
+            <label for="brinquedoteca_infest">Brinquedoteca</label>
+
+            <input type="checkbox" name="aquecimento_infest" id="aquecimento_infest">
+            <label for="aquecimento_infest">Aquecimento</label>
+
+            <input type="checkbox" name="cerca_eletrica_infest" id="cerca_eletrica_infest">
+            <label for="cerca_eletrica_infest">Cerca elétrica</label>
+
+            <input type="checkbox" name="salao_festa_infest" id="salao_festa_infest">
+            <label for="salao_festa_infest">Salão de Festa</label>
+
+            <input type="checkbox" name="churrasqueira_infest" id="churrasqueira_infest">
+            <label for="churrasqueira_infest">Churrasqueira</label>
+
+            <input type="checkbox" name="elevador_infest" id="elevador_infest">
+            <label for="elevador_infest">Elevador</label>
+
+            <input type="checkbox" name="estacionamento_visita_infest" id="estacionamento_visita_infest">
+            <label for="estacionamento_visita_infest">Estacionamento para visita</label>
+
+            <input type="checkbox" name="guarita_infest" id="guarita_infest">
+            <label for="guarita_infest">Guarita</label>
+
+            <input type="checkbox" name="lavanderia_infest" id="lavanderia_infest">
+            <label for="lavanderia_infest">Lavanderia</label>
+
+            <input type="checkbox" name="jardim_infest" id="jardim_infest">
+            <label for="jardim_infest">Jardim</label>
+
+            <input type="checkbox" name="lareira_infest" id="lareira_infest">
+            <label for="lareira_infest">Lareira</label>
+
+            <input type="checkbox" name="lavabo_infest" id="lavabo_infest">
+            <label for="lavabo_infest">Lavabo</label>
+
+            <input type="checkbox" name="mezanino_infest" id="mezanino_infest">
+            <label for="mezanino_infest">Mezanino</label>
+
+            <input type="checkbox" name="piscina_infest" id="piscina_infest">
+            <label for="piscina_infest">Piscina</label>
+
+            <input type="checkbox" name="mobiliado_infest" id="mobiliado_infest">
+            <label for="mobiliado_infest">Mobiliado</label>
+
+            <input type="checkbox" name="sacada_infest" id="sacada_infest">
+            <label for="sacada_infest">Sacada</label>
+
+            <input type="checkbox" name="sauna_infest" id="sauna_infest">
+            <label for="sauna_infest">Sauna</label>
+
+            <input type="checkbox" name="terraco_infest" id="terraco_infest">
+            <label for="terraco_infest">Terraço</label>
+
+            <input type="checkbox" name="interfone_infest" id="interfone_infest">
+            <label for="interfone_infest">Interfone</label>
+
+            <input type="checkbox" name="cinema_infest" id="cinema_infest">
+            <label for="cinema_infest">Cinema</label>
+
+            <input type="checkbox" name="deposito_infest" id="deposito_infest">
+            <label for="deposito_infest">Depósito</label>
+
+            <input type="checkbox" name="quadra_infest" id="quadra_infest">
+            <label for="quadra_infest">Quadra de esportes</label>
+
+            <input type="checkbox" name="academia_infest" id="academia_infest">
+            <label for="academia_infest">Academia</label>
+
+
+            <input type="file" name="fotos[]" id="fotos" multiple accept="image/*">
+            <button class="btn btn-success" type="submit">Cadastrar</button>
+
+        </form>
+    </div>
+
+</section>
+
 <script>
-    
-    $(document).ready(function() {
+
+    $(document).ready(function () {
 
         // CEP
         $('#cep').mask('00000-000'); // Exemplo de máscara de CEP
 
-        $('#cep').on('change', function() {
+        $('#cep').on('change', function () {
             // Obter o valor limpo (sem a máscara) do campo CEP
             var cep = $('#cep').cleanVal();
 
@@ -218,26 +234,25 @@
                 $.ajax({
                     url: `https://viacep.com.br/ws/${cep}/json`,
                     method: 'GET',
-                    success: function(data) {
+                    success: function (data) {
                         if (!("erro" in data)) {
                             $('#logradouro').val(data.logradouro);
                             $('#bairro').val(data.bairro);
                             $('#cidade').val(data.localidade);
                             $('#uf').val(data.uf);
                         } else {
-                            show_disappear("alert-doc","CEP não encontrado", 5000);
+                            show_disappear("alert-doc", "CEP não encontrado", 5000);
                         }
                     },
-                    error: function() {
-                        show_disappear("alert-doc","Erro ao buscar CEP", 5000);
+                    error: function () {
+                        show_disappear("alert-doc", "Erro ao buscar CEP", 5000);
                     }
                 });
             } else {
-                show_disappear("alert-doc","CEP inválido", 5000);
+                show_disappear("alert-doc", "CEP inválido", 5000);
             }
         });
     });
 </script>
 
 <script src="{% static 'js/mask.js' %}"></script>
-

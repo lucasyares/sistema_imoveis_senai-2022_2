@@ -10,17 +10,22 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-.nav {
+.main-nav {
   background-color: #BDBFBF;
+  filter: drop-shadow(2px 2px 5px #111);
 }
-.nav__logo {
+.main-nav__logo {
   width: 120px;
 }
-.nav .dropdown .btn {
+.main-nav .dropdown {
+  font: normal 16px "Arvo", serif;
+}
+.main-nav .dropdown .btn {
+  filter: drop-shadow(2px 2px 5px #111);
   background-color: #2F5932;
   border: none;
 }
-.nav .dropdown .btn:hover {
+.main-nav .dropdown .btn:hover {
   background-color: #224026;
 }
 
@@ -48,8 +53,7 @@ input[type=number] {
   font: bold 28px "Josefin Slab", serif;
 }
 .homepage__nav__menu {
-  -webkit-filter: drop-shadow(3px 3px 2px #111);
-  filter: drop-shadow(3px 3px 2px #111);
+  filter: drop-shadow(2px 2px 5px #111);
 }
 
 .cover {

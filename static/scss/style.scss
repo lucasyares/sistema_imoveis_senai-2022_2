@@ -1,5 +1,6 @@
 // * Comando no terminal para compilar em CSS >> sass --watch static/scss/style.scss static/css/style.css
 @import "setup/variaveis";
 @import "setup/reset";
+@import "setup/mixins";
 @import "bases/base_admin";
 @import "bases/base_portal" 

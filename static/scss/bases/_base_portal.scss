@@ -22,19 +22,17 @@
 
     &__logo {
         width: 100px;
-        -webkit-filter: drop-shadow(5px 5px 5px #111);
-        filter: drop-shadow(5px 5px 5px #111);
+        @include logo-shadow;
     }
 
     &__links * {
         color: white;
-        text-shadow: 2px 2px 2px #111;
+        @include soft-text-shadow;
         font: bold $txt-sz-6 $josefin;
     }
 
     &__menu {
-        -webkit-filter: drop-shadow(3px 3px 2px #111);
-        filter: drop-shadow(3px 3px 2px #111);
+        @include soft-shadow;
     }
 }
 
@@ -61,8 +59,7 @@
 
     &__select {
         @include fonte-destaque;
-
-        filter: drop-shadow(2px 2px 5px #111);
+        @include soft-shadow;
 
         label {
             background-color: $palette-1-4-hex;
@@ -98,7 +95,7 @@
         background-color: $palette-2-4-hex;
         color: $palette-2-5-hex;
         
-        filter: drop-shadow(2px 2px 5px #111);
+        @include soft-shadow;
     }
 }
 
