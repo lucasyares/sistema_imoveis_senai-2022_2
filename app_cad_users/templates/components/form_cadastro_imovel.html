@@ -2,287 +2,367 @@
 {% load static %}
 
 <section class="d-flex justify-content-center">
-        <div class="form-cadastro col-6 flex-column">
-                <ul class="nav nav-tabs nav-justified" id="myTab">
-                        <li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#basico"
-                                        class="nav-link active">Básico</button></li>
-                        <li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#complemento"
-                                        class="nav-link">Complementar</button></li>
-                        <li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#infraestrutura"
-                                        class="nav-link">Infraestrutura</button></li>
-                        <li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#galeria"
-                                        class="nav-link">Galeria</button></li>
-                </ul>
+    <div class="form-cadastro col-6 flex-column block-form-imovel">
+        <ul class="nav nav-tabs nav-justified" id="myTab">
+            <li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#basico"
+                    class="nav-link active">Básico</button></li>
+            <li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#complemento"
+                    class="nav-link">Complementar</button></li>
+            <li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#infraestrutura"
+                    class="nav-link">Infraestrutura</button></li>
+            <li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#galeria"
+                    class="nav-link">Galeria</button></li>
+        </ul>
 
-                <form class="p-3 border border-top-0 tab-content" method="post" enctype="multipart/form-data"
-                        id="myTabContent">
-                        {% csrf_token %}
-                        <div id="basico" class="tab-pane fade show active">
-                                <h2>Informações básicas</h2>
-                                <p>Dados primordiais para o cadastro do seu imóvel</p>
+        <form class="p-3 border border-top-0 tab-content d-flex flex-column form-imovel" method="post" enctype="multipart/form-data"
+            id="myTabContent">
+            {% csrf_token %}
+            <div id="basico" class="tab-pane fade show active">
+                <h2>Informações básicas</h2>
+                <p>Dados primordiais para o cadastro do seu imóvel</p>
 
-                                <div class="mx-5">
-                                        <div class="row">
-                                                <label class="col-3" for="tipo_imovel">Tipo do imóvel</label>
-                                                <select class="col-5" name="tipo_imovel" id="tipo_imovel">
-                                                        {% for tipo in tipos %}
-                                                        <optgroup label="{{tipo.nome_tipo_imovel}}">
-                                                                {% for subtipo in subtipos %}
-                                                                {% if subtipo.fk_tipo_imovel.id == tipo.id %}
-                                                                <option value="{{subtipo.id}}">
-                                                                        {{subtipo.nome_subtipo_imovel}}
-                                                                </option>
-                                                                {% endif %}
-                                                                {% endfor %}
-                                                        </optgroup>
-                                                        {% endfor %}
-                                                </select>
-                                        </div>
+                <div class="mx-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <label class="col-3 form-label px-2 m-0" for="tipo_imovel">Tipo do imóvel</label>
+                        <span class="col-5">
+                            <select class="form-select" name="tipo_imovel" id="tipo_imovel">
+                                {% for tipo in tipos %}
+                                <optgroup label="{{tipo.nome_tipo_imovel}}">
+                                    {% for subtipo in subtipos %}
+                                    {% if subtipo.fk_tipo_imovel.id == tipo.id %}
+                                    <option value="{{subtipo.id}}">
+                                        {{subtipo.nome_subtipo_imovel}}
+                                    </option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </optgroup>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
 
-                                        <div class="row">
-                                                <label class="col-3" for="clientes">Proprietário</label>
-                                                <select class="col-9" name="fk_proprietario" id="clientes">
-                                                        {% for cliente in clientes %}
-                                                        <option value="{{cliente.id }}">{{cliente.nome_cliente}}
-                                                        </option>
-                                                        {% endfor %}
-                                                </select>
-                                        </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <label class="col-3 form-label px-2 m-0" for="clientes">Proprietário</label>
+                        <span class="col-9">
+                            <select class="form-select" name="fk_proprietario" id="clientes">
+                                {% for cliente in clientes %}
+                                <option value="{{cliente.id }}">{{cliente.nome_cliente}}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
 
-                                        <div class="row">
-                                                <label class="col-3" for="clientes">Corretor</label>
-                                                <select class="col-9" name="fk_corretor" id="clientes">
-                                                        {% for corretor in corretores %}
-                                                        <option value="{{corretor.id }}">{{corretor.nome_corretor}}
-                                                        </option>
-                                                        {% endfor %}
-                                                </select>
-                                        </div>
+                    <div class="d-flex align-items-center mb-4">
+                        <label class="col-3 form-label px-2 m-0" for="corretor">Corretor</label>
+                        <span class="col-9">
+                            <select class="form-select" name="fk_corretor" id="clientes">
+                                {% for corretor in corretores %}
+                                <option value="{{corretor.id }}">{{corretor.nome_corretor}}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </span>
+                    </div>
 
-                                        <div class="row">
-                                                <!-- <div id="alert-doc">
-                                                        <p id="alert-cep"></p>
-                                                </div> -->
-                                                <label class="col-3" for="cep">CEP</label>
-                                                <input class="col-5" required type="text" name="cep" id="cep">
-                                        </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <!-- <div id="alert-doc">
+                            <p id="alert-cep"></p>
+                        </div> -->
+                        <label class="col-3 form-label px-2 m-0" style="vertical-align: middle;" for="cep">CEP</label>
+                        <span class="col-5">
+                            <input class="form-control" required type="text" name="cep" id="cep">
+                        </span>
+                    </div>
 
-                                        <div class="row">
-                                                
-                                        </div>
-                                        <label for="uf">UF</label>
-                                        <select required name="uf" id="uf">
-                                                <option value="AC">Acre</option>
-                                                <option value="AL">Alagoas</option>
-                                                <option value="AP">Amapá</option>
-                                                <option value="AM">Amazonas</option>
-                                                <option value="BA">Bahia</option>
-                                                <option value="CE">Ceará</option>
-                                                <option value="DF">Distrito Federal</option>
-                                                <option value="ES">Espírito Santo</option>
-                                                <option value="GO">Goiás</option>
-                                                <option value="MA">Maranhão</option>
-                                                <option value="MT">Mato Grosso</option>
-                                                <option value="MS">Mato Grosso do Sul</option>
-                                                <option value="MG">Minas Gerais</option>
-                                                <option value="PA">Pará</option>
-                                                <option value="PB">Paraíba</option>
-                                                <option value="PR">Paraná</option>
-                                                <option value="PE">Pernambuco</option>
-                                                <option value="PI">Piauí</option>
-                                                <option value="RJ">Rio de Janeiro</option>
-                                                <option value="RN">Rio Grande do Norte</option>
-                                                <option value="RS">Rio Grande do Sul</option>
-                                                <option value="RO">Rondônia</option>
-                                                <option value="RR">Roraima</option>
-                                                <option value="SC">Santa Catarina</option>
-                                                <option value="SP">São Paulo</option>
-                                                <option value="SE">Sergipe</option>
-                                                <option value="TO">Tocantins</option>
-                                        </select>
+                    <div class="d-flex align-items-center mb-2">
+                        <label class="col-3 form-label px-2 m-0" for="uf">UF</label>
+                        <span class="col-5">
+                            <select class="form-select" required name="uf" id="uf">
+                                <option value="AC">Acre</option>
+                                <option value="AL">Alagoas</option>
+                                <option value="AP">Amapá</option>
+                                <option value="AM">Amazonas</option>
+                                <option value="BA">Bahia</option>
+                                <option value="CE">Ceará</option>
+                                <option value="DF">Distrito Federal</option>
+                                <option value="ES">Espírito Santo</option>
+                                <option value="GO">Goiás</option>
+                                <option value="MA">Maranhão</option>
+                                <option value="MT">Mato Grosso</option>
+                                <option value="MS">Mato Grosso do Sul</option>
+                                <option value="MG">Minas Gerais</option>
+                                <option value="PA">Pará</option>
+                                <option value="PB">Paraíba</option>
+                                <option value="PR">Paraná</option>
+                                <option value="PE">Pernambuco</option>
+                                <option value="PI">Piauí</option>
+                                <option value="RJ">Rio de Janeiro</option>
+                                <option value="RN">Rio Grande do Norte</option>
+                                <option value="RS">Rio Grande do Sul</option>
+                                <option value="RO">Rondônia</option>
+                                <option value="RR">Roraima</option>
+                                <option value="SC">Santa Catarina</option>
+                                <option value="SP">São Paulo</option>
+                                <option value="SE">Sergipe</option>
+                                <option value="TO">Tocantins</option>
+                            </select>
+                        </span>
+                    </div>
 
-                                        <label for="logradouro">Logradouro</label>
-                                        <input required type="text" name="logradouro" id="logradouro">
+                    <div class="d-flex align-items-center mb-2">
+                        <label class="col-3 form-label px-2 m-0" for="logradouro">Logradouro</label>
+                        <span class="col-9">
+                            <input class="col-9 form-control" required type="text" name="logradouro" id="logradouro">
+                        </span>
+                    </div>
 
-                                        <label for="numero">Número</label>
-                                        <input required type="number" name="numero" id="numero">
+                    <div class="d-flex align-items-center mb-2">
+                        <label class="col-3 form-label px-2 m-0" for="bairro">Bairro</label>
+                        <span class="col-4">
+                            <input class="col-4 form-control" required type="text" name="bairro" id="bairro">
+                        </span>
 
-                                        <label for="bairro">Bairro</label>
-                                        <input required type="text" name="bairro" id="bairro">
+                        <label class="col-3 form-label px-2 m-0" for="numero">Número</label>
+                        <span class="col-2">
+                            <input class="col-2 form-control" required type="number" name="numero" id="numero">
+                        </span>
+                    </div>
 
-                                        <label for="cidade">Cidade</label>
-                                        <input required type="text" name="cidade" id="cidade">
+                    <div class="d-flex align-items-center mb-2">
+                        <label class="col-3 form-label px-2 m-0" for="cidade">Cidade</label>
+                        <span class="col-4">
+                            <input class="col-4 form-control" required type="text" name="cidade" id="cidade">
+                        </span>
 
-                                        <label for="complemento">Complemento</label>
-                                        <input required type="text" name="complemento">
-                                </div>
-                        </div>
+                        <label class="col-3 form-label px-2 m-0" for="complemento">Complemento</label>
+                        <span class="col-2">
+                            <input class="form-control" required type="text" name="complemento">
+                        </span>
+                    </div>
 
-
-
-                        <div id="complemento" class="tab-pane fade">
-                                <h2>Informações complementares</h2>
-                                <p>Dados opcionais que ajudam na busca e escolha do seu imóvel</p>
-
-                                <h3>Número de:</h3>
-
-                                <label for="n_quarto">Quartos</label>
-                                <input type="number" name="n_quarto" id="n_quarto">
-
-                                <label for="n_suite">Suítes</label>
-                                <input type="number" name="n_suite" id="n_suite">
-
-                                <label for="n_banheiro">Banheiros</label>
-                                <input type="number" name="n_banheiro" id="n_banheiro">
-
-                                <label for="n_garagem">Vagas de garagem</label>
-                                <input type="number" name="n_garagem" id="n_garagem">
-
-                                <label for="area_total">Área total (m²)</label>
-                                <input type="number" name="area_total" id="area_total">
-
-                                <label for="preco_imovel">Preço R$</label>
-                                <input value="R$ 0,00" type="text" name="preco_imovel" id="preco_imovel"
-                                        oninput="this.value = mask(this.value, 'money')">
-
-                                <label for="iptu">IPTU</label>
-                                <input type="number" name="iptu" id="iptu">
-
-                                <label for="condominio">Condomínio</label>
-                                <select name="condominio" id="condominio">
-
-                                </select>
-
-                                <button type="submit" class="btn btn-primary">Cadastrar novo condomínio</button>
-
-                                <label for="preco_condominio">Preço do condomínio</label>
-                                <input type="number" name="preco_condominio" id="preco_condominio">
-                        </div>
+                </div>
+            </div>
 
 
-                        <div id="infraestrutura" class="tab-pane fade">
-                                <h2>Infraestrutura</h2>
 
-                                <input type="checkbox" name="bicicletario_infest" id="bicicletario_infest">
-                                <label for="bicicletario_infest">Bicicletário</label>
+            <div id="complemento" class="tab-pane fade">
+                <h2>Informações complementares</h2>
+                <p>Dados opcionais que ajudam na busca e escolha do seu imóvel</p>
 
-                                <input type="checkbox" name="brinquedoteca_infest" id="brinquedoteca_infest">
-                                <label for="brinquedoteca_infest">Brinquedoteca</label>
+                <div class="mx-5">
+                    <div class="d-flex align-items-center mb-2">
+                        <label class="col-3 form-label px-2 m-0" for="n_quarto">Quartos</label>
+                        <span class="col-3">
+                            <input class="form-control" type="number" name="n_quarto" id="n_quarto">
+                        </span>
 
-                                <input type="checkbox" name="aquecimento_infest" id="aquecimento_infest">
-                                <label for="aquecimento_infest">Aquecimento</label>
+                        <label class="col-3 form-label px-2 m-0" for="n_suite">Suítes</label>
+                        <span class="col-3">
+                            <input class="form-control" type="number" name="n_suite" id="n_suite">
+                        </span>
+                    </div>
 
-                                <input type="checkbox" name="cerca_eletrica_infest" id="cerca_eletrica_infest">
-                                <label for="cerca_eletrica_infest">Cerca elétrica</label>
+                    <div class="d-flex align-items-center mb-4">
 
-                                <input type="checkbox" name="salao_festa_infest" id="salao_festa_infest">
-                                <label for="salao_festa_infest">Salão de Festa</label>
+                        <label class="col-3 form-label px-2 m-0" for="n_banheiro">Banheiros</label>
+                        <span class="col-3">
+                            <input class="form-control" type="number" name="n_banheiro" id="n_banheiro">
+                        </span>
 
-                                <input type="checkbox" name="churrasqueira_infest" id="churrasqueira_infest">
-                                <label for="churrasqueira_infest">Churrasqueira</label>
+                        <label class="col-3 form-label px-2 m-0" for="n_garagem">Vagas de garagem</label>
+                        <span class="col-3">
+                            <input class="form-control" type="number" name="n_garagem" id="n_garagem">
+                        </span>
+                    </div>
 
-                                <input type="checkbox" name="elevador_infest" id="elevador_infest">
-                                <label for="elevador_infest">Elevador</label>
+                    <div class="d-flex align-items-center mb-4">
+                        <label class="col-3 form-label px-2 m-0" for="area_total">Área total (m²)</label>
+                        <span class="col-3">
+                            <input class="form-control" type="number" name="area_total" id="area_total">
+                        </span>
 
-                                <input type="checkbox" name="estacionamento_visita_infest"
-                                        id="estacionamento_visita_infest">
-                                <label for="estacionamento_visita_infest">Estacionamento para visita</label>
+                        <label class="col-3 form-label px-2 m-0" for="area_privativa">Área privativa (m²)</label>
+                        <span class="col-3">
+                            <input class="form-control" type="number" name="area_privativa" id="area_privativa">
+                        </span>
+                    </div>
 
-                                <input type="checkbox" name="guarita_infest" id="guarita_infest">
-                                <label for="guarita_infest">Guarita</label>
+                    <div class="d-flex align-items-center mb-2">
+                        <label class="col-3 form-label px-2 m-0" for="preco_imovel">Preço R$</label>
+                        <span class="col-6">
+                            <input class="form-control" value="R$ 0,00" type="text" name="preco_imovel"
+                                id="preco_imovel" oninput="this.value = mask(this.value, 'money')">
+                        </span>
+                    </div>
 
-                                <input type="checkbox" name="lavanderia_infest" id="lavanderia_infest">
-                                <label for="lavanderia_infest">Lavanderia</label>
+                    <div class="d-flex align-items-center mb-2">
+                        <label class="col-3 form-label px-2 m-0" for="iptu">IPTU</label>
+                        <span class="col-6">
+                            <input class="form-control" type="number" name="iptu" id="iptu">
+                        </span>
+                    </div>
 
-                                <input type="checkbox" name="jardim_infest" id="jardim_infest">
-                                <label for="jardim_infest">Jardim</label>
+                    <!-- <label class="col-3 form-label px-2 m-0" for="condominio">Condomínio</label>
+                <select name="condominio" id="condominio">
 
-                                <input type="checkbox" name="lareira_infest" id="lareira_infest">
-                                <label for="lareira_infest">Lareira</label>
+                </select> -->
 
-                                <input type="checkbox" name="lavabo_infest" id="lavabo_infest">
-                                <label for="lavabo_infest">Lavabo</label>
+                    <!-- <button type="submit" class="btn btn-primary">Cadastrar novo condomínio</button>
 
-                                <input type="checkbox" name="mezanino_infest" id="mezanino_infest">
-                                <label for="mezanino_infest">Mezanino</label>
+                <label class="col-3 form-label px-2 m-0" for="preco_condominio">Preço do condomínio</label>
+                <input type="number" name="preco_condominio" id="preco_condominio"> -->
+                </div>
+            </div>
 
-                                <input type="checkbox" name="piscina_infest" id="piscina_infest">
-                                <label for="piscina_infest">Piscina</label>
 
-                                <input type="checkbox" name="mobiliado_infest" id="mobiliado_infest">
-                                <label for="mobiliado_infest">Mobiliado</label>
+            <div id="infraestrutura" class="tab-pane fade">
+                <h2>Infraestrutura</h2>
+                <p>Características específicas do imóvel em si</p>
 
-                                <input type="checkbox" name="sacada_infest" id="sacada_infest">
-                                <label for="sacada_infest">Sacada</label>
+                <div class="mx-5 d-flex flex-wrap">
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="bicicletario_infest"
+                            id="bicicletario_infest">
+                        <label class="form-check-label" for="bicicletario_infest">Bicicletário</label>
+                    </span>
 
-                                <input type="checkbox" name="sauna_infest" id="sauna_infest">
-                                <label for="sauna_infest">Sauna</label>
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="brinquedoteca_infest"
+                            id="brinquedoteca_infest">
+                        <label class="form-check-label" for="brinquedoteca_infest">Brinquedoteca</label>
+                    </span>
 
-                                <input type="checkbox" name="terraco_infest" id="terraco_infest">
-                                <label for="terraco_infest">Terraço</label>
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="aquecimento_infest"
+                            id="aquecimento_infest">
+                        <label class="form-check-label" for="aquecimento_infest">Aquecimento</label>
+                    </span>
 
-                                <input type="checkbox" name="interfone_infest" id="interfone_infest">
-                                <label for="interfone_infest">Interfone</label>
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="cerca_eletrica_infest"
+                            id="cerca_eletrica_infest">
+                        <label class="form-check-label" for="cerca_eletrica_infest">Cerca elétrica</label>
+                    </span>
 
-                                <input type="checkbox" name="cinema_infest" id="cinema_infest">
-                                <label for="cinema_infest">Cinema</label>
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="salao_festa_infest"
+                            id="salao_festa_infest">
+                        <label class="form-check-label" for="salao_festa_infest">Salão de Festa</label>
+                    </span>
 
-                                <input type="checkbox" name="deposito_infest" id="deposito_infest">
-                                <label for="deposito_infest">Depósito</label>
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="churrasqueira_infest"
+                            id="churrasqueira_infest">
+                        <label class="form-check-label" for="churrasqueira_infest">Churrasqueira</label>
+                    </span>
 
-                                <input type="checkbox" name="quadra_infest" id="quadra_infest">
-                                <label for="quadra_infest">Quadra de esportes</label>
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="elevador_infest" id="elevador_infest">
+                        <label class="form-check-label" for="elevador_infest">Elevador</label>
+                    </span>
 
-                                <input type="checkbox" name="academia_infest" id="academia_infest">
-                                <label for="academia_infest">Academia</label>
-                        </div>
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="estacionamento_visita_infest"
+                            id="estacionamento_visita_infest">
+                        <label class="form-check-label" for="estacionamento_visita_infest">Estacionamento para
+                            visita</label>
+                    </span>
 
-                        <div id="galeria" class="tab-pane fade">
-                                <input type="file" name="fotos[]" id="fotos" multiple accept="image/*">
-                        </div>
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="guarita_infest" id="guarita_infest">
+                        <label class="form-check-label" for="guarita_infest">Guarita</label>
+                    </span>
 
-                        <button class="btn btn-success" type="submit">Cadastrar</button>
-                </form>
-        </div>
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="lavanderia_infest" id="lavanderia_infest">
+                        <label class="form-check-label" for="lavanderia_infest">Lavanderia</label>
+                    </span>
+
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="jardim_infest" id="jardim_infest">
+                        <label class="form-check-label" for="jardim_infest">Jardim</label>
+                    </span>
+
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="lareira_infest" id="lareira_infest">
+                        <label class="form-check-label" for="lareira_infest">Lareira</label>
+                    </span>
+
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="lavabo_infest" id="lavabo_infest">
+                        <label class="form-check-label" for="lavabo_infest">Lavabo</label>
+                    </span>
+
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="mezanino_infest" id="mezanino_infest">
+                        <label class="form-check-label" for="mezanino_infest">Mezanino</label>
+                    </span>
+
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="piscina_infest" id="piscina_infest">
+                        <label class="form-check-label" for="piscina_infest">Piscina</label>
+                    </span>
+
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="mobiliado_infest" id="mobiliado_infest">
+                        <label class="form-check-label" for="mobiliado_infest">Mobiliado</label>
+                    </span>
+
+                    <span class="col-6">
+                        <input class="form-check-input" type="checkbox" name="sacada_infest" id="sacada_infest">
+                        <label class="form-check-label" for="sacada_infest">Sacada</label>
+                    </span>
+                </div>
+            </div>
+
+            <div id="galeria" class="tab-pane fade">
+                <h2>Galeria</h2>
+                <p>Insira aqui suas fotos (você pode selecionar múltiplas)</p>
+                <input class="form-control" type="file" name="fotos[]" id="fotos" multiple accept="image/*">
+            </div>
+
+            <button class="btn btn-success align-self-end mt-3" type="submit">Cadastrar</button>
+        </form>
+    </div>
 
 </section>
 
 <script>
 
-        $(document).ready(function () {
+    $(document).ready(function () {
 
-                // CEP
-                $('#cep').mask('00000-000'); // Exemplo de máscara de CEP
+        // CEP
+        $('#cep').mask('00000-000'); // Exemplo de máscara de CEP
 
-                $('#cep').on('change', function () {
-                        // Obter o valor limpo (sem a máscara) do campo CEP
-                        var cep = $('#cep').cleanVal();
+        $('#cep').on('change', function () {
+            // Obter o valor limpo (sem a máscara) do campo CEP
+            var cep = $('#cep').cleanVal();
 
-                        if (cep.length === 8) {
-                                // var cep = $(this).val();
-                                $.ajax({
-                                        url: `https://viacep.com.br/ws/${cep}/json`,
-                                        method: 'GET',
-                                        success: function (data) {
-                                                if (!("erro" in data)) {
-                                                        $('#logradouro').val(data.logradouro);
-                                                        $('#bairro').val(data.bairro);
-                                                        $('#cidade').val(data.localidade);
-                                                        $('#uf').val(data.uf);
-                                                } else {
-                                                        show_disappear("alert-doc", "CEP não encontrado", 5000);
-                                                }
-                                        },
-                                        error: function () {
-                                                show_disappear("alert-doc", "Erro ao buscar CEP", 5000);
-                                        }
-                                });
+            if (cep.length === 8) {
+                // var cep = $(this).val();
+                $.ajax({
+                    url: `https://viacep.com.br/ws/${cep}/json`,
+                    method: 'GET',
+                    success: function (data) {
+                        if (!("erro" in data)) {
+                            $('#logradouro').val(data.logradouro);
+                            $('#bairro').val(data.bairro);
+                            $('#cidade').val(data.localidade);
+                            $('#uf').val(data.uf);
                         } else {
-                                show_disappear("alert-doc", "CEP inválido", 5000);
+                            show_disappear("alert-doc", "CEP não encontrado", 5000);
                         }
+                    },
+                    error: function () {
+                        show_disappear("alert-doc", "Erro ao buscar CEP", 5000);
+                    }
                 });
+            } else {
+                show_disappear("alert-doc", "CEP inválido", 5000);
+            }
         });
+    });
 </script>
 
 <script src="{% static 'js/mask.js' %}"></script>
-<script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.js' %}"></script>

@@ -32,9 +32,9 @@
 </head>
 
 <body>
-    <header class="main-header">
-        <nav class="w-100 main-nav px-3 py-3">
-            <a class="col-2 g-0" href="/"><img class="main-nav__logo col-2 img-fluid" src="{% static 'imgs/logo2.png' %}" alt="Logo"></a>
+    <header class="main-header mb-3">
+        <nav class="w-100 main-nav px-3 py-3 row">
+            <a class="col-2 g-0 d-flex justify-content-center" href="/"><img class="main-nav__logo col-2 img-fluid" src="{% static 'imgs/logo2.png' %}" alt="Logo"></a>
             <menu class="col-8 m-0 d-inline-flex align-items-center gap-3 list-unstyled">
                 <li>
                     <div class="dropdown">
@@ -69,7 +69,7 @@
         </nav>
     </header>
 
-    <main>
+    <main class="mx-4">
         {% block main %} Main padrão {% endblock main %}
     </main>
 
