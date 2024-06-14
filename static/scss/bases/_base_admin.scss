@@ -8,17 +8,24 @@
     }
 
     .dropdown {
-
         font: normal $txt-sz-3 $arvo;
 
         .btn {
             @include soft-shadow;
             background-color: $palette-1-4-hex;
             border: none;
-            
+
             &:hover {
                 background-color: $palette-1-5-hex;
             }
         }
     }
 }
+
+// .form-imovel {
+//     min-height: 250px;
+
+//     button[type="submit"] {
+//         justify-self: end;
+//     }
+// }
