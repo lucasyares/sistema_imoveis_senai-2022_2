@@ -309,13 +309,25 @@ def edicao_imovel_admin(request, id):
         # print(repeated_infras_ids)
       
     # Percorre os IDs repetidos e salva no banco de dados
-        for infra_id in infras_ids:
-            print(infra_id)
-            infra = InfraestruturaImovel.objects.get(id=infra_id)
-            AssocInfraImovel.objects.create(
-            fk_imovel=imovel,
-            fk_infraestrutura_imovel=infra
-        )
+        infra_imovel_verify = AssocInfraImovel.objects.filter(fk_imovel=imovel)
+        infra_imovel_all = InfraestruturaImovel.objects.all()
+    
+    # IDs das infraestruturas existentes relacionadas ao imóvel
+        existing_infra_ids = set([assoc.fk_infraestrutura_imovel.id for assoc in infra_imovel_verify])
+    
+    # IDs das infraestruturas selecionadas
+        selected_infra_ids = set(infras_ids)
+
+    # Cria novas associações para as infraestruturas selecionadas que ainda não estão relacionadas ao imóvel
+        for infra_id in selected_infra_ids:
+            if infra_id not in existing_infra_ids:
+             infra = InfraestruturaImovel.objects.get(id=infra_id)
+            AssocInfraImovel.objects.create(fk_imovel=imovel, fk_infraestrutura_imovel=infra)
+    
+    # Remove as associações existentes que não estão mais selecionadas
+        for assoc in infra_imovel_verify:
+            if assoc.fk_infraestrutura_imovel.id not in selected_infra_ids:
+                assoc.delete()
         # for infra_id in delete_infras_ids:
         #     AssocInfraImovel.objects.filter(fk_infraestrutura_imovel__id__in=delete_infras_ids).delete()
         # Salva o imóvel atualizado
