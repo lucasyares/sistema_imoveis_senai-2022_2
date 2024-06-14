@@ -8,12 +8,14 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
-from .models import Cliente, TipoCliente, Corretor, Conta, Endereco, Imovel, SubtipoImovel, FotoImovel, TipoImovel, AssocClienteTipo
+from .models import Cliente,TipoCliente, Corretor, Endereco, Imovel,InfraestruturaImovel, SubtipoImovel, FotoImovel, TipoImovel, AssocClienteTipo, AssocInfraImovel
 # from .forms import ImovelForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from collections import Counter
 from django.core.paginator import Paginator
-
+from django.db import transaction
+import re
 
 User = get_user_model()
 ##############################################################################################
@@ -130,12 +132,14 @@ def cadastro_imovel_admin(request):
         subtipo = SubtipoImovel.objects.all()
         tipo = TipoImovel.objects.all()
         corretores = Corretor.objects.all()
+        infra_imovel = InfraestruturaImovel.objects.all()
         contexto =  {
                 "titulo": "Cadastro",
                 'subtipos': subtipo,
                 'tipos': tipo,
                 'clientes': cliente,
                 'corretores':corretores,
+                'infra_imoveis': infra_imovel
                  }
         return render(request, 'pages/admin/cadastro_imovel_admin.html', contexto)
     else:
@@ -159,6 +163,8 @@ def cadastro_imovel_admin(request):
         #DADOS RECEBIDOS
         area_total_imovel = request.POST.get('area_total')
         preco_imovel = request.POST.get('preco_imovel')
+        preco_imovel_n = re.sub(r'\D', '', preco_imovel)
+        preco_imovel_n=int(preco_imovel_n)
         n_quarto = request.POST.get('n_quarto')
         n_suite = request.POST.get('n_suite')
         n_banheiro = request.POST.get('n_banheiro')
@@ -179,7 +185,8 @@ def cadastro_imovel_admin(request):
         if proprietarios.exists():
             alert_developer = "Cliente já é proprietário"
         else:
-            cliete_proprietario = AssocClienteTipo.objects.create(fk_tipo_cliente=1, fk_cliente=cliente)
+            tipo_cliente = TipoCliente.objects.get(id=1)
+            cliete_proprietario = AssocClienteTipo.objects.create(fk_tipo_cliente=tipo_cliente, fk_cliente=cliente)
             cliete_proprietario.save()
              
         
@@ -187,7 +194,7 @@ def cadastro_imovel_admin(request):
         # CRIAÇÃO DO IMOVEL
         imovel = Imovel.objects.create(
         area_total_imovel = area_total_imovel,
-        preco_imovel = preco_imovel,
+        preco_imovel = preco_imovel_n,
         # area_privativa_imovel, ---> Ver com o Erik ukié
         num_quarto_imovel = n_quarto,
         num_suite_imovel = n_suite,
@@ -205,6 +212,20 @@ def cadastro_imovel_admin(request):
             url_foto_imovel=foto,
             fk_imovel=imovel
           )
+        infras_ids = request.POST.getlist('infras[]')
+    #     infras_counter = Counter(infras_ids)
+
+    # # Filtra os IDs que aparecem mais de uma vez
+    #     repeated_infras_ids = [infra_id for infra_id, count in infras_counter.items() if count > 1]
+
+    # Percorre os IDs repetidos e salva no banco de dados
+        for infra_id in infras_ids:
+     
+            infra = InfraestruturaImovel.objects.get(id=infra_id)
+            AssocInfraImovel.objects.create(
+            fk_imovel=imovel,
+            fk_infraestrutura_imovel=infra
+        )
 
         # imovel.endereco = endereco
         # foto_imovel.imovel = imovel
@@ -218,11 +239,14 @@ def edicao_imovel_admin(request, id):
     imovel = get_object_or_404(Imovel, id=id)
 
     if request.method == "GET":
+        infra_imovel = InfraestruturaImovel.objects.all()
         cliente = Cliente.objects.all()
         corretores = Corretor.objects.all()
         subtipo = SubtipoImovel.objects.all()
         tipo = TipoImovel.objects.all()
         imagem = FotoImovel.objects.filter(fk_imovel=imovel)
+        infra_anteriores = AssocInfraImovel.objects.filter(fk_imovel=id)
+        infra_salvo_ids = [infra.fk_infraestrutura_imovel.id for infra in infra_anteriores]
         contexto =  {
                 "titulo": "Edição",
                 'subtipos': subtipo,
@@ -231,6 +255,8 @@ def edicao_imovel_admin(request, id):
                 'imovel': imovel,
                 'imagem': imagem,
                 'corretores':corretores,
+                'infra_imoveis':infra_imovel,
+                'infra_salvo':infra_salvo_ids,
                  }
         return render(request, 'pages/admin/edicao_imovel_admin.html', contexto)
     else:
@@ -245,7 +271,10 @@ def edicao_imovel_admin(request, id):
 
         # Atualiza os campos do imóvel
         imovel.area_total_imovel = request.POST.get('area_total')
-        imovel.preco_imovel = request.POST.get('preco_imovel')
+        preco_imovel = request.POST.get('preco_imovel')
+        preco_imovel_n = re.sub(r'\D', '', preco_imovel)
+        preco_imovel_n=int(preco_imovel_n)
+        imovel.preco_imovel = preco_imovel_n
         imovel.num_quarto_imovel = request.POST.get('n_quarto')
         imovel.num_suite_imovel = request.POST.get('n_suite')
         imovel.num_banheiro_imovel = request.POST.get('n_banheiro')
@@ -270,6 +299,25 @@ def edicao_imovel_admin(request, id):
         for foto in novas_fotos:
             FotoImovel.objects.create(fk_imovel=imovel, url_foto_imovel=foto)
 
+        #Edição dos infras
+        infras_ids = request.POST.getlist('new_infras[]')
+        # print(infras_ids)
+        # infras_counter = Counter(infras_ids)
+
+    # Filtra os IDs que aparecem mais de uma vez
+        # repeated_infras_ids = [infra_id for infra_id, count in infras_counter.items() if count > 1]
+        # print(repeated_infras_ids)
+      
+    # Percorre os IDs repetidos e salva no banco de dados
+        for infra_id in infras_ids:
+            print(infra_id)
+            infra = InfraestruturaImovel.objects.get(id=infra_id)
+            AssocInfraImovel.objects.create(
+            fk_imovel=imovel,
+            fk_infraestrutura_imovel=infra
+        )
+        # for infra_id in delete_infras_ids:
+        #     AssocInfraImovel.objects.filter(fk_infraestrutura_imovel__id__in=delete_infras_ids).delete()
         # Salva o imóvel atualizado
         imovel.save()
         return redirect('/imovel')
@@ -290,7 +338,7 @@ def lista_imovel_admin(request):
     if busca:
         imoveis_list = Imovel.objects.filter(Name__icontains=busca)[:10]
     else:
-        imoveis_list = Imovel.objects.all()[:10]  # Limit to 10 items for demonstration purposes
+        imoveis_list = Imovel.objects.all()  # Limit to 10 items for demonstration purposes
 
     imoveis_com_foto = []
 
@@ -299,7 +347,7 @@ def lista_imovel_admin(request):
         if foto:
             imoveis_com_foto.append((imovel, foto))
 
-    paginator = Paginator(imoveis_com_foto, 2)  # Show 2 items per page
+    paginator = Paginator(imoveis_com_foto, 1)  # Show 2 items per page
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     contexto = {
