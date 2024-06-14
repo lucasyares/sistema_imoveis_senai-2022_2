@@ -1,187 +1,351 @@
 <!-- TODO 1 >> inserir condomínios disponíveis no select de condomínio (necessário inpecionar o banco e mostrá-los como opções) -->
+{% load static %}
 
-<h2>Informações básicas</h2>
-<p>Dados primordiais para o cadastro do seu imóvel</p>
-<form method="post" enctype="multipart/form-data" >
-    {% csrf_token %}
-    <label for="tipo_imovel">Tipo do imóvel</label>
-    <select name="tipo_imovel" id="tipo_imovel">
-        {% for tipo in tipos  %}
-		<optgroup label="{{tipo.nome_tipo_imovel}}">
-            {% for subtipo in  subtipos %}
-            {% if subtipo.fk_tipo_imovel.id == tipo.id  %}
-			<option value="{{subtipo.id}}" {% if subtipo.id == imovel.fk_subtipo_imovel.id %}selected{% endif %}>{{subtipo.nome_subtipo_imovel}}</option>
-            {% endif %}
-            {% endfor %}
-		</optgroup>
-        {% endfor %}
-	
-	</select>
-    <label for="clientes">Proprietário</label>
-    <select name="fk_proprietario" id="clientes">
-        {% for cliente in clientes  %}
-        <option value="{{ cliente.id }}" {% if cliente.id == imovel.fk_proprietario_id %}selected{% endif %}>
-            {{ cliente.nome_cliente }}
-        </option>
+<section class="d-flex justify-content-center">
+	<div class="form-cadastro col-6 flex-column block-form-imovel">
+		<ul class="nav nav-tabs nav-justified" id="myTab">
+			<li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#basico"
+					class="nav-link active">Básico</button></li>
+			<li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#complemento"
+					class="nav-link">Complementar</button></li>
+			<li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#infraestrutura"
+					class="nav-link">Infraestrutura</button></li>
+			<li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#galeria"
+					class="nav-link">Galeria</button></li>
+		</ul>
 
-        {% endfor %}
-	
-	</select>
-    <label for="clientes">Corretor</label>
-    <select name="fk_corretor" id="clientes">
-        {% for corretor in corretores  %}
-        <option value="{{ corretor.id }}" {% if corretor.id == imovel.fk_corretor %}selected{% endif %}>
-            {{ corretor.nome_corretor }}
-        </option>
+		<form class="p-3 border border-top-0 tab-content d-flex flex-column form-imovel" method="post"
+			enctype="multipart/form-data" id="myTabContent">
+			{% csrf_token %}
+			<div id="basico" class="tab-pane fade show active">
+				<h2>Informações básicas</h2>
+				<p>Dados primordiais para o cadastro do seu imóvel</p>
 
-        {% endfor %}
-	
-	</select>
+				<div class="mx-5">
+					<div class="d-flex align-items-center mb-4">
+						<label class="col-3 form-label px-2 m-0" for="tipo_imovel">Tipo do
+							imóvel</label>
+						<span class="col-5">
+							<select class="form-select" name="tipo_imovel" id="tipo_imovel">
+								{% for tipo in tipos  %}
+								<optgroup label="{{tipo.nome_tipo_imovel}}">
+									{% for subtipo in  subtipos %}
+									{% if subtipo.fk_tipo_imovel.id == tipo.id  %}
+									<option value="{{subtipo.id}}" x
+										{% if subtipo.id == imovel.fk_subtipo_imovel.id %}selected{% endif %}>
+										{{subtipo.nome_subtipo_imovel}}</option>
+									{% endif %}
+									{% endfor %}
+								</optgroup>
+								{% endfor %}
+							</select>
+						</span>
+					</div>
 
-    <label for="uf">UF</label>
-    <select required name="uf" id="uf">
-        <option value="AC" {% if imovel.fk_endereco.uf_endereco == "AC" %}selected{% endif %}>Acre</option>
-        <option value="AL" {% if imovel.fk_endereco.uf_endereco == "AL" %}selected{% endif %}>Alagoas</option>
-        <option value="AP" {% if imovel.fk_endereco.uf_endereco == "AP" %}selected{% endif %}>Amapá</option>
-        <option value="AM" {% if imovel.fk_endereco.uf_endereco == "AM" %}selected{% endif %}>Amazonas</option>
-        <option value="BA" {% if imovel.fk_endereco.uf_endereco == "BA" %}selected{% endif %}>Bahia</option>
-        <option value="CE" {% if imovel.fk_endereco.uf_endereco == "CE" %}selected{% endif %}>Ceará</option>
-        <option value="DF" {% if imovel.fk_endereco.uf_endereco == "DF" %}selected{% endif %}>Distrito Federal</option>
-        <option value="ES" {% if imovel.fk_endereco.uf_endereco == "ES" %}selected{% endif %}>Espírito Santo</option>
-        <option value="GO" {% if imovel.fk_endereco.uf_endereco == "GO" %}selected{% endif %}>Goiás</option>
-        <option value="MA" {% if imovel.fk_endereco.uf_endereco == "MA" %}selected{% endif %}>Maranhão</option>
-        <option value="MT" {% if imovel.fk_endereco.uf_endereco == "MT" %}selected{% endif %}>Mato Grosso</option>
-        <option value="MS" {% if imovel.fk_endereco.uf_endereco == "MS" %}selected{% endif %}>Mato Grosso do Sul</option>
-        <option value="MG" {% if imovel.fk_endereco.uf_endereco == "MG" %}selected{% endif %}>Minas Gerais</option>
-        <option value="PA" {% if imovel.fk_endereco.uf_endereco == "PA" %}selected{% endif %}>Pará</option>
-        <option value="PB" {% if imovel.fk_endereco.uf_endereco == "PB" %}selected{% endif %}>Paraíba</option>
-        <option value="PR" {% if imovel.fk_endereco.uf_endereco == "PR" %}selected{% endif %}>Paraná</option>
-        <option value="PE" {% if imovel.fk_endereco.uf_endereco == "PE" %}selected{% endif %}>Pernambuco</option>
-        <option value="PI" {% if imovel.fk_endereco.uf_endereco == "PI" %}selected{% endif %}>Piauí</option>
-        <option value="RJ" {% if imovel.fk_endereco.uf_endereco == "RJ" %}selected{% endif %}>Rio de Janeiro</option>
-        <option value="RN" {% if imovel.fk_endereco.uf_endereco == "RN" %}selected{% endif %}>Rio Grande do Norte</option>
-        <option value="RS" {% if imovel.fk_endereco.uf_endereco == "RS" %}selected{% endif %}>Rio Grande do Sul</option>
-        <option value="RO" {% if imovel.fk_endereco.uf_endereco == "RO" %}selected{% endif %}>Rondônia</option>
-        <option value="RR" {% if imovel.fk_endereco.uf_endereco == "RR" %}selected{% endif %}>Roraima</option>
-        <option value="SC" {% if imovel.fk_endereco.uf_endereco == "SC" %}selected{% endif %}>Santa Catarina</option>
-        <option value="SP" {% if imovel.fk_endereco.uf_endereco == "SP" %}selected{% endif %}>São Paulo</option>
-        <option value="SE" {% if imovel.fk_endereco.uf_endereco == "SE" %}selected{% endif %}>Sergipe</option>
-        <option value="TO" {% if imovel.fk_endereco.uf_endereco == "TO" %}selected{% endif %}>Tocantins</option>
-    </select>
- <div id="alert-doc">
-    <p id="alert-cep"></p>
- </div>
-    <label for="cep">CEP</label>
-    <input required type="text" name="cep" id="cep" value="{{imovel.fk_endereco.cep_endereco}}">
+					<div class="d-flex align-items-center mb-2">
+						<label class="col-3 form-label px-2 m-0" for="clientes">Proprietário</label>
+						<span class="col-9">
+							<select class="form-select" name="fk_proprietario" id="clientes">
+								{% for cliente in clientes  %}
+								<option value="{{ cliente.id }}"
+									{% if cliente.id == imovel.fk_proprietario_id %}selected{% endif %}>
+									{{ cliente.nome_cliente }}
+								</option>
+								{% endfor %}
+							</select>
+						</span>
+					</div>
 
-    <label for="logradouro">Logradouro</label>
-    <input required type="text" name="logradouro" id="logradouro" value="{{imovel.fk_endereco.logradouro_endereco}}">
+					<div class="d-flex align-items-center mb-4">
+						<label class="col-3 form-label px-2 m-0" for="corretor">Corretor</label>
+						<span class="col-9">
+							<select class="form-select" name="fk_corretor" id="clientes">
+								{% for corretor in corretores  %}
+								<option value="{{ corretor.id }}"
+									{% if corretor.id == imovel.fk_corretor %}selected{% endif %}>
+									{{ corretor.nome_corretor }}
+								</option>
+								{% endfor %}
+							</select>
+						</span>
+					</div>
 
-    <label for="numero">Número</label>
-    <input required type="number" name="numero" id="numero" value="{{imovel.fk_endereco.numero_endereco}}">
+					<div class="d-flex align-items-center mb-2">
+						<!-- <div id="alert-doc">
+                            <p id="alert-cep"></p>
+                        </div> -->
+						<label class="col-3 form-label px-2 m-0" style="vertical-align: middle;" for="cep">CEP</label>
+						<span class="col-5">
+							<input class="form-control" required type="text" name="cep" id="cep"
+								value="{{imovel.fk_endereco.cep_endereco}}">
+						</span>
+					</div>
 
-    <label for="bairro">Bairro</label>
-    <input required type="text" name="bairro" id="bairro" value="{{imovel.fk_endereco.bairro_endereco}}">
+					<div class="d-flex align-items-center mb-2">
+						<label class="col-3 form-label px-2 m-0" for="uf">UF</label>
+						<span class="col-5">
+							<select class="form-select" required name="uf" id="uf">
+								<option value="AC" {% if imovel.fk_endereco.uf_endereco == "AC" %}selected{% endif %}>
+									Acre</option>
+								<option value="AL" {% if imovel.fk_endereco.uf_endereco == "AL" %}selected{% endif %}>
+									Alagoas</option>
+								<option value="AP" {% if imovel.fk_endereco.uf_endereco == "AP" %}selected{% endif %}>
+									Amapá</option>
+								<option value="AM" {% if imovel.fk_endereco.uf_endereco == "AM" %}selected{% endif %}>
+									Amazonas</option>
+								<option value="BA" {% if imovel.fk_endereco.uf_endereco == "BA" %}selected{% endif %}>
+									Bahia</option>
+								<option value="CE" {% if imovel.fk_endereco.uf_endereco == "CE" %}selected{% endif %}>
+									Ceará</option>
+								<option value="DF" {% if imovel.fk_endereco.uf_endereco == "DF" %}selected{% endif %}>
+									Distrito Federal</option>
+								<option value="ES" {% if imovel.fk_endereco.uf_endereco == "ES" %}selected{% endif %}>
+									Espírito Santo</option>
+								<option value="GO" {% if imovel.fk_endereco.uf_endereco == "GO" %}selected{% endif %}>
+									Goiás</option>
+								<option value="MA" {% if imovel.fk_endereco.uf_endereco == "MA" %}selected{% endif %}>
+									Maranhão</option>
+								<option value="MT" {% if imovel.fk_endereco.uf_endereco == "MT" %}selected{% endif %}>
+									Mato Grosso</option>
+								<option value="MS" {% if imovel.fk_endereco.uf_endereco == "MS" %}selected{% endif %}>
+									Mato Grosso do Sul</option>
+								<option value="MG" {% if imovel.fk_endereco.uf_endereco == "MG" %}selected{% endif %}>
+									Minas Gerais</option>
+								<option value="PA" {% if imovel.fk_endereco.uf_endereco == "PA" %}selected{% endif %}>
+									Pará</option>
+								<option value="PB" {% if imovel.fk_endereco.uf_endereco == "PB" %}selected{% endif %}>
+									Paraíba</option>
+								<option value="PR" {% if imovel.fk_endereco.uf_endereco == "PR" %}selected{% endif %}>
+									Paraná</option>
+								<option value="PE" {% if imovel.fk_endereco.uf_endereco == "PE" %}selected{% endif %}>
+									Pernambuco</option>
+								<option value="PI" {% if imovel.fk_endereco.uf_endereco == "PI" %}selected{% endif %}>
+									Piauí</option>
+								<option value="RJ" {% if imovel.fk_endereco.uf_endereco == "RJ" %}selected{% endif %}>
+									Rio de Janeiro</option>
+								<option value="RN" {% if imovel.fk_endereco.uf_endereco == "RN" %}selected{% endif %}>
+									Rio Grande do Norte</option>
+								<option value="RS" {% if imovel.fk_endereco.uf_endereco == "RS" %}selected{% endif %}>
+									Rio Grande do Sul</option>
+								<option value="RO" {% if imovel.fk_endereco.uf_endereco == "RO" %}selected{% endif %}>
+									Rondônia</option>
+								<option value="RR" {% if imovel.fk_endereco.uf_endereco == "RR" %}selected{% endif %}>
+									Roraima</option>
+								<option value="SC" {% if imovel.fk_endereco.uf_endereco == "SC" %}selected{% endif %}>
+									Santa Catarina</option>
+								<option value="SP" {% if imovel.fk_endereco.uf_endereco == "SP" %}selected{% endif %}>
+									São Paulo</option>
+								<option value="SE" {% if imovel.fk_endereco.uf_endereco == "SE" %}selected{% endif %}>
+									Sergipe</option>
+								<option value="TO" {% if imovel.fk_endereco.uf_endereco == "TO" %}selected{% endif %}>
+									Tocantins</option>
+							</select>
+						</span>
+					</div>
 
-    <label for="cidade">Cidade</label>
-    <input required type="text" name="cidade" id="cidade" value="{{imovel.fk_endereco.cidade_endereco}}">
+					<div class="d-flex align-items-center mb-2">
+						<label class="col-3 form-label px-2 m-0" for="logradouro">Logradouro</label>
+						<span class="col-9">
+							<input class="col-9 form-control" required type="text" name="logradouro" id="logradouro"
+								value="{{imovel.fk_endereco.logradouro_endereco}}">
+						</span>
+					</div>
 
-    <label for="complemento">Complemento</label>
-    <input required type="text" name="complemento" id="complemento" value="{{imovel.complemento_endereco_imovel}}">
-    
+					<div class="d-flex align-items-center mb-2">
+						<label class="col-3 form-label px-2 m-0" for="bairro">Bairro</label>
+						<span class="col-4">
+							<input class="col-4 form-control" required type="text" name="bairro" id="bairro">
+						</span>
 
+						<label class="col-3 form-label px-2 m-0" for="numero">Número</label>
+						<span class="col-2">
+							<input class="col-2 form-control" required type="number" name="numero" id="numero"
+								value="{{imovel.fk_endereco.bairro_endereco}}">
+						</span>
+					</div>
 
-<h2>Informações complementares</h2>
-<p>Dados opcionais que ajudam na busca e escolha do seu imóvel</p>
+					<div class="d-flex align-items-center mb-2">
+						<label class="col-3 form-label px-2 m-0" for="cidade">Cidade</label>
+						<span class="col-4">
+							<input class="col-4 form-control" required type="text" name="cidade" id="cidade"
+								value="{{imovel.fk_endereco.cidade_endereco}}">
+						</span>
 
-    <h3>Número de:</h3>
+						<label class="col-3 form-label px-2 m-0" for="complemento">Complemento</label>
+						<span class="col-2">
+							<input class="form-control" required type="text" name="complemento"
+								value="{{imovel.complemento_endereco_imovel}}">
+						</span>
+					</div>
 
-    <label for="n_quarto">Quartos</label>
-    <input type="number" name="n_quarto" id="n_quarto" value="{{imovel.num_quarto_imovel}}">
-
-    <label for="n_suite">Suítes</label>
-    <input type="number" name="n_suite" id="n_suite"  value="{{imovel.num_suite_imovel}}">
-
-    <label for="n_banheiro">Banheiros</label>
-    <input type="number" name="n_banheiro" id="n_banheiro"  value="{{imovel.num_banheiro_imovel}}">
-
-    <label for="n_garagem">Vagas de garagem</label>
-    <input type="number" name="n_garagem" id="n_garagem" value="{{imovel.num_garagem_imovel}}">
-
-    <hr>
-
-    <label for="area_total">Área total (m²)</label>
-    <input type="number" name="area_total" id="area_total"  value="{{imovel.area_total_imovel}}">
-
-    <label for="preco_imovel">Preço</label>
-    <input type="number" name="preco_imovel" id="preco_imovel"  value="{{imovel.preco_imovel}}">
-
-    <label for="iptu">IPTU</label>
-    <input type="number" name="iptu" id="iptu" >
-
-    <label for="condominio">Condomínio</label>
-    <select name="condominio" id="condominio">
-		
-	</select>
-
-    <button type="submit" class="btn btn-primary">Cadastrar novo condomínio</button>
-
-    <label for="preco_condominio">Preço do condomínio</label>
-    <input type="number" name="preco_condominio" id="preco_condominio">
-
-    <h2>Infraestrutura</h2>
-    {% for infra in infra_imoveis %}
-    <input value="{{infra.id}}" type="checkbox" {% if infra.id in infra_salvo %} checked {% endif %} name="new_infras[]">
-    
-    <label>{{infra.nome_infraestrutura_imovel}}</label>
-    {% endfor %}
+				</div>
+			</div>
 
 
-    <input type="file" name="novas_fotos[]" id="novas_fotos" multiple accept="image/*">
-    
-    <!-- Lista de fotos existentes com opção para editar ou remover -->
-    <h3>Fotos Atuais:</h3>
-    {% for foto in imagem %}
-        <div>
-            <img src="{{ foto.url_foto_imovel.url }}"  style="height:400px; width=300px;" alt="Foto do Imóvel">
-            <input type="checkbox" name="remover_foto[]" value="{{ foto.id }}"> Remover
-        </div>
-    {% endfor %}
-    <button class="btn btn-success" type="submit">Editar</button>
-</form>
+
+			<div id="complemento" class="tab-pane fade">
+				<h2>Informações complementares</h2>
+				<p>Dados opcionais que ajudam na busca e escolha do seu imóvel</p>
+
+				<div class="mx-5">
+					<div class="d-flex align-items-center mb-2">
+						<label class="col-3 form-label px-2 m-0" for="n_quarto">Quartos</label>
+						<span class="col-3">
+							<input class="form-control" type="number" name="n_quarto" id="n_quarto"
+								value="{{imovel.num_quarto_imovel}}">
+						</span>
+
+						<label class="col-3 form-label px-2 m-0" for="n_suite">Suítes</label>
+						<span class="col-3">
+							<input class="form-control" type="number" name="n_suite" id="n_suite"
+								value="{{imovel.num_suite_imovel}}">
+						</span>
+					</div>
+
+					<div class="d-flex align-items-center mb-4">
+
+						<label class="col-3 form-label px-2 m-0" for="n_banheiro">Banheiros</label>
+						<span class="col-3">
+							<input class="form-control" type="number" name="n_banheiro" id="n_banheiro"
+								value="{{imovel.num_banheiro_imovel}}">
+						</span>
+
+						<label class="col-3 form-label px-2 m-0" for="n_garagem">Vagas de
+							garagem</label>
+						<span class="col-3">
+							<input class="form-control" type="number" name="n_garagem" id="n_garagem"
+								value="{{imovel.num_garagem_imovel}}">
+						</span>
+					</div>
+
+					<div class="d-flex align-items-center mb-4">
+						<label class="col-3 form-label px-2 m-0" for="area_total">Área total
+							(m²)</label>
+						<span class="col-3">
+							<input class="form-control" type="number" name="area_total" id="area_total"
+								value="{{imovel.area_total_imovel}}">
+						</span>
+
+						<label class="col-3 form-label px-2 m-0" for="area_privativa">Área
+							privativa (m²)</label>
+						<span class="col-3">
+							<input class="form-control" type="number" name="area_privativa" id="area_privativa">
+						</span>
+					</div>
+
+					<div class="d-flex align-items-center mb-2">
+						<label class="col-3 form-label px-2 m-0" for="preco_imovel">Preço
+							R$</label>
+						<span class="col-6">
+							<input class="form-control" value="{{imovel.preco_imovel}}" type="text" name="preco_imovel"
+								id="preco_imovel" oninput="this.value = mask(this.value, 'money')">
+						</span>
+					</div>
+
+					<div class="d-flex align-items-center mb-2">
+						<label class="col-3 form-label px-2 m-0" for="iptu">IPTU</label>
+						<span class="col-6">
+							<input class="form-control" type="number" name="iptu" id="iptu">
+						</span>
+					</div>
+
+					<!-- <label class="col-3 form-label px-2 m-0" for="condominio">Condomínio</label>
+                <select name="condominio" id="condominio">
+
+                </select> -->
+
+					<!-- <button type="submit" class="btn btn-primary">Cadastrar novo condomínio</button>
+
+                <label class="col-3 form-label px-2 m-0" for="preco_condominio">Preço do condomínio</label>
+                <input type="number" name="preco_condominio" id="preco_condominio"> -->
+				</div>
+			</div>
+
+
+			<div id="infraestrutura" class="tab-pane fade">
+				<h2>Infraestrutura</h2>
+				<p>Características específicas do imóvel em si</p>
+
+				<div class="mx-5 d-flex flex-wrap">
+					{% for infra in infra_imoveis %}
+					<span class="col-6">
+						<input class="form-check-input" value="{{infra.id}}" type="checkbox"
+							{% if infra.id in infra_salvo %} checked {% endif %} name="new_infras[]">
+						<label class="form-check-label">{{infra.nome_infraestrutura_imovel}}</label>
+					</span>
+					{% endfor %}
+				</div>
+			</div>
+
+			<div id="galeria" class="tab-pane fade">
+				<h2>Galeria</h2>
+				<p>Insira aqui suas fotos (você pode selecionar múltiplas)</p>
+				<input class="form-control" type="file" name="fotos[]" id="fotos" multiple accept="image/*">
+				{% comment %} {% for foto in imagem %}
+				<div>
+					<img src="{{ foto.url_foto_imovel.url }}" style="height:400px; width=300px;" alt="Foto do Imóvel">
+					<input type="checkbox" name="remover_foto[]" value="{{ foto.id }}">Remover</input>
+				</div>
+				{% endfor %} {% endcomment %}
+			</div>
+
+			<button class="btn btn-success align-self-end mt-3" type="submit">Editar</button>
+		</form>
+	</div>
+
+</section>
+
 <script>
-    
-    $(document).ready(function() {
-        $('#cep').mask('00000-000'); // Exemplo de máscara de CEP
+	$(document).ready(function () {
 
-        $('#cep').on('change', function() {
-            // Obter o valor limpo (sem a máscara) do campo CEP
-            var cep = $('#cep').cleanVal();
+		// CEP
+		$('#cep').mask('00000-000'); // Exemplo de máscara de CEP
 
-            if (cep.length === 8) {
-                // var cep = $(this).val();
-                $.ajax({
-                    url: `https://viacep.com.br/ws/${cep}/json`,
-                    method: 'GET',
-                    success: function(data) {
-                        if (!("erro" in data)) {
-                            $('#logradouro').val(data.logradouro);
-                            $('#bairro').val(data.bairro);
-                            $('#cidade').val(data.localidade);
-                            $('#uf').val(data.uf);
-                        } else {
-                            show_disappear("alert-doc","CEP não encontrado", 5000);
-                        }
-                    },
-                    error: function() {
-                        show_disappear("alert-doc","Erro ao buscar CEP", 5000);
-                    }
-                });
-            } else {
-                show_disappear("alert-doc","CEP inválido", 5000);
-            }
-        });
-    });
+		$('#cep').on('change', function () {
+			// Obter o valor limpo (sem a máscara) do campo CEP
+			var cep = $('#cep').cleanVal();
+
+			if (cep.length === 8) {
+				// var cep = $(this).val();
+				$.ajax({
+					url: `https://viacep.com.br/ws/${cep}/json`,
+					method: 'GET',
+					success: function (data) {
+						if (!("erro" in
+								data)) {
+							$('#logradouro')
+								.val(data
+									.logradouro
+								);
+							$('#bairro')
+								.val(data
+									.bairro
+								);
+							$('#cidade')
+								.val(data
+									.localidade
+								);
+							$('#uf').val(data
+								.uf
+							);
+						} else {
+							show_disappear("alert-doc",
+								"CEP não encontrado",
+								5000
+							);
+						}
+					},
+					error: function () {
+						show_disappear("alert-doc",
+							"Erro ao buscar CEP",
+							5000);
+					}
+				});
+			} else {
+				show_disappear("alert-doc", "CEP inválido", 5000);
+			}
+		});
+	});
 </script>
 
-
+<script src="{% static 'js/mask.js' %}"></script>
