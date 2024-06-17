@@ -59,7 +59,8 @@
 <div onclick="esconderMenuLateral();" id="menu-fundo"></div>
 
 <aside id="menu-lateral" class="p-5">
-    <a href="/">Área do Corretor</a>
+    <a class="d-block" href="/">Área do Corretor</a>
+    <a class="d-block" href="/auth_log">Login</a>
 </aside>
 
 <section class="cover d-flex justify-content-center">
@@ -114,132 +115,8 @@
     </div>
 
 </section>
-{% for imovel, foto in imoveis_com_foto %}
 
-<!-- <h1>U -> Update</h1>
-<h1>D -> delete</h1> -->
-
-<article class="border border-black border-2 p-3">
-   
-    <section class="container-fluid">
-        <div class="row"> 
-                    <img class="col-5" src="{{ foto.url_foto_imovel.url }}" alt="Galeria das fotos (carrossel)">
-            <!-- Descrição -->
-            <section class="col-7 flex-grow-1 px-3 py-1">
-                <header class="d-flex justify-content-between">
-                    <span class="h3">{{imovel.fk_endereco.bairro_endereco}}</span>
-                    {% if user.corretor.id ==  imovel.fk_corretor.id or user.admin_id%}
-                    <button class="btn">
-                        <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/edicao/{{imovel.id}}">U</a></i>
-                        <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/deletar/{{imovel.id}}">D</a></i>  <!-- vou ver oq faço com isso aqui depois -->
-                        </button>
-                    {% endif %}
-                </header>
-                <div>
-                    <p>Proprietário: {{imovel.fk_proprietario.nome_cliente}}</p> 
-                    <p>Endereço: {{imovel.fk_endereco.cidade_endereco}} - {{imovel.fk_endereco.bairro_endereco}} | {{imovel.fk_endereco.cep_endereco}}</p>
-                    <p>Preço: <span class="imovel-preco" data-preco="{{imovel.preco_imovel}}"></span></p>
-                   
-                    <p>Corretor: {{imovel.fk_corretor.nome_corretor}}</p>
-                </div>
-            </section>
-
-        </div>
-    </section>
-    <section class="container-fluid">
-        <div class="row">
-
-            <div class="col-5 d-flex justify-content-center align-items-center">
-                <span class="px-1 border border-warning border-3 rounded">
-                    <i class="fa-solid fa-clock-rotate-left"></i>
-                    30+
-                </span>
-            </div>
-
-            <ul class="list-unstyled d-inline-flex col-7 gap-3">
-                {% if imovel.num_quarto_imovel|default:0|add:0 > 1 %}
-                <li>
-                    <div class="d-flex justify-content-center gap-1">
-                        <span class="text-secondary">{{imovel.num_quarto_imovel}}</span>
-                        <i class="fa-solid fa-door-closed"></i>
-                    </div>
-                    <span class="text-secondary">Quartos</span>
-                </li>
-                {% else %}
-                <li>
-                    <div class="d-flex justify-content-center gap-1">
-                        <span class="text-secondary">{{imovel.num_quarto_imovel}}</span>
-                        <i class="fa-solid fa-door-closed"></i>
-                    </div>
-                    <span class="text-secondary">Quarto</span>
-                </li>
-                {% endif %}
-
-                {% if imovel.num_suite_imovel|default:0|add:0 > 1 %}
-                <li>
-                    <div class="d-flex justify-content-center gap-1">
-                        <span class="text-secondary">{{imovel.num_suite_imovel}}</span>
-                        <i class="fa-solid fa-bed"></i>
-                    </div>
-                    <span class="text-secondary">Suítes</span>
-                </li>
-                {% else %}
-                <li>
-                    <div class="d-flex justify-content-center gap-1">
-                        <span class="text-secondary">{{imovel.num_suite_imovel}}</span>
-                        <i class="fa-solid fa-bed"></i>
-                    </div>
-                    <span class="text-secondary">Suíte</span>
-                </li>
-                {% endif %}
-                {% if imovel.num_banheiro_imovel|default:0|add:0 > 1 %}
-                <li>
-                    <div class="d-flex justify-content-center gap-1">
-                        <span class="text-secondary">{{imovel.num_banheiro_imovel}}</span>
-                        <i class="fa-solid fa-toilet"></i>
-                    </div>
-                    <span class="text-secondary">Banheiros</span>
-                </li>
-                {% else %}
-                <li>
-                    <div class="d-flex justify-content-center gap-1">
-                        <span class="text-secondary">{{imovel.num_banheiro_imovel}}</span>
-                        <i class="fa-solid fa-toilet"></i>
-                    </div>
-                    <span class="text-secondary">Banheiro</span>
-                </li>
-                {% endif %}
-                {% if imovel.num_garagem_imovel|default:0|add:0 > 1 %}
-                <li>
-                    <div class="d-flex justify-content-center gap-1">
-                        <span class="text-secondary">{{imovel.num_garagem_imovel}}</span>
-                        <i class="fa-solid fa-car"></i>
-                    </div>
-                    <span class="text-secondary">Vagas</span>
-                </li>
-                {% else %}
-                <li>
-                    <div class="d-flex justify-content-center gap-1">
-                        <span class="text-secondary">{{imovel.num_garagem_imovel}}</span>
-                        <i class="fa-solid fa-car"></i>
-                    </div>
-                    <span class="text-secondary">Vaga</span>
-                </li>
-                {% endif %}
-                <li>
-                    <div class="d-flex justify-content-center gap-1">
-                        <span class="text-secondary">{{imovel.area_total_imovel}}m²</span>
-                    </div>
-                    <span class="text-secondary">Área total</span>
-                </li>
-
-            </ul>
-
-        </div>
-    </section>
-</article>
-{% endfor %}
-
+{% include "components/portal_lista_imovel.html" %}
 <script src="{% static 'js/nav_scroll_portal.js' %}"></script>
 
 {% endblock main %}

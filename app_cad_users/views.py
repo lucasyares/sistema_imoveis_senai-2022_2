@@ -501,11 +501,9 @@ def homepage(request):
     if request.method == 'GET':
         cidade = request.GET.get('cidade_imovel')
         tipo = request.GET.get('tipo_imovel')
-        menor_valor = request.GET.get('menor_imovel')
-        maior_valor = request.GET.get('maior_imovel')
+        menor_valor = request.GET.get('menor_valor')
+        maior_valor = request.GET.get('maior_valor')
         bairro = request.GET.get('bairro_imovel')
-      
-        print('oi')
         imoveis_list = Imovel.objects.all()  # Limit to 10 items for demonstration purposes
         if bairro:
             imoveis_list = imoveis_list.filter(fk_endereco__bairro_endereco=bairro)
@@ -514,9 +512,15 @@ def homepage(request):
         if tipo:
             imoveis_list = imoveis_list.filter(fk_subtipo_imovel__fk_tipo_imovel__nome_tipo_imovel=tipo)
         if menor_valor:
-            imoveis_list = imoveis_list.filter(preco_imovel__gte=menor_valor)
+            menor_valor_number= re.sub(r'\D', '', menor_valor)
+            menor_valor_validado=float(menor_valor_number)/100
+            print(f"Menor Valor Validado: {menor_valor_validado}")
+            imoveis_list = imoveis_list.filter(preco_imovel__gte=menor_valor_validado)
         if maior_valor:
-            imoveis_list = imoveis_list.filter(preco_imovel__lte=maior_valor)
+            maior_valor_number= re.sub(r'\D', '', maior_valor)
+            maior_valor_validado=float(maior_valor_number)/100
+            print(f"Maior Valor Validado: {maior_valor_validado}")
+            imoveis_list = imoveis_list.filter(preco_imovel__lte=maior_valor_validado)
         imoveis_com_foto = []
 
         for imovel in imoveis_list:
@@ -524,7 +528,7 @@ def homepage(request):
             if foto:
                 imoveis_com_foto.append((imovel, foto))
 
-        paginator = Paginator(imoveis_com_foto,23)  # Show 2 items per page
+        paginator = Paginator(imoveis_com_foto,10)  
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
         # endereco = Endereco.objects.values().distinct()
