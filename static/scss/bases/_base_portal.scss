@@ -143,10 +143,22 @@
         }
 
         .bloco-info {
-            :first-child {
+            border-radius: 1em;
+
+            span {
+                display: inline-block;
+            }
+
+            span:first-child {
+                border-radius: 1em 0 0 1em;
+
                 padding: 0.2em;
                 color: white;
                 background-color: $palette-1-4-hex;
+            }
+            span:last-child {
+                vertical-align: middle;
+                font-weight: bold;
             }
         }
     }

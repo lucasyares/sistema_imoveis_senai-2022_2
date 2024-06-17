@@ -152,10 +152,21 @@ input[type=number] {
 .imovel-card__info .preco {
   font-size: 28px;
 }
-.imovel-card__info .bloco-info :first-child {
+.imovel-card__info .bloco-info {
+  border-radius: 1em;
+}
+.imovel-card__info .bloco-info span {
+  display: inline-block;
+}
+.imovel-card__info .bloco-info span:first-child {
+  border-radius: 1em 0 0 1em;
   padding: 0.2em;
   color: white;
   background-color: #2F5932;
+}
+.imovel-card__info .bloco-info span:last-child {
+  vertical-align: middle;
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=style.css.map */

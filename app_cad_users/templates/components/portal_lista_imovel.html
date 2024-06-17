@@ -2,41 +2,54 @@
 
 </aside>
 
-<section class="container d-flex flex-column section-resultados">
+<section class="container d-flex flex-column align-items-center gap-4 section-resultados">
 
-    <article class="d-flex imovel-card col-6">
+    <article class="d-flex imovel-card col-6 shadow rounded-3 overflow-hidden">
         <section class="imovel-card__img col">
             <img src="https://picsum.photos/200/200" alt="img imovel">
         </section>
 
         <section class="imovel-card__info col p-3">
-            <h2 class="mb-0 text-secondary">Apartamento Giardino</h2>
+            <h2 class="mb-1 text-secondary">Apartamento Giardino</h2>
             <p class="preco">R$ 1.000.000,00</p>
             
-            <div class="bloco-info border">
-                <span>Área privativa</span>
+            <div class="bloco-info border mb-2">
+                <span class="p-2">Área privativa</span>
                 <span>120m²</span>
             </div>
             
-            <div class="bloco-info border">
-                <i class="fa-solid fa-door-closed"></i>
-                <span>2</span>
-            </div>
-            <div class="bloco-info border">
-                <i class="fa-solid fa-toilet"></i>
-                <span>2</span>
-            </div>
-            <div class="bloco-info border">
-                <i class="fa-solid fa-bed"></i>
-                <span>1</span>
-            </div>
-            <div class="bloco-info border">
-                <i class="fa-solid fa-car"></i>
-                <span>1</span>
+            <div class="mb-3 d-flex flex-wrap justify-content-between gap-1 justify-content-evenly">
+                <div class="col-5 d-flex bloco-info border">
+                    <span class="col-5 d-flex justify-content-center">
+                        <i class="fa-solid fa-door-closed"></i>
+                    </span>
+                    <span class="col text-center">2</span>
+                </div>
+                <div class="col-5 d-flex bloco-info border">
+                    <span class="col-5 d-flex justify-content-center">
+                        <i class="fa-solid fa-toilet"></i>
+                    </span>
+                    <span class="col text-center">2</span>
+                </div>
+                <div class="col-5 d-flex bloco-info border">
+                    <span class="col-5 d-flex justify-content-center">
+                        <i class="fa-solid fa-bed"></i>
+                    </span>
+                    <span class="col text-center">1</span>
+                </div>
+                <div class="col-5 d-flex bloco-info border">
+                    <span class="col-5 d-flex justify-content-center">
+                        <i class="fa-solid fa-car"></i>
+                    </span>
+                    <span class="col text-center">1</span>
+                </div>
             </div>
 
-            <a href="#">VER MAIS</a>
+            <div class="d-flex justify-content-center">
+                <a class="text-warning-emphasis btn btn-warning" href="#">VER MAIS</a>
+            </div>
         </section>
     </article>
+    
 
 </section>
