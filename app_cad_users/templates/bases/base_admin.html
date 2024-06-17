@@ -30,6 +30,29 @@
             $('#' + elementId).hide();
         }, timeout);
     }
+
+  
+        $(document).ready(function() {
+            // Supondo que `mask` seja uma função que formata o valor monetário
+
+            $('.imovel-preco').each(function() {
+                // Obtendo o preço do atributo data-preco
+                var preco = $(this).data('preco');
+    
+                // Formatando o preço
+                const formatter = new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    minimumFractionDigits: 2,
+                });
+                const precoFormatado = formatter.format(preco);
+    
+                // Exibindo o preço formatado dentro do span
+                $(this).text(precoFormatado);
+            });
+        });
+    
+        
     </script>
     <title>{{titulo}}</title>
 </head>
@@ -43,7 +66,12 @@
                     <div class="dropdown">
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton1">Corretores</button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            
+
+                            {% if user.admin %}
                             <li><a class="dropdown-item" href="/cadastro-corretor">Cadastro</a></li>
+                            {% endif %}
+                       
                             <li><a class="dropdown-item" href="/lista-corretor">Pesquisa</a></li>
                         </ul>
                     </div>

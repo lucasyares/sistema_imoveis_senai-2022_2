@@ -164,7 +164,9 @@ def cadastro_imovel_admin(request):
         area_total_imovel = request.POST.get('area_total')
         preco_imovel = request.POST.get('preco_imovel')
         preco_imovel_n = re.sub(r'\D', '', preco_imovel)
-        preco_imovel_n=int(preco_imovel_n)
+        preco_imovel_n=float(preco_imovel_n)/100
+        
+
         n_quarto = request.POST.get('n_quarto')
         n_suite = request.POST.get('n_suite')
         n_banheiro = request.POST.get('n_banheiro')
@@ -273,7 +275,7 @@ def edicao_imovel_admin(request, id):
         imovel.area_total_imovel = request.POST.get('area_total')
         preco_imovel = request.POST.get('preco_imovel')
         preco_imovel_n = re.sub(r'\D', '', preco_imovel)
-        preco_imovel_n=int(preco_imovel_n)
+        preco_imovel_n=float(preco_imovel_n)/100
         imovel.preco_imovel = preco_imovel_n
         imovel.num_quarto_imovel = request.POST.get('n_quarto')
         imovel.num_suite_imovel = request.POST.get('n_suite')
@@ -359,7 +361,7 @@ def lista_imovel_admin(request):
         if foto:
             imoveis_com_foto.append((imovel, foto))
 
-    paginator = Paginator(imoveis_com_foto, 1)  # Show 2 items per page
+    paginator = Paginator(imoveis_com_foto, 3)  # Show 2 items per page
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
     contexto = {
@@ -481,14 +483,15 @@ def lista_corretor_admin(request):
 
 
 def dashboard(request):
-    clientes = Cliente.objects.all()
-    paginator = Paginator(clientes,1)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-    contexto =  {
-        "titulo": "Dashboard",
-        'clientes':page_obj
-    }
+    if request.method == 'GET':
+        clientes = Cliente.objects.all()
+        paginator = Paginator(clientes,1)
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
+        contexto =  {
+            "titulo": "Dashboard",
+            'clientes':page_obj
+        }
     return render(request, 'pages/admin/dashboard.html', contexto)
 
 
@@ -496,6 +499,34 @@ def dashboard(request):
 
 def homepage(request):
     if request.method == 'GET':
+        cidade = request.GET.get('cidade_imovel')
+        tipo = request.GET.get('tipo_imovel')
+        menor_valor = request.GET.get('menor_imovel')
+        maior_valor = request.GET.get('maior_imovel')
+        bairro = request.GET.get('bairro_imovel')
+      
+        print('oi')
+        imoveis_list = Imovel.objects.all()  # Limit to 10 items for demonstration purposes
+        if bairro:
+            imoveis_list = imoveis_list.filter(fk_endereco__bairro_endereco=bairro)
+        if cidade:
+            imoveis_list = imoveis_list.filter(fk_endereco__cidade_endereco=cidade)
+        if tipo:
+            imoveis_list = imoveis_list.filter(fk_subtipo_imovel__fk_tipo_imovel__nome_tipo_imovel=tipo)
+        if menor_valor:
+            imoveis_list = imoveis_list.filter(preco_imovel__gte=menor_valor)
+        if maior_valor:
+            imoveis_list = imoveis_list.filter(preco_imovel__lte=maior_valor)
+        imoveis_com_foto = []
+
+        for imovel in imoveis_list:
+            foto = FotoImovel.objects.filter(fk_imovel=imovel.id).first()
+            if foto:
+                imoveis_com_foto.append((imovel, foto))
+
+        paginator = Paginator(imoveis_com_foto,23)  # Show 2 items per page
+        page_number = request.GET.get("page")
+        page_obj = paginator.get_page(page_number)
         # endereco = Endereco.objects.values().distinct()
         bairro = Endereco.objects.all()
         tipo = TipoImovel.objects.all()
@@ -522,9 +553,43 @@ def homepage(request):
            'bairros':bairro_unicos_lista,
            'cidades':cidade_unicos_lista,
            'tipos': tipo,
+           'imoveis_com_foto':page_obj
       }
-        return render(request, 'pages/portal/homepage.html', contexto)   
-    return render(request, 'pages/portal/homepage.html', contexto)
+    # else:
+    #     imoveis_queryset = Imovel.objects.all()
+    #     if bairro:
+    #         imoveis_queryset = imoveis_queryset.filter(endereco__bairro=bairro)
+    #     if cidade:
+    #         imoveis_queryset = imoveis_queryset.filter(endereco__cidade=cidade)
+    #     if tipo:
+    #         imoveis_queryset = imoveis_queryset.filter(subtipo_imovel__tipo_imovel__nome_tipo_imovel=tipo)
+    #     if menor_valor:
+    #         imoveis_queryset = imoveis_queryset.filter(valor__gte=menor_valor)
+    #     if maior_valor:
+    #         imoveis_queryset = imoveis_queryset.filter(valor__lte=maior_valor)
+        
+    #     print(imoveis_queryset)
+        
+    #     # Lista para armazenar imóveis com fotos
+    #     imoveis_com_foto = []
+        
+    #     # Iterar sobre os imóveis filtrados e obter a primeira foto de cada
+    #     for imovel in imoveis_queryset:
+    #         foto = FotoImovel.objects.filter(fk_imovel=imovel.id).first()
+    #         if foto:
+    #             imoveis_com_foto.append((imovel, foto))
+    #     paginator = Paginator(imoveis_com_foto,23)  # Show 2 items per page
+    #     page_number = request.GET.get("page")
+    #     page_obj = paginator.get_page(page_number)
+    #     contexto =  {
+    #        "titulo": "DOMINUS — Página principal",
+    #        'bairros':bairro_unicos_lista,
+    #        'cidades':cidade_unicos_lista,
+    #        'tipos': tipo,
+    #        'imoveis_com_foto':page_obj
+    #   }
+    
+    return render(request, 'pages/portal/homepage.html', contexto)   
    
 
 
