@@ -10,6 +10,30 @@
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
     {% block head %}{% endblock head %}
     <title>{{titulo}}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <script defer>
+        $(document).ready(function() {
+            // Supondo que `mask` seja uma função que formata o valor monetário
+
+            $('.imovel-preco').each(function() {
+                // Obtendo o preço do atributo data-preco
+                var preco = $(this).data('preco');
+    
+                // Formatando o preço
+                const formatter = new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    minimumFractionDigits: 2,
+                });
+                const precoFormatado = formatter.format(preco);
+    
+                // Exibindo o preço formatado dentro do span
+                $(this).text(precoFormatado);
+            });
+        });
+    
+        </script>
 </head>
 
 <body>
