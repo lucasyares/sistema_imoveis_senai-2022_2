@@ -102,9 +102,9 @@
                 <div class="searchbox__select d-flex">
                     <label class="py-1 px-2 flex-shrink-0">Faixa de Preço</label>
                     <div id="preco-input-area" class="px-2 d-inline-flex align-items-center">
-                        <input class="col-5" type="text" name="menor_valor">
+                        <input class="col-5" type="text" name="menor_valor" value="R$ 0,00" oninput="this.value = mask(this.value, 'money')">
                         <span class="col-2 align-middle">até</span>
-                        <input class="col-5" type="text" id="preco-last-input" name="maior_valor">
+                        <input class="col-5" type="text" id="preco-last-input" value="R$ 0,00" name="maior_valor" oninput="this.value = mask(this.value, 'money')">
                     </div>
                 </div>
             </div>

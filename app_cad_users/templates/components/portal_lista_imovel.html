@@ -55,18 +55,11 @@
     <div class="pagination">
         <span class="step-links">
             {% if imoveis_com_foto.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ imoveis_com_foto.previous_page_number }}">previous</a>
-            {% endif %}
-    
-            <span class="current">
-                Page {{ imoveis_com_foto.number }} of {{ imoveis_com_foto.paginator.num_pages }}.
-            </span>
-    
-            {% if imoveis_com_foto.has_next %}
-                <a href="?page={{ imoveis_com_foto.next_page_number }}">next</a>
-                <a href="?page={{ imoveis_com_foto.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
+            <a href="?page={{ imoveis_com_foto.previous_page_number }}{% if request.GET.bairro %}&bairro={{ request.GET.bairro }}{% endif %}{% if request.GET.cidade %}&cidade={{ request.GET.cidade }}{% endif %}{% if request.GET.tipo %}&tipo={{ request.GET.tipo }}{% endif %}{% if request.GET.menor_valor %}&menor_valor={{ request.GET.menor_valor }}{% endif %}{% if request.GET.maior_valor %}&maior_valor={{ request.GET.maior_valor }}{% endif %}">Anterior</a>
+        {% endif %}
+        {% if imoveis_com_foto.has_next %}
+            <a href="?page={{ imoveis_com_foto.next_page_number }}{% if request.GET.bairro %}&bairro={{ request.GET.bairro }}{% endif %}{% if request.GET.cidade %}&cidade={{ request.GET.cidade }}{% endif %}{% if request.GET.tipo %}&tipo={{ request.GET.tipo }}{% endif %}{% if request.GET.menor_valor %}&menor_valor={{ request.GET.menor_valor }}{% endif %}{% if request.GET.maior_valor %}&maior_valor={{ request.GET.maior_valor }}{% endif %}">Próxima</a>
+        {% endif %}
         </span>
     </div>
 
