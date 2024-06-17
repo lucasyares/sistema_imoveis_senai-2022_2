@@ -441,8 +441,8 @@ def lista_cliente_admin(request):
 def cadastro_corretor_admin(request):
     if request.method == "GET":
         contexto =  {
-             "titulo": "Cadastro de Corretores"
-         }
+            "titulo": "Cadastro de Corretores"
+        }
         return render(request, 'pages/login_cad.html')
     elif request.method == "POST":
         nome_corretor = request.POST.get('nome_corretor')
@@ -456,7 +456,7 @@ def cadastro_corretor_admin(request):
         if User.objects.filter(email=email).exists():
             return redirect("/")  # Redireciona se o usuário já existir
 
-   
+
         corretor = Corretor.objects.create(
             nome_corretor=nome_corretor,
             foto_corretor=foto_corretor,
@@ -499,7 +499,7 @@ def homepage(request):
         # endereco = Endereco.objects.values().distinct()
         bairro = Endereco.objects.all()
         tipo = TipoImovel.objects.all()
-       
+
 
 # Criando um conjunto vazio para armazenar os endereços únicos
         bairro_unicos = set()
@@ -518,14 +518,19 @@ def homepage(request):
         cidade_unicos_lista = list(cidade_unicos)
 
         contexto =  {
-           "titulo": "DOMINUS — Página principal",
-           'bairros':bairro_unicos_lista,
-           'cidades':cidade_unicos_lista,
-           'tipos': tipo,
-      }
+            "titulo": "DOMINUS — Página principal",
+            'bairros':bairro_unicos_lista,
+            'cidades':cidade_unicos_lista,
+            'tipos': tipo,
+    }
         return render(request, 'pages/portal/homepage.html', contexto)   
     return render(request, 'pages/portal/homepage.html', contexto)
-   
+
+def portal_pesquisa(request):
+    contexto =  {
+            "titulo": "DOMINUS — Resultado de pesquisa"
+    }
+    return render(request, 'pages/portal/pesquisa.html', contexto)
 
 
 #FIM_PÁGINAS

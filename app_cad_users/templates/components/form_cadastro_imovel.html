@@ -2,7 +2,7 @@
 {% load static %}
 
 <section class="d-flex justify-content-center">
-    <div class="form-cadastro col-6 flex-column block-form-imovel">
+    <div class="form-cadastro col-6 flex-column block-form-imovel ">
         <ul class="nav nav-tabs nav-justified" id="myTab">
             <li class="nav-item"><button data-bs-toggle="tab" data-bs-target="#basico"
                     class="nav-link active">Básico</button></li>
@@ -14,7 +14,7 @@
                     class="nav-link">Galeria</button></li>
         </ul>
 
-        <form class="p-3 border border-top-0 tab-content d-flex flex-column form-imovel" method="post" enctype="multipart/form-data"
+        <form class="p-3 border border-top-0 tab-content d-flex flex-column form-imovel shadow" method="post" enctype="multipart/form-data"
             id="myTabContent">
             {% csrf_token %}
             <div id="basico" class="tab-pane fade show active">

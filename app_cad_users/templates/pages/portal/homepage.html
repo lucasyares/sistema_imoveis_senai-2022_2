@@ -2,7 +2,8 @@
 
 {% extends "bases/base_portal.html" %}
 {% load static %}
-{% block header %}
+
+{% comment %} {% block header %}
 
 <nav id="homepage__nav"
     class="homepage__nav position-fixed py-3 px-5 d-flex justify-content-between align-items-center">
@@ -25,6 +26,31 @@
     </button>
 </nav>
 
+{% endblock header %} {% endcomment %}
+
+{% block header %}
+<header>
+    <nav id="homepage__nav"
+        class="homepage__nav position-fixed py-3 px-5 d-flex justify-content-between align-items-center">
+        <a href="/portal">
+            <img id="homepage__nav__logo" class="homepage__nav__logo" src="{% static 'imgs/logo4.png' %}" alt="Logo">
+        </a>
+        <menu class="homepage__nav__links list-unstyled d-inline-flex gap-5">
+            <li class="align-self-center"><a class="text-decoration-none" href="/portal">Imóveis</a></li>
+            <li class="align-self-center"><a class="text-decoration-none" href="/portal">Venda conosco</a></li>
+            <li class="align-self-center"><a class="text-decoration-none" href="/portal">Contato</a></li>
+            <li class="align-self-center"><a class="text-decoration-none" href="/portal">Institucional</a></li>
+        </menu>
+        <button onclick="exibirMenuLateral();" id="btn-menu" class="btn align-self-center">
+            <svg class="homepage__nav__menu" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="grid"
+                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="50px">
+                <path fill="#FFF"
+                    d="M0 72C0 49.9 17.9 32 40 32H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V72zM0 232c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V232zM128 392v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40zM160 72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V72zM288 232v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM160 392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V392zM448 72v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM320 232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V232zM448 392v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40z">
+                </path>
+            </svg>
+        </button>
+    </nav>
+</header>
 {% endblock header %}
 
 
@@ -57,7 +83,7 @@
                         {% for bairro in bairros  %}
                         <option value="">{{bairro}}</option>
                         {% endfor %}
-                    
+
                     </select>
                 </div>
             </div>
@@ -136,5 +162,7 @@
 <p>lol</p>
 <p>lol</p>
 <p>lol</p>
+
+<script src="{% static 'js/nav_scroll_portal.js' %}"></script>
 
 {% endblock main %}

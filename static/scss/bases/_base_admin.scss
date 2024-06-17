@@ -20,6 +20,11 @@
             }
         }
     }
+
+    .a-portal {
+        @include soft-shadow;
+        font: normal $txt-sz-3 $arvo;
+    } 
 }
 
 // .form-imovel {

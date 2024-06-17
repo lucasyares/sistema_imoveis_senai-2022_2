@@ -28,10 +28,15 @@ input[type=number] {
 .main-nav .dropdown .btn:hover {
   background-color: #224026;
 }
+.main-nav .a-portal {
+  filter: drop-shadow(2px 2px 5px #111);
+  font: normal 16px "Arvo", serif;
+}
 
 .homepage__nav {
   width: 100%;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.8666666667), rgba(0, 0, 0, 0));
+  right: 0;
   transition: 0.3s;
   z-index: 1;
 }
@@ -135,6 +140,22 @@ input[type=number] {
   font-size: 24px;
   font-weight: bold;
   color: #224026;
+}
+
+.imovel-card__img img {
+  width: 100%;
+  height: 100%;
+}
+.imovel-card * {
+  font: normal 20px "Arvo", serif;
+}
+.imovel-card__info .preco {
+  font-size: 28px;
+}
+.imovel-card__info .bloco-info :first-child {
+  padding: 0.2em;
+  color: white;
+  background-color: #2F5932;
 }
 
 /*# sourceMappingURL=style.css.map */
