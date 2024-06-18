@@ -27,7 +27,7 @@ urlpatterns = [
     #* URLs orientadas ao cliente
     path("portal/", views.homepage, name="homepage"),
     path("pesquisa/", views.portal_pesquisa, name="portal_pesquisa"),
-    path("pesquisa/imovel", views.portal_imovel, name="portal_imovel"),
+    path("pesquisa/imovel/<int:id>", views.portal_imovel, name="portal_imovel"),
 
     
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  #Permite a imagem aparecer

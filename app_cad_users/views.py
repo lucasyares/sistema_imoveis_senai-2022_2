@@ -543,9 +543,15 @@ def portal_pesquisa(request):
     }
     return render(request, 'pages/portal/pesquisa.html', contexto)
 
-def portal_imovel(request):
+def portal_imovel(request, id):
+    imovel = Imovel.objects.filter(id=id)
+    assoc = AssocInfraImovel.objects.filter(fk_imovel=id)
+    fotos = FotoImovel.objects.filter(fk_imovel=id)
     contexto =  {
-            "titulo": "DOMINUS — Imóvel"
+            "titulo": "DOMINUS — Imóvel",
+            "imovel":imovel,
+            "assoc": assoc,
+            'fotos':fotos,
     }
     return render(request, 'pages/portal/imovel.html', contexto)
     
