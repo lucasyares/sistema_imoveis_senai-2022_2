@@ -1,71 +1,42 @@
-<!-- TODO 1 >> colocar informações relevantes para a pesquisa de um imóvel -->
-
+<br>
 <form action="#" method="get">
-    <!-- ? será que é uma boa usar GET?-->
+    <div class="container-fluid border border-dark rounded p-4">
+        <h2 class="mb-4">Pesquisa de Imóveis</h2>
 
-    <div class="container-fluid border border-dark rounded">
-
-        <div class="row">
-            <label class="col-2" for="id">ID</label>
-            <input class="col-2" type="number" name="id" id="id">
+        <div class="form-group row">
+            <label for="id" class="col-sm-2 col-form-label">ID</label>
+            <div class="col-sm-2">
+                <input type="number" class="form-control" id="id" name="id_buscado">
+            </div>
         </div>
-
-        <div class="row">
-            <label for="menor_preco">Faixa de preço</label>
-            <input class="col-5" type="number" name="menor_preco" id="menor_preco">
-            <span class="col-2 text-center">até</span>
-            <input class="col-5" type="number" name="maior_preco" id="maior_preco">
+        <div class="form-group row">
+            <label for="id" class="col-sm-5 col-form-label">Corretor vinculado</label>
+            <div class="col-sm-4">
+                <input type="tel" class="form-control " id="c" name="corretor_buscado">
+            </div>
         </div>
-
-        <div class="row">
-            <label class="col-5" for="n_quarto">Quartos</label>
-            <div class="col-2"></div>
-            <label class="col-5" for="n_suite">Suítes</label>
-
-            <input class="col-5" type="number" name="n_quarto" id="n_quarto">
-            <div class="col-2"></div>
-            <input class="col-5" type="number" name="n_suite" id="n_suite">
+        <div class="form-group row">
+            <label for="id" class="col-sm-5 col-form-label">Proprietario vinculado            </label>
+            <div class="col-sm-4">
+                <input type="tel" class="form-control " id="p" name="proprietario_buscado">
+            </div>
         </div>
-
-        <div class="row">
-            <label class="col-5" for="n_banheiro">Banheiros</label>
-            <div class="col-2"></div>
-            <label class="col-5" for="n_garagem">Vagas de garagem</label>
-
-            <input class="col-5" type="number" name="n_banheiro" id="n_banheiro">
-            <div class="col-2"></div>
-            <input class="col-5" type="number" name="n_garagem" id="n_garagem">
+        {% if  imoveis_com_foto|length < 1 %} 
+        <span class="text-muted" id="num_resultados">Nenhum resultado encontrado</span>
+        {% else %}
+        {% comment %} <span class="text-muted" id="num_resultados">Resultados encontrados: {{imoveis_html.imoveis_s}}</span> {% endcomment %}
+        <div>
+            <span class="span_btn_resultados">Número de resultados:</span>
+            <ul class="list-unstyled ul_btn_resultados d-inline-flex">
+                <li class="mx-1">
+                    <button class="btn btn-outline-secondary">{{imoveis_com_foto|length}}</button>
+            </ul>
         </div>
-
-        <div class="row">
-            <label class="col-3" for="bairro">Bairro</label>
-            <input class="col-4" type="text" name="bairro" id="bairro">
+        {% endif %}
+        <div class="form-group row">
+            <div class="col-sm-10 offset-sm-2  d-flex justify-content-end">
+                <button type="submit" class="btn btn-primary">Pesquisar</button>
+            </div>
         </div>
-
-        <div class="row">
-            <label class="col-3" for="cidade">Cidade</label>
-            <input class="col-4" type="text" name="cidade" id="cidade">
-        </div>
-
-        <div class="row">
-            <label for="endereco">Endereço</label>
-            <select class="col-4" name="endereco" id="endereco">
-        		<option value="alameda">Alameda</option>
-        		<option value="avenida">Avenida</option>
-        		<option value="estrada">Estrada</option>
-        		<option value="ladeira">Ladeira</option>
-        		<option value="loteamento">Loteamento</option>
-        		<option value="morro">Morro</option>
-        		<option value="parque">Parque</option>
-        		<option value="praca">Praça</option>
-        		<option value="rodovia">Rodovia</option>
-        		<option value="rua">Rua</option>
-        		<option value="travessa">Travessa</option>
-        		<option value="vale">Vale</option>
-        		<option value="via">Via</option>
-        	</select>
-            <input class="col-8" type="text" name="logradouro" id="logradouro">
-        </div>
-
     </div>
 </form>

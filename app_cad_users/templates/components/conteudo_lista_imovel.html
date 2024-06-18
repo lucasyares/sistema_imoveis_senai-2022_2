@@ -2,30 +2,7 @@
 <!-- TODO 2 >> usar um for para exibir os imóveis cadastrados -->
 <!-- TODO 3 >> exibir as informações do imóvel em cada item -->
 
-<header class="mb-3">
-    <div class="d-flex justify-content-around">
-        {% if imoveis_html.imoveis_s < 1 %} 
-        <span class="text-muted" id="num_resultados">Nenhum resultado encontrado</span>
-        {% else %}
-        {% comment %} <span class="text-muted" id="num_resultados">Resultados encontrados: {{imoveis_html.imoveis_s}}</span> {% endcomment %}
-        <div>
-            <span class="span_btn_resultados">Número de resultados:</span>
-            <ul class="list-unstyled ul_btn_resultados d-inline-flex">
-                <li class="mx-1">
-                    <button class="btn btn-outline-secondary">10</button>
-                </li>
-                <li class="mx-1">
-                    <button class="btn btn-outline-secondary">25</button>
-                </li>
-                <li class="mx-1">
-                    <button class="btn btn-outline-secondary">50</button>
-                </li>
-            </ul>
-        </div>
-        {% endif %}
-    </div>
 
-</header>
 <!-- Seção da listagem dos imóveis -->
 <section class="d-flex flex-column">
  
@@ -53,10 +30,10 @@
 
     <!-- <h1>U -> Update</h1>
     <h1>D -> delete</h1> -->
-
+<br>
     <article class="border border-black border-2 p-3">
        
-        <section class="container-fluid">
+        <section class="container-fluid p-2">
             <div class="row"> 
                         <img class="col-5" src="{{ foto.url_foto_imovel.url }}" alt="Galeria das fotos (carrossel)">
                 <!-- Descrição -->
@@ -65,9 +42,9 @@
                         <span class="h3">{{imovel.fk_endereco.bairro_endereco}}</span>
                         {% if user.corretor.id ==  imovel.fk_corretor.id or user.admin_id%}
                         <button class="btn">
-                            <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/edicao/{{imovel.id}}">U</a></i>
-                            <i class="fa-solid fa-ellipsis fa-2x text-secondary"><a href="/deletar/{{imovel.id}}">D</a></i>  <!-- vou ver oq faço com isso aqui depois -->
-                            </button>
+                         <a style="margin-right:20px;" href="/edicao/{{imovel.id}}"> <i class="fas fa-pencil-alt fa-2x text-secondary"></i></a>
+                            <a href="/deletar/{{imovel.id}}">  <i class="fas fa-trash-alt fa-2x text-secondary" ></i></a>  <!-- vou ver oq faço com isso aqui depois -->
+                        </button>
                         {% endif %}
                     </header>
                     <div>
@@ -84,10 +61,7 @@
             <div class="row">
 
                 <div class="col-5 d-flex justify-content-center align-items-center">
-                    <span class="px-1 border border-warning border-3 rounded">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        30+
-                    </span>
+        
                 </div>
 
                 <ul class="list-unstyled d-inline-flex col-7 gap-3">
@@ -172,23 +146,38 @@
             </div>
         </section>
     </article>
-    <div class="pagination">
-        <span class="step-links">
+    {% endfor %}
+    <br>
+    {% if imoveis_com_foto|length > 1 %}
+    <div class="pagination d-flex justify-content-center">
+        <ul class="pagination justify-content-center">
+    
             {% if imoveis_com_foto.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ imoveis_com_foto.previous_page_number }}">previous</a>
+            <li class="page-item">
+                <a class="page-link" href="?page=1">&laquo; first</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ imoveis_com_foto.previous_page_number }}">previous</a>
+            </li>
             {% endif %}
     
-            <span class="current">
-                Page {{ imoveis_com_foto.number }} of {{ imoveis_com_foto.paginator.num_pages }}.
-            </span>
+            <li class="page-item disabled">
+                <span class="page-link">
+                    Page {{ imoveis_com_foto.number }} of {{ imoveis_com_foto.paginator.num_pages }}.
+                </span>
+            </li>
     
             {% if imoveis_com_foto.has_next %}
-                <a href="?page={{ imoveis_com_foto.next_page_number }}">next</a>
-                <a href="?page={{ imoveis_com_foto.paginator.num_pages }}">last &raquo;</a>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ imoveis_com_foto.next_page_number }}">next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ imoveis_com_foto.paginator.num_pages }}">last &raquo;</a>
+            </li>
             {% endif %}
-        </span>
+    
+        </ul>
     </div>
-    {% endfor %}
+    {% endif %}
     
 </section>

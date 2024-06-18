@@ -95,6 +95,17 @@
                         </ul>
                     </div>
                 </li>
+                <div class="dropdown">
+                    <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton4">Conta</button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
+                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        {% if user.is_authenticated and user.admin %}
+                        <li><a class="dropdown-item" href="/cadastro-admin">Cadastrar admin</a></li>
+                        {% endif %}
+              
+                    </ul>
+                </div>
+            </li>
                 <li>
                     <a class="btn btn-secondary a-portal" href="/portal">Retornar ao Portal</a>
                 </li>

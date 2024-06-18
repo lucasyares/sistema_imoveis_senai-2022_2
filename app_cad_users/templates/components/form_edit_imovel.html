@@ -277,16 +277,16 @@
 				</div>
 			</div>
 
-			<div id="galeria" class="tab-pane fade">
+			<div id="galeria" class="tab-pane fade  ">
 				<h2>Galeria</h2>
 				<p>Insira aqui suas fotos (você pode selecionar múltiplas)</p>
 				<input class="form-control" type="file" name="fotos[]" id="fotos" multiple accept="image/*">
-				{% comment %} {% for foto in imagem %}
-				<div>
+				<div class="d-flex flex-column">
+				 {% for foto in imagem %}
 					<img src="{{ foto.url_foto_imovel.url }}" style="height:400px; width=300px;" alt="Foto do Imóvel">
-					<input type="checkbox" name="remover_foto[]" value="{{ foto.id }}">Remover</input>
+					<input type="checkbox" name="remover_foto[]" class="d-flex" value="{{ foto.id }}">Remover</input>
+					{% endfor %} 
 				</div>
-				{% endfor %} {% endcomment %}
 			</div>
 
 			<button class="btn btn-success align-self-end mt-3" type="submit">Editar</button>

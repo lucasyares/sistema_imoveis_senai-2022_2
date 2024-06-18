@@ -44,7 +44,7 @@
         <menu class="homepage__nav__links list-unstyled d-inline-flex gap-5">
             <li class="align-self-center"><a class="text-decoration-none" href="/portal">Imóveis</a></li>
             <li class="align-self-center"><a class="text-decoration-none" href="/portal">Venda conosco</a></li>
-            <li class="align-self-center"><a class="text-decoration-none" href="/portal">Contato</a></li>
+            <li class="align-self-center"><a class="text-decoration-none" href="/contato">Contato</a></li>
             <li class="align-self-center"><a class="text-decoration-none" href="/portal">Institucional</a></li>
         </menu>
         <button onclick="exibirMenuLateral();" id="btn-menu" class="btn align-self-center">
@@ -66,7 +66,13 @@
 
 <aside id="menu-lateral" class="p-5">
     <a class="d-block" href="/">Área do Corretor</a>
+    {% if user.is_authenticated %}
+    <a class="d-block" href="/logout">Logout</a>
+    {% else %}
+    
+    <a class="d-block" href="/cadastro-cliente">Cadastrar-se</a>
     <a class="d-block" href="/auth_log">Login</a>
+    {% endif %}
 </aside>
 
 <section class="cover d-flex justify-content-center">

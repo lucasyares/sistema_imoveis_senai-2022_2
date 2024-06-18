@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
-from .models import Cliente,TipoCliente, Corretor, Endereco, Imovel,InfraestruturaImovel, SubtipoImovel, FotoImovel, TipoImovel, AssocClienteTipo, AssocInfraImovel
+from .models import Cliente,Admin,TipoCliente, Corretor, Endereco, Imovel,InfraestruturaImovel, SubtipoImovel, FotoImovel, TipoImovel, AssocClienteTipo, AssocInfraImovel
 # from .forms import ImovelForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -16,6 +16,8 @@ from collections import Counter
 from django.core.paginator import Paginator
 from django.db import transaction
 import re
+from django.core.mail import send_mail, BadHeaderError
+
 
 User = get_user_model()
 ##############################################################################################
@@ -297,19 +299,54 @@ def deletar_imovel_admin(request, id):
         endereco.delete()
         foto.delete()
         imovel.delete()
-    return redirect ('/')
+    return redirect ('/imovel')
 
 from django.core.paginator import Paginator
 from django.shortcuts import render
+def cadastro_admin(request):
+    admin_user = request.user
+    if admin_user.is_authenticated and admin_user.admin:
+        if request.method == 'GET':
+            contexto = {
+                'titulo': "ADMIN - CAD"
+            }
+            return render(request, 'pages/cad_admin.html', contexto)
+        else:
+            nome_admin = request.POST.get('nome_admin')
+            email_admin = request.POST.get('email_admin')
+            senha_admin = request.POST.get('senha_admin')
+            foto_admin = request.FILES.get('foto_admin')
+            if User.objects.filter(email=email_admin).exists():
+                return redirect("/")  # Redireciona se o usuário já existir
+            
 
+            admin = Admin.objects.create(
+                    nome_admin=nome_admin,
+                    foto_admin=foto_admin,
+
+                )
+            user = User.objects.create_user(email=email_admin, password=senha_admin, admin=admin)
+            user.admin = admin #Os dados do email e senha vão para user
+            admin.save()
+            return redirect('/')
+    else:
+        return redirect('/')
+
+        
 def lista_imovel_admin(request):
+    
     user_a_c = request.user
     if user_a_c.is_authenticated and (user_a_c.corretor or user_a_c.admin):
-            busca = request.GET.get('search')
-            if busca:
-                imoveis_list = Imovel.objects.filter(Name__icontains=busca)[:10]
-            else:
-                imoveis_list = Imovel.objects.all()  # Limit to 10 items for demonstration purposes
+            id_buscado = request.GET.get('id_buscado')
+            corretor = request.GET.get('corretor_buscado')
+            proprietario = request.GET.get('proprietario_buscado')
+            imoveis_list = Imovel.objects.all()  
+            if id_buscado:
+                imoveis_list = imoveis_list.filter(pk=id_buscado)
+            if corretor:
+                imoveis_list = imoveis_list.filter(fk_corretor__nome_corretor__icontains=corretor)
+            if proprietario:
+                imoveis_list = imoveis_list.filter(fk_proprietario__nome_cliente__icontains=proprietario)
 
             imoveis_com_foto = []
 
@@ -350,7 +387,7 @@ def cadastro_cliente_admin(request):
         if User.objects.filter(email=email).exists():
             return redirect("/")  # Redireciona se o usuário já existir
         user_logado = request.user
-        print(user_logado.corretor.id)
+     
         if user_logado.is_authenticated and user_logado.corretor.id != None:
             corretor = Corretor.objects.get(pk=user_logado.corretor.id)
             estagio_cliente = request.POST.get('estagio_cliente')
@@ -395,10 +432,14 @@ def lista_cliente_admin(request):
     user_a_c = request.user
     if user_a_c.is_authenticated and (user_a_c.corretor or user_a_c.admin):
         user = User.objects.all()
+        cliente_bus = request.GET.get('clientee')
+        if cliente_bus:
+            user = user.filter(cliente__nome_cliente__icontains=cliente_bus)
         contexto =  {
             "titulo": "Lista de Clientes",
             "users":user
         }
+    
         return render(request, 'pages/admin/lista_cliente_admin.html', contexto)
     else:
         return redirect('/')
@@ -544,57 +585,112 @@ def portal_pesquisa(request):
     return render(request, 'pages/portal/pesquisa.html', contexto)
 
 def portal_imovel(request, id):
-    imovel = Imovel.objects.filter(id=id)
-    assoc = AssocInfraImovel.objects.filter(fk_imovel=id)
-    fotos = FotoImovel.objects.filter(fk_imovel=id)
-    contexto =  {
-            "titulo": "DOMINUS — Imóvel",
-            "imovel":imovel,
-            "assoc": assoc,
-            'fotos':fotos,
-    }
-    return render(request, 'pages/portal/imovel.html', contexto)
+    if request.method == 'GET':
+        imovel = Imovel.objects.filter(id=id)
+        assoc = AssocInfraImovel.objects.filter(fk_imovel=id)
+        fotos = FotoImovel.objects.filter(fk_imovel=id)
+        contexto =  {
+                "titulo": "DOMINUS — Imóvel",
+                "imovel":imovel,
+                "assoc": assoc,
+                'fotos':fotos,
+        }
+        return render(request, 'pages/portal/imovel.html', contexto)
+    else:
+        imovel = Imovel.objects.filter(id=id)
+        assoc = AssocInfraImovel.objects.filter(fk_imovel=id)
+        fotos = FotoImovel.objects.filter(fk_imovel=id)
+        contexto =  {
+                "titulo": "DOMINUS — Imóvel",
+                "imovel":imovel,
+                "assoc": assoc,
+                'fotos':fotos,
+        }
+        nome = request.POST.get('nome_contato', '')
+        telefone = request.POST.get('telefone_contato', '')
+        email = request.POST.get('email_contato', '')
+        mensagem = request.POST.get('mensagem_contato', '')
+        id_imovel = id
+
+        # Lógica para enviar o email
+        assunto = 'Contato - Imovel'
+        mensagem_email = f'''
+            Nome: {nome}
+            Telefone: {telefone}
+            Email: {email}
+            imovel: http://127.0.0.1:8000/pesquisa/imovel/{id_imovel}
+            Mensagem:
+            {mensagem}
+            '''
+        remetente = email  # Configurar no settings.py
+        destinatario = [settings.EMAIL_HOST_USER]# Email de destino
+
+        send_mail(assunto, mensagem_email, remetente, destinatario)
+        return render(request, 'pages/portal/imovel.html', contexto)
     
 
 #FIM_PÁGINAS
-
-
-
-
-
-#BOTÕES DE CRIAR, DELETAR E EDITAR e LOGOUT (RESPECTIVAMENTE):
-def NewImovel(request): 
-    user = request.user
-    if user.is_authenticated:
-        imoveis_list = imoveis_s.objects.all()
-        imoveis_html = {'imoveis_s': imoveis_list}
-        criador = request.user # pega o login da pessoa
-        if request.method == 'POST':
-            form = ImovelForm(request.POST, request.FILES)
-            if form.is_valid():
-                imovel = form.save(commit=False)
-                imovel.criador_user = criador # ADD quem criou
-                imovel.save()
-                return render(request, 'pages/admin/lista_imoveis_admin.html', imoveis_html)
-
-        else:
-            form = ImovelForm()
-            return render(request, 'pages/adicionar_imoveis.html', {'form': form})  # Retorna o formulário para preenchimento
+def contato(request):
+    if request.method == 'GET':
+        contexto = {
+            "titulo": "DOMINUS — contato",
+        }
+        return render(request, 'pages/portal/contato.html', contexto)
     else:
-        return redirect("/")
+        nome = request.POST.get('nome_contato', '')
+        telefone = request.POST.get('telefone_contato', '')
+        email = request.POST.get('email_contato', '')
+        mensagem = request.POST.get('mensagem_contato', '')
+        # Lógica para enviar o email
+        assunto = 'Contato - Cliente'
+        mensagem_email = f'''
+            Nome: {nome}
+            Telefone: {telefone}
+            Email: {email}
+            Mensagem:
+            {mensagem}
+            '''
+        remetente = email  # Configurar no settings.py
+        destinatario = [settings.EMAIL_HOST_USER]# Email de destino
 
+        try:
+            send_mail(assunto, mensagem_email, remetente, destinatario)
+        except BadHeaderError:
+            msg = "Erro ao enviar email: cabeçalho inválido."
+            contexto = {
+                "titulo": "DOMINUS — contato",
+                "msgs": msg
+            }
+            return render(request, 'pages/portal/contato.html', contexto)
+        except Exception as e:
+            msg = f"Erro ao enviar email: {str(e)}"
+            contexto = {
+                "titulo": "DOMINUS — contato",
+                "msgs": msg
+            }
+            return render(request, 'pages/portal/contato.html', contexto)
 
-@login_required
-def editarImoveis(request, id): #EDITAR UNIVEL
-    imovel_list = get_object_or_404(imoveis_s, pk=id) #PEGA O IMOVEL PELO ID
-    form = ImovelForm(instance=imovel_list)
-    if request.method == 'POST':
-        form = ImovelForm(request.POST, request.FILES, instance=imovel_list)
-        if form.is_valid():
-            form.save()  # Salve o formulário, isso atualizará automaticamente o objeto imovel_list
-            return redirect('/')
+        msg = "Mensagem enviada com sucesso."
+        contexto = {
+            "titulo": "DOMINUS — contato",
+            "msgs": msg
+        }
+        
+        return render(request, 'pages/portal/contato.html', contexto)
+        
+        return render(request, 'pages/portal/contato.html', contexto)
+    
+def venda_conosco(request):
+    if request.method == 'GET':
+        
+        return
     else:
-        return render(request, 'pages/edit-imovel.html', {'form': form, 'list': imovel_list})
+        return 
+
+
+
+
+
 
 def logout_user(request):
     logout(request)

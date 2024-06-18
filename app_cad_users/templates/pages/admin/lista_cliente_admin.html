@@ -1,21 +1,47 @@
 {% extends "bases/base_admin.html" %}
 
 {% block main %}
+<div class="w-100 d-flex justify-content-center">
+    <h2>Clientes no sistema</h2>
+    
+    
+</div>
+<form action="" method="get">
+    
+    <input type="text" class="form-control" placeholder="Digite o nome do cliente..." aria-label="Pesquisar" name="clientee"aria-describedby="button-addon2">
+   
+</form>
 
-<p>----------------------------------------------------</p>
 {% for user in users %}
-<h1>Conta:</h1>
-<p>ID: {{user.cliente.id}}</p>
-<p>Email: {{user.email}}</p>
-<p>Senha: {{user.password}}</p>
-<p>Nome: {{user.cliente.nome_cliente}}</p>
-{% if user.cliente.telefone_cliente  %}
-<p>Telefone: {{user.cliente.telefone_cliente}}</p>
-{% else %}
-<p>Telefone: Não tem</p>
-{% endif %}
+<br>
+{% if user.cliente %}
+    <article class="border border-black border-2 p-3">
+       
+        <section class="container-fluid p-2">
+            <div class="row"> 
+                        <img class="col-2" src="{{ user.cliente.foto_cliente.url }}" alt="Galeria das fotos (carrossel)">
+                <!-- Descrição -->
+                <section class="col-7 flex-grow-1 px-3 py-1">
+                    <header class="d-flex justify-content-between">
+                        <span class="h3">{{imovel.fk_endereco.bairro_endereco}}</span>
+                    </header>
+                    <div>
+                        <p>ID: {{user.cliente.id}}</p>
+                        <p>Email: {{user.email}}</p>
+                        <p>Nome: {{user.cliente.nome_cliente}}</p>
+                        {% if user.cliente.telefone_cliente  %}
+                        <p>Telefone: {{user.cliente.telefone_cliente}}</p>
+                        {% else %}
+                        <p>Telefone: Não tem</p>
+                        {% endif %}
+                        
+                    </div>
+                </section>
+            </div>
+        </section>
+    </article>
+    {% endif %}
 
-<p>----------------------------------------------------</p>
 {% endfor %}
 
 {% endblock main %}
