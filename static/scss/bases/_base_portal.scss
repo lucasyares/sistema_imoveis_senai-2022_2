@@ -234,6 +234,16 @@
     transform: scale(1.3);
 }
 
+.imovel-contato {
+    h2 {
+        font-size: $txt-sz-7;
+        font-weight: bold;
+    }
+    * {
+        font: normal $txt-sz-4 $arvo;
+    }
+}
+
 .imovel-produto {
     * {
         font: normal $txt-sz-4 $arvo;
