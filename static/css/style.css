@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Kameron:wght@400..700&display=swap");
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -152,21 +153,112 @@ input[type=number] {
 .imovel-card__info .preco {
   font-size: 28px;
 }
-.imovel-card__info .bloco-info {
+
+.bloco-info {
   border-radius: 1em;
 }
-.imovel-card__info .bloco-info span {
+.bloco-info span {
   display: inline-block;
 }
-.imovel-card__info .bloco-info span:first-child {
+.bloco-info > span:first-child {
   border-radius: 1em 0 0 1em;
   padding: 0.2em;
   color: white;
   background-color: #2F5932;
 }
-.imovel-card__info .bloco-info span:last-child {
+.bloco-info span:last-child {
   vertical-align: middle;
   font-weight: bold;
+}
+.bloco-info--icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 50%;
+}
+
+.footer {
+  font: normal 16px "Arvo", serif;
+  display: flex;
+  background-color: #2F5932;
+  align-items: center;
+  margin: auto;
+}
+
+.footerEsquerda {
+  margin-top: 5%;
+  width: 50%;
+  margin-left: 2.5%;
+}
+
+.footerDireita {
+  width: 50%;
+  text-align: center;
+}
+.footerDireita h2 {
+  font-family: "Arvo", serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+.paragrafoFooter { /* FOOTER PARAGRAFO1 */
+  text-align: left;
+  width: 300px;
+  color: white;
+  margin-right: 100px;
+}
+
+.footerLink { /* LINK DO FOOTER - CARRO E INFORMAÇÕES*/
+  color: aliceblue;
+  padding: 16px;
+}
+
+.footerCopyright { /* FOOTER COPYRIGHT */
+  color: silver;
+  margin-top: 5.5%;
+  padding: 0px 0px 40px 0px;
+}
+
+.imgFlex {
+  display: flex;
+  gap: 1.2em;
+  margin-top: 2.5%;
+}
+
+.redeSocial {
+  border: 0;
+  margin-left: 0;
+  font-size: 24px;
+  color: white;
+}
+
+.redeSocial:hover { /* FOOTER REDES SOCIAIS HOVER */
+  transition: 0;
+  background-color: transparent;
+  -webkit-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+  transform: scale(1.3);
+}
+
+.imovel-produto * {
+  font: normal 20px "Arvo", serif;
+}
+.imovel-produto .produto-foto img {
+  max-height: 80vh;
+}
+.imovel-produto .produto-info .tipo {
+  font-size: 28px;
+}
+.imovel-produto .produto-info .preco {
+  font-size: 40px;
+}
+.imovel-produto .produto-info li:before {
+  content: "\f00c"; /* FontAwesome Unicode */
+  font-family: FontAwesome;
+  display: inline-block;
+  margin: 0 0.2em;
+  width: 1.2em;
 }
 
 /*# sourceMappingURL=style.css.map */

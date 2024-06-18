@@ -7,19 +7,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'css/style.css'%}">
     {% block head %}{% endblock head %}
     <title>{{titulo}}</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     <script defer>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Supondo que `mask` seja uma função que formata o valor monetário
 
-            $('.imovel-preco').each(function() {
+            $('.imovel-preco').each(function () {
                 // Obtendo o preço do atributo data-preco
                 var preco = $(this).data('preco');
-    
+
                 // Formatando o preço
                 const formatter = new Intl.NumberFormat('pt-BR', {
                     style: 'currency',
@@ -27,40 +28,38 @@
                     minimumFractionDigits: 2,
                 });
                 const precoFormatado = formatter.format(preco);
-    
+
                 // Exibindo o preço formatado dentro do span
                 $(this).text(precoFormatado);
             });
         });
-    
-        </script>
+    </script>
 </head>
 
 <body>
     {% block header %}
     <header class="sticky-top">
-            <nav id="homepage__nav"
-                class="homepage__nav homepage__nav--pequeno py-1 px-5 d-flex justify-content-between align-items-center">
-                <a href="/portal">
-                    <img id="homepage__nav__logo" class="homepage__nav__logo" src="{% static 'imgs/logo3.png' %}"
-                        alt="Logo">
-                </a>
-                <menu class="homepage__nav__links list-unstyled d-inline-flex gap-5">
-                    <li class="align-self-center"><a class="text-decoration-none" href="/portal">Imóveis</a></li>
-                    <li class="align-self-center"><a class="text-decoration-none" href="/portal">Venda conosco</a></li>
-                    <li class="align-self-center"><a class="text-decoration-none" href="/portal">Contato</a></li>
-                    <li class="align-self-center"><a class="text-decoration-none" href="/portal">Institucional</a></li>
-                </menu>
-                <button onclick="exibirMenuLateral();" id="btn-menu" class="btn align-self-center">
-                    <svg class="homepage__nav__menu" aria-hidden="true" focusable="false" data-prefix="fas"
-                        data-icon="grid" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                        width="50px">
-                        <path fill="#FFF"
-                            d="M0 72C0 49.9 17.9 32 40 32H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V72zM0 232c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V232zM128 392v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40zM160 72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V72zM288 232v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM160 392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V392zM448 72v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM320 232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V232zM448 392v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40z">
-                        </path>
-                    </svg>
-                </button>
-            </nav>
+        <nav id="homepage__nav"
+            class="homepage__nav homepage__nav--pequeno py-1 px-5 d-flex justify-content-between align-items-center">
+            <a href="/portal">
+                <img id="homepage__nav__logo" class="homepage__nav__logo" src="{% static 'imgs/logo3.png' %}"
+                    alt="Logo">
+            </a>
+            <menu class="homepage__nav__links list-unstyled d-inline-flex gap-5">
+                <li class="align-self-center"><a class="text-decoration-none" href="/portal">Imóveis</a></li>
+                <li class="align-self-center"><a class="text-decoration-none" href="/portal">Venda conosco</a></li>
+                <li class="align-self-center"><a class="text-decoration-none" href="/portal">Contato</a></li>
+                <li class="align-self-center"><a class="text-decoration-none" href="/portal">Institucional</a></li>
+            </menu>
+            <button onclick="exibirMenuLateral();" id="btn-menu" class="btn align-self-center">
+                <svg class="homepage__nav__menu" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="grid"
+                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="50px">
+                    <path fill="#FFF"
+                        d="M0 72C0 49.9 17.9 32 40 32H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V72zM0 232c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V232zM128 392v48c0 22.1-17.9 40-40 40H40c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40H88c22.1 0 40 17.9 40 40zM160 72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V72zM288 232v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM160 392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H200c-22.1 0-40-17.9-40-40V392zM448 72v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V72c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40zM320 232c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V232zM448 392v48c0 22.1-17.9 40-40 40H360c-22.1 0-40-17.9-40-40V392c0-22.1 17.9-40 40-40h48c22.1 0 40 17.9 40 40z">
+                    </path>
+                </svg>
+            </button>
+        </nav>
     </header>
     {% endblock header %}
 
@@ -70,11 +69,33 @@
         {% endblock main %}
     </main>
 
-    <footer>
-        {% block footer %}
-        <p>Footer padrão</p>
-        {% endblock footer %}
+    {% block footer %}
+    <footer class="footer">
+        <div class="footerEsquerda">
+            <p class="paragrafoFooter">Agradecemos a preferência, somos especializados em encontrar o lar perfeito
+                para você. Nossa equipe dedicada está sempre disponivel para ajudá-lo.</p>
+            <div class="imgFlex">
+                <a class="redeSocial" href="https://www.facebook.com/"><i class="fa-brands fa-facebook"></i></a>
+                <a class="redeSocial" href="https://www.instagram.com/"><i class="fa-brands fa-instagram"></i></a>
+                <a class="redeSocial" href="https://www.youtube.com.br"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <p class="footerCopyright">
+                Copyright © 2023 Dominus
+            </p>
+        </div>
+        <div class="footerDireita">
+            <h2>Informações</h2>
+            <ul class="list-unstyled d-inline-block">
+                <li class="mb-2"><a class="footerLink" href="SobreNos.html"> Sobre Nós</a></li>
+                <li><a class="footerLink" href="Contato.html"> Contato</a></li>
+            </ul>
+            <ul class="list-unstyled">
+                <li class="mb-2"><span class="footerLink"> Telefone: +55 (47) 3043-8700</span></li>
+                <li><span class="footerLink"> Endereço: Avenida JK, 350 - 2º Andar / Centro Joinville-SC</span></li>
+            </ul>
+        </div>
     </footer>
+    {% endblock footer %}
 
     <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.js' %}"></script>
     <script src="{% static "js/menu_lateral.js" %}"></script>

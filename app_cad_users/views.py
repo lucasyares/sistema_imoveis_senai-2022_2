@@ -597,6 +597,12 @@ def portal_pesquisa(request):
     }
     return render(request, 'pages/portal/pesquisa.html', contexto)
 
+def portal_imovel(request):
+    contexto =  {
+            "titulo": "DOMINUS — Imóvel"
+    }
+    return render(request, 'pages/portal/imovel.html', contexto)
+    
 
 #FIM_PÁGINAS
 
