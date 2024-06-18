@@ -10,17 +10,44 @@
 {% for im in imovel  %}
 <section class="imovel-produto mx-5 my-4">
     <div class="d-flex justify-content-between">
-        <div class="produto-foto col-6">
-            {% for foto in fotos  %}
-            <img class="w-100" src="{{foto.url_foto_imovel.url}}" alt="foto-id={{foto.id}}">
-            {% endfor %}
+        <div data-bs-ride="carousel" id="carouselExampleIndicators" class="produto-foto col-6 carousel slide">
+
+            <div class="carousel-indicators">
+                {% for foto in fotos %}
+                <button type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide-to="{{ forloop.counter0 }}" class="shadow rounded-4 border border-1 border-dark-subtle{% if forloop.first %} active" aria-current="true"
+                    {% endif %} aria-label="Slide {{ forloop.counter }}">
+                </button>
+                {% endfor %}
+            </div>
+
+            <div class="carousel-inner">
+                {% for foto in fotos  %}
+                <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                    <img class="d-block w-100" src="{{foto.url_foto_imovel.url}}" alt="foto-id={{foto.id}}">
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
 
         <div class="col-5 produto-info">
-            <h1 class="tipo">{{im.fk_subtipo_imovel.fk_tipo_imovel.nome_tipo_imovel}} {{im.fk_subtipo_imovel.nome_subtipo_imovel}}</h1>
-            <p class ="preco imovel-preco" data-preco="{{im.preco_imovel}}"></p>
+            <h1 class="tipo">{{im.fk_subtipo_imovel.fk_tipo_imovel.nome_tipo_imovel}}
+                {{im.fk_subtipo_imovel.nome_subtipo_imovel}}</h1>
+            <p class="preco imovel-preco" data-preco="{{im.preco_imovel}}"></p>
 
-            <p class="mb-0">{{im.fk_endereco.bairro_endereco}} | {{im.fk_endereco.cidade_endereco}} — {{im.fk_endereco.uf_endereco}}</p>
+            <p class="mb-0">{{im.fk_endereco.bairro_endereco}} | {{im.fk_endereco.cidade_endereco}} —
+                {{im.fk_endereco.uf_endereco}}</p>
             <p>{{im.fk_endereco.logradouro_endereco}}, {{im.fk_endereco.numero_endereco}}</p>
 
             <div class="d-inline-block bloco-info border mb-4">

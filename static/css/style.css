@@ -123,7 +123,8 @@ input[type=number] {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6666666667);
   position: fixed;
-  z-index: 2;
+  top: 0;
+  z-index: 1022;
 }
 
 #menu-lateral {
@@ -134,7 +135,7 @@ input[type=number] {
   right: -30vw;
   top: 0;
   background-color: #EBE0BB;
-  z-index: 2;
+  z-index: 1022;
 }
 #menu-lateral a {
   font-family: "Arvo", serif;
@@ -175,6 +176,16 @@ input[type=number] {
   align-items: center;
   justify-content: center;
   line-height: 50%;
+}
+
+.imovel-carousel {
+  position: relative;
+  overflow: hidden;
+}
+.imovel-carousel img {
+  position: absolute;
+  top: 20%;
+  left: 20%;
 }
 
 .footer {
