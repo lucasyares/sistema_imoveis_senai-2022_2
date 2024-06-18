@@ -6,7 +6,7 @@ urlpatterns = [
     #rota(forma que o link exibirá), view responsavel(Função executada), nome de referência
     
     path('', views.dashboard, name="dashboard"), #Página principal
-    path('imovel/<int:id>', views.vizualizarImoveis, name="imoveis-view"), #Vizualização geral de um imóvel
+    # path('imovel/<int:id>', views.vizualizarImoveis, name="imoveis-view"), #Vizualização geral de um imóvel
     path('auth_log/', views.login_user, name="login"), #Login
     path('auth_cad/', views.cadastro, name="cadastro"), # Cadastro
     path('Add_Imovel/', views.NewImovel, name="adicionar-imoveis"), #Adicionar Imóvel

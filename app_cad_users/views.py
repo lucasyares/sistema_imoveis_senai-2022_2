@@ -27,20 +27,6 @@ msg = settings.GLOBAL_MESSAGES #Otimização de caracteres
 ##############################################################################################
 # Criação de páginas
 ##############################################################################################
-def index(request): #PÁGINA PRINCIPAL COM O SISTEMA DE BUSCA (IMPLEMENTADO)
-    busca = request.GET.get('search')
-    if busca:
-        imoveis_list = imoveis_s.objects.filter(Name__icontains=busca)[:10]   #PRECISA VALIDAR +
-    else:
-        imoveis_list = imoveis_s.objects.all()
-    user = request.user
-    imoveis_html = {'imoveis_s': imoveis_list, 'user':user} #VARIAVEL QUE EXIBIRÁ OS VALORES
-    return render(request, 'pages/index.html', imoveis_html) 
-
-def vizualizarImoveis(request, id): #VIZUALIZAÇÃO DE UM IMOVEL ESPECIFICO PELO ID
-    imovel_list = get_object_or_404(imoveis_s, pk=id)
-    return render(request, 'pages/list.html',{'list':imovel_list})
-
 
 def login_user(request): #PÁGINA DE LOGIN
     if request.method == "GET": #Requisição GET (abrir a página)
@@ -84,49 +70,8 @@ def cadastro(request): #PÁGINA DE CADASTRO
 
 
 def cadastro_imovel_admin(request):
-    # dados = [
-    # {"nome_subtipo_imovel": "Duplex", "fk_tipo_imovel": 1},
-    # {"nome_subtipo_imovel": "Loft", "fk_tipo_imovel": 1},
-    # {"nome_subtipo_imovel": "Studio", "fk_tipo_imovel": 1},
-    # {"nome_subtipo_imovel": "Quitinete", "fk_tipo_imovel": 1},
-
-    # {"nome_subtipo_imovel": "Plana", "fk_tipo_imovel": 2},
-    # {"nome_subtipo_imovel": "Sobrado", "fk_tipo_imovel": 2},
-    # {"nome_subtipo_imovel": "Geminado", "fk_tipo_imovel": 2},
-
-    # {"nome_subtipo_imovel": "Plana", "fk_tipo_imovel": 3},
-    # {"nome_subtipo_imovel": "Duplex", "fk_tipo_imovel": 3},
-    # {"nome_subtipo_imovel": "Triplex", "fk_tipo_imovel": 3},
-    
-    # # Terreno
-    # {"nome_subtipo_imovel": "Residencial", "fk_tipo_imovel": 4},
-    # {"nome_subtipo_imovel": "Comercial", "fk_tipo_imovel": 4},
-    # {"nome_subtipo_imovel": "Industrial", "fk_tipo_imovel": 4},
-    # {"nome_subtipo_imovel": "Grandes áreas", "fk_tipo_imovel": 4},
-    
-    # # Rural
-    # {"nome_subtipo_imovel": "Chácara", "fk_tipo_imovel": 5},
-    # {"nome_subtipo_imovel": "Sítio", "fk_tipo_imovel": 5},
-    # {"nome_subtipo_imovel": "Fazenda", "fk_tipo_imovel": 5},
-    
-    # # Comercial
-    # {"nome_subtipo_imovel": "Casa", "fk_tipo_imovel": 6},
-    # {"nome_subtipo_imovel": "Loja", "fk_tipo_imovel": 6},
-    # {"nome_subtipo_imovel": "Sala", "fk_tipo_imovel": 6},
-    
-    # # Miscelânia
-    # {"nome_subtipo_imovel": "Galpão", "fk_tipo_imovel": 7},
-    # {"nome_subtipo_imovel": "Condomínio", "fk_tipo_imovel": 7},
-    # # Adicione quantos quiser
-    # ]
-
-    # for dado in dados:
-    #    fk_tipo_imovel_instance = TipoImovel.objects.get(id=dado["fk_tipo_imovel"])
-    #    salvar_rapido = SubtipoImovel(
-    #     nome_subtipo_imovel=dado["nome_subtipo_imovel"],
-    #     fk_tipo_imovel=fk_tipo_imovel_instance
-    #      )
-    #    salvar_rapido.save()
+ user_a_c = request.user
+ if user_a_c.is_authenticated and (user_a_c.corretor or user_a_c.admin):
     if request.method == "GET":
         cliente = Cliente.objects.all()
         subtipo = SubtipoImovel.objects.all()
@@ -235,143 +180,157 @@ def cadastro_imovel_admin(request):
         # foto_imovel.save()
         imovel.save()
         return render(request, 'pages/admin/cadastro_imovel_admin.html')
-
+ else:
+     return redirect('/')
 
 def edicao_imovel_admin(request, id):
     imovel = get_object_or_404(Imovel, id=id)
+    user_a_c = request.user
+    if (user_a_c.is_authenticated and 
+        (user_a_c.admin or 
+         (hasattr(user_a_c, 'corretor') and user_a_c.corretor is not None and user_a_c.corretor.id == imovel.fk_corretor.id))):
+        if request.method == "GET":
+            infra_imovel = InfraestruturaImovel.objects.all()
+            cliente = Cliente.objects.all()
+            corretores = Corretor.objects.all()
+            subtipo = SubtipoImovel.objects.all()
+            tipo = TipoImovel.objects.all()
+            imagem = FotoImovel.objects.filter(fk_imovel=imovel)
+            infra_anteriores = AssocInfraImovel.objects.filter(fk_imovel=id)
+            infra_salvo_ids = [infra.fk_infraestrutura_imovel.id for infra in infra_anteriores]
+            contexto =  {
+                    "titulo": "Edição",
+                    'subtipos': subtipo,
+                    'tipos': tipo,
+                    'clientes': cliente,
+                    'imovel': imovel,
+                    'imagem': imagem,
+                    'corretores':corretores,
+                    'infra_imoveis':infra_imovel,
+                    'infra_salvo':infra_salvo_ids,
+                    }
+            return render(request, 'pages/admin/edicao_imovel_admin.html', contexto)
+        else:
+            endereco = imovel.fk_endereco
+            endereco.uf_endereco = request.POST.get('uf')
+            endereco.logradouro_endereco = request.POST.get('logradouro')
+            endereco.numero_endereco = request.POST.get('numero')
+            endereco.bairro_endereco = request.POST.get('bairro')
+            endereco.cidade_endereco = request.POST.get('cidade')
+            endereco.cep_endereco = request.POST.get('cep')
+            endereco.save()
 
-    if request.method == "GET":
-        infra_imovel = InfraestruturaImovel.objects.all()
-        cliente = Cliente.objects.all()
-        corretores = Corretor.objects.all()
-        subtipo = SubtipoImovel.objects.all()
-        tipo = TipoImovel.objects.all()
-        imagem = FotoImovel.objects.filter(fk_imovel=imovel)
-        infra_anteriores = AssocInfraImovel.objects.filter(fk_imovel=id)
-        infra_salvo_ids = [infra.fk_infraestrutura_imovel.id for infra in infra_anteriores]
-        contexto =  {
-                "titulo": "Edição",
-                'subtipos': subtipo,
-                'tipos': tipo,
-                'clientes': cliente,
-                'imovel': imovel,
-                'imagem': imagem,
-                'corretores':corretores,
-                'infra_imoveis':infra_imovel,
-                'infra_salvo':infra_salvo_ids,
-                 }
-        return render(request, 'pages/admin/edicao_imovel_admin.html', contexto)
+            # Atualiza os campos do imóvel
+            imovel.area_total_imovel = request.POST.get('area_total')
+            preco_imovel = request.POST.get('preco_imovel')
+            preco_imovel_n = re.sub(r'\D', '', preco_imovel)
+            preco_imovel_n=float(preco_imovel_n)/100
+            imovel.preco_imovel = preco_imovel_n
+            imovel.num_quarto_imovel = request.POST.get('n_quarto')
+            imovel.num_suite_imovel = request.POST.get('n_suite')
+            imovel.num_banheiro_imovel = request.POST.get('n_banheiro')
+            imovel.num_garagem_imovel = request.POST.get('n_garagem')
+            imovel.complemento_endereco_imovel = request.POST.get('complemento')
+
+            # Atualiza as chaves estrangeiras
+            cliente_id = int(request.POST.get('fk_proprietario'))
+            corretor_id = int(request.POST.get('fk_corretor'))
+            subtipo_imovel_id = int(request.POST.get('tipo_imovel'))
+            imovel.fk_subtipo_imovel = get_object_or_404(SubtipoImovel, pk=subtipo_imovel_id)
+            imovel.fk_proprietario = get_object_or_404(Cliente, pk=cliente_id)
+            imovel.fk_corretor = get_object_or_404(Corretor, pk=corretor_id)
+
+            # Remove fotos selecionadas para exclusão
+            if 'remover_foto[]' in request.POST:
+                fotos_remover_ids = request.POST.getlist('remover_foto[]')
+                FotoImovel.objects.filter(id__in=fotos_remover_ids).delete()
+
+            # Adiciona novas fotos
+            novas_fotos = request.FILES.getlist('novas_fotos[]')
+            for foto in novas_fotos:
+                FotoImovel.objects.create(fk_imovel=imovel, url_foto_imovel=foto)
+
+            #Edição dos infras
+            infras_ids = request.POST.getlist('new_infras[]')
+            # print(infras_ids)
+            # infras_counter = Counter(infras_ids)
+
+        # Filtra os IDs que aparecem mais de uma vez
+            # repeated_infras_ids = [infra_id for infra_id, count in infras_counter.items() if count > 1]
+            # print(repeated_infras_ids)
+        
+        # Percorre os IDs repetidos e salva no banco de dados
+            infra_imovel_verify = AssocInfraImovel.objects.filter(fk_imovel=imovel)
+            infra_imovel_all = InfraestruturaImovel.objects.all()
+        
+        # IDs das infraestruturas existentes relacionadas ao imóvel
+            existing_infra_ids = set([assoc.fk_infraestrutura_imovel.id for assoc in infra_imovel_verify])
+        
+        # IDs das infraestruturas selecionadas
+            selected_infra_ids = set(infras_ids)
+
+        # Cria novas associações para as infraestruturas selecionadas que ainda não estão relacionadas ao imóvel
+            for infra_id in selected_infra_ids:
+                if infra_id not in existing_infra_ids:
+                    infra = InfraestruturaImovel.objects.get(id=infra_id)
+                AssocInfraImovel.objects.create(fk_imovel=imovel, fk_infraestrutura_imovel=infra)
+        
+        # Remove as associações existentes que não estão mais selecionadas
+            for assoc in infra_imovel_verify:
+                if assoc.fk_infraestrutura_imovel.id not in selected_infra_ids:
+                    assoc.delete()
+            # for infra_id in delete_infras_ids:
+            #     AssocInfraImovel.objects.filter(fk_infraestrutura_imovel__id__in=delete_infras_ids).delete()
+            # Salva o imóvel atualizado
+            imovel.save()
+            return redirect('/imovel')
     else:
-        endereco = imovel.fk_endereco
-        endereco.uf_endereco = request.POST.get('uf')
-        endereco.logradouro_endereco = request.POST.get('logradouro')
-        endereco.numero_endereco = request.POST.get('numero')
-        endereco.bairro_endereco = request.POST.get('bairro')
-        endereco.cidade_endereco = request.POST.get('cidade')
-        endereco.cep_endereco = request.POST.get('cep')
-        endereco.save()
-
-        # Atualiza os campos do imóvel
-        imovel.area_total_imovel = request.POST.get('area_total')
-        preco_imovel = request.POST.get('preco_imovel')
-        preco_imovel_n = re.sub(r'\D', '', preco_imovel)
-        preco_imovel_n=float(preco_imovel_n)/100
-        imovel.preco_imovel = preco_imovel_n
-        imovel.num_quarto_imovel = request.POST.get('n_quarto')
-        imovel.num_suite_imovel = request.POST.get('n_suite')
-        imovel.num_banheiro_imovel = request.POST.get('n_banheiro')
-        imovel.num_garagem_imovel = request.POST.get('n_garagem')
-        imovel.complemento_endereco_imovel = request.POST.get('complemento')
-
-        # Atualiza as chaves estrangeiras
-        cliente_id = int(request.POST.get('fk_proprietario'))
-        corretor_id = int(request.POST.get('fk_corretor'))
-        subtipo_imovel_id = int(request.POST.get('tipo_imovel'))
-        imovel.fk_subtipo_imovel = get_object_or_404(SubtipoImovel, pk=subtipo_imovel_id)
-        imovel.fk_proprietario = get_object_or_404(Cliente, pk=cliente_id)
-        imovel.fk_corretor = get_object_or_404(Corretor, pk=corretor_id)
-
-        # Remove fotos selecionadas para exclusão
-        if 'remover_foto[]' in request.POST:
-            fotos_remover_ids = request.POST.getlist('remover_foto[]')
-            FotoImovel.objects.filter(id__in=fotos_remover_ids).delete()
-
-        # Adiciona novas fotos
-        novas_fotos = request.FILES.getlist('novas_fotos[]')
-        for foto in novas_fotos:
-            FotoImovel.objects.create(fk_imovel=imovel, url_foto_imovel=foto)
-
-        #Edição dos infras
-        infras_ids = request.POST.getlist('new_infras[]')
-        # print(infras_ids)
-        # infras_counter = Counter(infras_ids)
-
-    # Filtra os IDs que aparecem mais de uma vez
-        # repeated_infras_ids = [infra_id for infra_id, count in infras_counter.items() if count > 1]
-        # print(repeated_infras_ids)
-      
-    # Percorre os IDs repetidos e salva no banco de dados
-        infra_imovel_verify = AssocInfraImovel.objects.filter(fk_imovel=imovel)
-        infra_imovel_all = InfraestruturaImovel.objects.all()
-    
-    # IDs das infraestruturas existentes relacionadas ao imóvel
-        existing_infra_ids = set([assoc.fk_infraestrutura_imovel.id for assoc in infra_imovel_verify])
-    
-    # IDs das infraestruturas selecionadas
-        selected_infra_ids = set(infras_ids)
-
-    # Cria novas associações para as infraestruturas selecionadas que ainda não estão relacionadas ao imóvel
-        for infra_id in selected_infra_ids:
-            if infra_id not in existing_infra_ids:
-             infra = InfraestruturaImovel.objects.get(id=infra_id)
-            AssocInfraImovel.objects.create(fk_imovel=imovel, fk_infraestrutura_imovel=infra)
-    
-    # Remove as associações existentes que não estão mais selecionadas
-        for assoc in infra_imovel_verify:
-            if assoc.fk_infraestrutura_imovel.id not in selected_infra_ids:
-                assoc.delete()
-        # for infra_id in delete_infras_ids:
-        #     AssocInfraImovel.objects.filter(fk_infraestrutura_imovel__id__in=delete_infras_ids).delete()
-        # Salva o imóvel atualizado
-        imovel.save()
-        return redirect('/imovel')
-def deletar_imovel_admin(request, id): #DELETAR IMOVEL
+        return redirect('/')
+def deletar_imovel_admin(request, id):
     imovel = get_object_or_404(Imovel, id=id)
-    foto = FotoImovel.objects.filter(fk_imovel=imovel.id)
-    endereco = Endereco.objects.filter(id=imovel.fk_endereco.id)
-    endereco.delete()
-    foto.delete()
-    imovel.delete()
+    user_a_c = request.user
+    if (user_a_c.is_authenticated and 
+        (user_a_c.admin or 
+         (hasattr(user_a_c, 'corretor') and user_a_c.corretor is not None and user_a_c.corretor.id == imovel.fk_corretor.id))):
+        foto = FotoImovel.objects.filter(fk_imovel=imovel.id)
+        endereco = Endereco.objects.filter(id=imovel.fk_endereco.id)
+        endereco.delete()
+        foto.delete()
+        imovel.delete()
     return redirect ('/')
 
 from django.core.paginator import Paginator
 from django.shortcuts import render
 
 def lista_imovel_admin(request):
-    busca = request.GET.get('search')
-    if busca:
-        imoveis_list = Imovel.objects.filter(Name__icontains=busca)[:10]
+    user_a_c = request.user
+    if user_a_c.is_authenticated and (user_a_c.corretor or user_a_c.admin):
+            busca = request.GET.get('search')
+            if busca:
+                imoveis_list = Imovel.objects.filter(Name__icontains=busca)[:10]
+            else:
+                imoveis_list = Imovel.objects.all()  # Limit to 10 items for demonstration purposes
+
+            imoveis_com_foto = []
+
+            for imovel in imoveis_list:
+                foto = FotoImovel.objects.filter(fk_imovel=imovel.id).first()
+                if foto:
+                    imoveis_com_foto.append((imovel, foto))
+
+            paginator = Paginator(imoveis_com_foto, 3)  # Show 2 items per page
+            page_number = request.GET.get("page")
+            page_obj = paginator.get_page(page_number)
+            contexto = {
+                "titulo": "Listar Imóveis",
+                "imoveis_com_foto": page_obj,
+            }
+            return render(request, 'pages/admin/lista_imovel_admin.html', contexto)
     else:
-        imoveis_list = Imovel.objects.all()  # Limit to 10 items for demonstration purposes
-
-    imoveis_com_foto = []
-
-    for imovel in imoveis_list:
-        foto = FotoImovel.objects.filter(fk_imovel=imovel.id).first()
-        if foto:
-            imoveis_com_foto.append((imovel, foto))
-
-    paginator = Paginator(imoveis_com_foto, 3)  # Show 2 items per page
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-    contexto = {
-        "titulo": "Listar Imóveis",
-        "imoveis_com_foto": page_obj,
-    }
-    return render(request, 'pages/admin/lista_imovel_admin.html', contexto)
+        return redirect('/')
 
 
-def cadastro_cliente_admin(request): #INCOMPLETO
+def cadastro_cliente_admin(request): 
     if request.method == "GET":
         # tipos_clientes = TipoCliente.objects.all()
         # corretores = Corretor.objects.all()
@@ -380,8 +339,7 @@ def cadastro_cliente_admin(request): #INCOMPLETO
         #     'corretores': corretores,
         # }
         return render(request, 'pages/login.html')
-
-def cadastro_cliente_sistema(request):
+    else:
         nome_cliente = request.POST.get('nome_cliente')
         email = request.POST.get('email_cliente')
         senha = request.POST.get('senha_cliente')
@@ -392,7 +350,8 @@ def cadastro_cliente_sistema(request):
         if User.objects.filter(email=email).exists():
             return redirect("/")  # Redireciona se o usuário já existir
         user_logado = request.user
-        if user_logado.is_authenticated and user_logado.corretor_id != None:
+        print(user_logado.corretor.id)
+        if user_logado.is_authenticated and user_logado.corretor.id != None:
             corretor = Corretor.objects.get(pk=user_logado.corretor.id)
             estagio_cliente = request.POST.get('estagio_cliente')
             cliente = Cliente.objects.create(
@@ -420,7 +379,8 @@ def cadastro_cliente_sistema(request):
              ) 
                  
         if tipo:
-                tipo_save = AssocClienteTipo.objects.create(fk_tipo_cliente=2, fk_cliente=cliente)
+                tipo_cliente_instance = TipoCliente.objects.get(pk=2) 
+                tipo_save = AssocClienteTipo.objects.create(fk_tipo_cliente=tipo_cliente_instance, fk_cliente=cliente)
                 tipo_save.save()
             
             
@@ -432,67 +392,82 @@ def cadastro_cliente_sistema(request):
 
     
 def lista_cliente_admin(request):
-    user = User.objects.all()
-    contexto =  {
-        "titulo": "Lista de Clientes",
-        "users":user
-    }
-    return render(request, 'pages/admin/lista_cliente_admin.html', contexto)
+    user_a_c = request.user
+    if user_a_c.is_authenticated and (user_a_c.corretor or user_a_c.admin):
+        user = User.objects.all()
+        contexto =  {
+            "titulo": "Lista de Clientes",
+            "users":user
+        }
+        return render(request, 'pages/admin/lista_cliente_admin.html', contexto)
+    else:
+        return redirect('/')
 
     
 def cadastro_corretor_admin(request):
-    if request.method == "GET":
-        contexto =  {
-            "titulo": "Cadastro de Corretores"
-        }
-        return render(request, 'pages/login_cad.html')
-    elif request.method == "POST":
-        nome_corretor = request.POST.get('nome_corretor')
-        email = request.POST.get('email_corretor')
-        senha = request.POST.get('senha_corretor')
-        telefone_corretor = request.POST.get('telefone_corretor')
-        cpf_corretor = request.POST.get('cpf_corretor')
-        rg_corretor = request.POST.get('rg_corretor')
-        foto_corretor = request.FILES.get('foto_corretor')
+    user_a = request.user
+    if user_a.is_authenticated and user_a.admin:
+        if request.method == "GET":
+            contexto =  {
+                "titulo": "Cadastro de Corretores"
+            }
+            return render(request, 'pages/login_cad.html')
+        elif request.method == "POST":
+            nome_corretor = request.POST.get('nome_corretor')
+            email = request.POST.get('email_corretor')
+            senha = request.POST.get('senha_corretor')
+            telefone_corretor = request.POST.get('telefone_corretor')
+            cpf_corretor = request.POST.get('cpf_corretor')
+            rg_corretor = request.POST.get('rg_corretor')
+            foto_corretor = request.FILES.get('foto_corretor')
 
-        if User.objects.filter(email=email).exists():
-            return redirect("/")  # Redireciona se o usuário já existir
+            if User.objects.filter(email=email).exists():
+                return redirect("/")  # Redireciona se o usuário já existir
 
 
-        corretor = Corretor.objects.create(
-            nome_corretor=nome_corretor,
-            foto_corretor=foto_corretor,
-            telefone_corretor=telefone_corretor,
-            cpf_corretor=cpf_corretor,
-            rg_corretor=rg_corretor
-        )
-        user = User.objects.create_user(email=email, password=senha, corretor=corretor)
-        user.corretor = corretor #Os dados do email e senha vão para user
-        corretor.save()
-        return render(request, 'pages/admin/dashboard.html')  # Redireciona para uma página de sucesso
-    else:
-        return redirect("/") 
+            corretor = Corretor.objects.create(
+                nome_corretor=nome_corretor,
+                foto_corretor=foto_corretor,
+                telefone_corretor=telefone_corretor,
+                cpf_corretor=cpf_corretor,
+                rg_corretor=rg_corretor
+            )
+            user = User.objects.create_user(email=email, password=senha, corretor=corretor)
+            user.corretor = corretor #Os dados do email e senha vão para user
+            corretor.save()
+            return render(request, 'pages/admin/dashboard.html')  # Redireciona para uma página de sucesso
+        else:
+            return redirect("/") 
+    return redirect('/')
     
 def lista_corretor_admin(request):
-    user = User.objects.all()
-    contexto =  {
-        "titulo": "Lista de Corretores",
-        'users':user,
-    }
-    return render(request, 'pages/admin/lista_corretor_admin.html', contexto)
+    user = request.user
+    if user.is_authenticated and (user.corretor or user.admin):
+        users = User.objects.all()
+        contexto =  {
+            "titulo": "Lista de Corretores",
+            'users':users,
+        }
+        return render(request, 'pages/admin/lista_corretor_admin.html', contexto)
+    else:
+        return redirect('portal/')
 
 
 def dashboard(request):
-    if request.method == 'GET':
-        clientes = Cliente.objects.all()
-        paginator = Paginator(clientes,1)
-        page_number = request.GET.get("page")
-        page_obj = paginator.get_page(page_number)
-        contexto =  {
-            "titulo": "Dashboard",
-            'clientes':page_obj
-        }
-    return render(request, 'pages/admin/dashboard.html', contexto)
+    user = request.user
+    if user.is_authenticated and (user.corretor or user.admin):
+        if request.method == 'GET':
+            clientes = Cliente.objects.all()
+            paginator = Paginator(clientes,1)
+            page_number = request.GET.get("page")
+            page_obj = paginator.get_page(page_number)
+            contexto =  {
+                "titulo": "Dashboard",
+                'clientes':page_obj
+            }
+            return render(request, 'pages/admin/dashboard.html', contexto)
+    else:
+        return redirect('portal/')
 
 
 #* Views orientadas ao cliente
@@ -501,11 +476,9 @@ def homepage(request):
     if request.method == 'GET':
         cidade = request.GET.get('cidade_imovel')
         tipo = request.GET.get('tipo_imovel')
-        menor_valor = request.GET.get('menor_imovel')
-        maior_valor = request.GET.get('maior_imovel')
+        menor_valor = request.GET.get('menor_valor')
+        maior_valor = request.GET.get('maior_valor')
         bairro = request.GET.get('bairro_imovel')
-      
-        print('oi')
         imoveis_list = Imovel.objects.all()  # Limit to 10 items for demonstration purposes
         if bairro:
             imoveis_list = imoveis_list.filter(fk_endereco__bairro_endereco=bairro)
@@ -514,9 +487,15 @@ def homepage(request):
         if tipo:
             imoveis_list = imoveis_list.filter(fk_subtipo_imovel__fk_tipo_imovel__nome_tipo_imovel=tipo)
         if menor_valor:
-            imoveis_list = imoveis_list.filter(preco_imovel__gte=menor_valor)
+            menor_valor_number= re.sub(r'\D', '', menor_valor)
+            menor_valor_validado=float(menor_valor_number)/100
+            print(f"Menor Valor Validado: {menor_valor_validado}")
+            imoveis_list = imoveis_list.filter(preco_imovel__gte=menor_valor_validado)
         if maior_valor:
-            imoveis_list = imoveis_list.filter(preco_imovel__lte=maior_valor)
+            maior_valor_number= re.sub(r'\D', '', maior_valor)
+            maior_valor_validado=float(maior_valor_number)/100
+            print(f"Maior Valor Validado: {maior_valor_validado}")
+            imoveis_list = imoveis_list.filter(preco_imovel__lte=maior_valor_validado)
         imoveis_com_foto = []
 
         for imovel in imoveis_list:
@@ -524,7 +503,7 @@ def homepage(request):
             if foto:
                 imoveis_com_foto.append((imovel, foto))
 
-        paginator = Paginator(imoveis_com_foto,23)  # Show 2 items per page
+        paginator = Paginator(imoveis_com_foto,10)  
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
         # endereco = Endereco.objects.values().distinct()
@@ -555,39 +534,6 @@ def homepage(request):
             'tipos': tipo,
            'imoveis_com_foto':page_obj
     }
-    # else:
-    #     imoveis_queryset = Imovel.objects.all()
-    #     if bairro:
-    #         imoveis_queryset = imoveis_queryset.filter(endereco__bairro=bairro)
-    #     if cidade:
-    #         imoveis_queryset = imoveis_queryset.filter(endereco__cidade=cidade)
-    #     if tipo:
-    #         imoveis_queryset = imoveis_queryset.filter(subtipo_imovel__tipo_imovel__nome_tipo_imovel=tipo)
-    #     if menor_valor:
-    #         imoveis_queryset = imoveis_queryset.filter(valor__gte=menor_valor)
-    #     if maior_valor:
-    #         imoveis_queryset = imoveis_queryset.filter(valor__lte=maior_valor)
-        
-    #     print(imoveis_queryset)
-        
-    #     # Lista para armazenar imóveis com fotos
-    #     imoveis_com_foto = []
-        
-    #     # Iterar sobre os imóveis filtrados e obter a primeira foto de cada
-    #     for imovel in imoveis_queryset:
-    #         foto = FotoImovel.objects.filter(fk_imovel=imovel.id).first()
-    #         if foto:
-    #             imoveis_com_foto.append((imovel, foto))
-    #     paginator = Paginator(imoveis_com_foto,23)  # Show 2 items per page
-    #     page_number = request.GET.get("page")
-    #     page_obj = paginator.get_page(page_number)
-    #     contexto =  {
-    #        "titulo": "DOMINUS — Página principal",
-    #        'bairros':bairro_unicos_lista,
-    #        'cidades':cidade_unicos_lista,
-    #        'tipos': tipo,
-    #        'imoveis_com_foto':page_obj
-    #   }
     
     return render(request, 'pages/portal/homepage.html', contexto)   
 

@@ -3,53 +3,64 @@
 </aside>
 
 <section class="container d-flex flex-column align-items-center gap-4 section-resultados">
-
+    {% for imovel, foto in imoveis_com_foto %}
     <article class="d-flex imovel-card col-6 shadow rounded-3 overflow-hidden">
         <section class="imovel-card__img col">
-            <img src="https://picsum.photos/200/200" alt="img imovel">
+            <img src="{{ foto.url_foto_imovel.url }}" alt="img imovel">
         </section>
 
         <section class="imovel-card__info col p-3">
-            <h2 class="mb-1 text-secondary">Apartamento Giardino</h2>
-            <p class="preco">R$ 1.000.000,00</p>
+            <h2 class="mb-1 text-secondary">{{imovel.fk_subtipo_imovel.fk_tipo_imovel.nome_tipo_imovel}} {{imovel.fk_subtipo_imovel.nome_subtipo_imovel}}</h2>
+            <p class ="preco imovel-preco" data-preco="{{imovel.preco_imovel}}"></p>
             
             <div class="bloco-info border mb-2">
-                <span class="p-2">Área privativa</span>
-                <span>120m²</span>
+                <span class="p-2">Área total</span>
+                <span>{{imovel.area_total_imovel}}m²</span>
             </div>
             
             <div class="mb-3 d-flex flex-wrap justify-content-between gap-1 justify-content-evenly">
                 <div class="col-5 d-flex bloco-info bloco-info--icone border">
                     <span class="col-5 d-flex justify-content-center">
                         <i class="fa-solid fa-door-closed"></i>
-                    </span>
-                    <span class="col text-center">2</span>
+                    </span> 
+                    <span class="col text-center">{{imovel.num_quarto_imovel}}</span>
                 </div>
                 <div class="col-5 d-flex bloco-info bloco-info--icone border">
                     <span class="col-5 d-flex justify-content-center">
                         <i class="fa-solid fa-toilet"></i>
-                    </span>
-                    <span class="col text-center">2</span>
+                    </span> 
+                    <span class="col text-center">{{imovel.num_banheiro_imovel}}</span>
                 </div>
                 <div class="col-5 d-flex bloco-info bloco-info--icone border">
                     <span class="col-5 d-flex justify-content-center">
                         <i class="fa-solid fa-bed"></i>
-                    </span>
-                    <span class="col text-center">1</span>
+                    </span> 
+                    <span class="col text-center">{{imovel.num_suite_imovel}}</span>
                 </div>
                 <div class="col-5 d-flex bloco-info bloco-info--icone border">
                     <span class="col-5 d-flex justify-content-center">
                         <i class="fa-solid fa-car"></i>
-                    </span>
-                    <span class="col text-center">1</span>
+                    </span> 
+                    <span class="col text-center">{{imovel.num_garagem_imovel}}</span>
                 </div>
             </div>
 
             <div class="d-flex justify-content-center">
-                <a class="text-warning-emphasis btn btn-warning" href="#">VER MAIS</a>
+                <a class="text-warning-emphasis btn btn-warning" href="/imovel/{{imovel.id}}">VER MAIS</a>
             </div>
         </section>
     </article>
+    {% endfor %}
     
+    <div class="pagination">
+        <span class="step-links">
+            {% if imoveis_com_foto.has_previous %}
+            <a href="?page={{ imoveis_com_foto.previous_page_number }}{% if request.GET.bairro %}&bairro={{ request.GET.bairro }}{% endif %}{% if request.GET.cidade %}&cidade={{ request.GET.cidade }}{% endif %}{% if request.GET.tipo %}&tipo={{ request.GET.tipo }}{% endif %}{% if request.GET.menor_valor %}&menor_valor={{ request.GET.menor_valor }}{% endif %}{% if request.GET.maior_valor %}&maior_valor={{ request.GET.maior_valor }}{% endif %}">Anterior</a>
+        {% endif %}
+        {% if imoveis_com_foto.has_next %}
+            <a href="?page={{ imoveis_com_foto.next_page_number }}{% if request.GET.bairro %}&bairro={{ request.GET.bairro }}{% endif %}{% if request.GET.cidade %}&cidade={{ request.GET.cidade }}{% endif %}{% if request.GET.tipo %}&tipo={{ request.GET.tipo }}{% endif %}{% if request.GET.menor_valor %}&menor_valor={{ request.GET.menor_valor }}{% endif %}{% if request.GET.maior_valor %}&maior_valor={{ request.GET.maior_valor }}{% endif %}">Próxima</a>
+        {% endif %}
+        </span>
+    </div>
 
 </section>
