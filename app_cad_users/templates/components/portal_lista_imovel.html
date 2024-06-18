@@ -1,6 +1,6 @@
-<aside>
+{% comment %} <aside>
 
-</aside>
+</aside> {% endcomment %}
 
 <section class="container d-flex flex-column align-items-center gap-4 section-resultados">
     {% if imoveis_com_foto > 0 %}
@@ -47,7 +47,7 @@
             </div>
 
             <div class="d-flex justify-content-center">
-                <a class="text-warning-emphasis btn btn-warning" href="/imovel/{{imovel.id}}">VER MAIS</a>
+                <a class="text-warning-emphasis btn btn-warning" href="/pesquisa/imovel/{{imovel.id}}">VER MAIS</a>
             </div>
         </section>
     </article>
