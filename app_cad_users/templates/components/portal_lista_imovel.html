@@ -1,9 +1,10 @@
 {% comment %} <aside>
 
 </aside> {% endcomment %}
+<br>
 
 <section class="container d-flex flex-column align-items-center gap-4 section-resultados">
-    {% if imoveis_com_foto > 0 %}
+    {% if imoveis_com_foto|length > 0 %}
     {% for imovel, foto in imoveis_com_foto %}
     <article class="d-flex imovel-card col-6 shadow rounded-3 overflow-hidden">
         <section class="imovel-card__img col">
