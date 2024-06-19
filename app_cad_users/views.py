@@ -17,7 +17,8 @@ from django.core.paginator import Paginator
 from django.db import transaction
 import re
 from django.core.mail import send_mail, BadHeaderError
-
+from django.urls import reverse
+from django.contrib import messages
 
 User = get_user_model()
 ##############################################################################################
@@ -181,7 +182,8 @@ def cadastro_imovel_admin(request):
         
         # foto_imovel.save()
         imovel.save()
-        return render(request, 'pages/admin/cadastro_imovel_admin.html')
+        messages.success(request, 'Imovel cadastrado com sucesso!')
+        return redirect('/'+'?msg=cad_imovel')
  else:
      return redirect('/')
 
@@ -285,7 +287,7 @@ def edicao_imovel_admin(request, id):
             #     AssocInfraImovel.objects.filter(fk_infraestrutura_imovel__id__in=delete_infras_ids).delete()
             # Salva o imóvel atualizado
             imovel.save()
-            return redirect('/imovel')
+            return redirect('/imovel'+'?msg=edit_cad')
     else:
         return redirect('/')
 def deletar_imovel_admin(request, id):
@@ -299,7 +301,8 @@ def deletar_imovel_admin(request, id):
         endereco.delete()
         foto.delete()
         imovel.delete()
-    return redirect ('/imovel')
+        
+    return redirect ('/imovel' + '?msg=delete_cad')
 
 from django.core.paginator import Paginator
 from django.shortcuts import render
@@ -328,7 +331,9 @@ def cadastro_admin(request):
             user = User.objects.create_user(email=email_admin, password=senha_admin, admin=admin)
             user.admin = admin #Os dados do email e senha vão para user
             admin.save()
-            return redirect('/')
+            messages.success(request, 'Administrador cadastrado com sucesso!')
+            
+            return redirect('/' + '?msg=adm' )
     else:
         return redirect('/')
 
@@ -388,7 +393,7 @@ def cadastro_cliente_admin(request):
             return redirect("/")  # Redireciona se o usuário já existir
         user_logado = request.user
      
-        if user_logado.is_authenticated and user_logado.corretor.id != None:
+        if user_logado.is_authenticated and user_logado.corretor:
             corretor = Corretor.objects.get(pk=user_logado.corretor.id)
             estagio_cliente = request.POST.get('estagio_cliente')
             cliente = Cliente.objects.create(
@@ -424,9 +429,100 @@ def cadastro_cliente_admin(request):
         user = User.objects.create_user(email=email, password=senha, cliente=cliente)
         user.cliente = cliente #Os dados do email e senha vão para user
         cliente.save()
-        
-        return redirect("/") 
+        messages.success(request, 'Usuário cadastrado com sucesso!')
+        return redirect("/portal" +'?msg=cadastrado') 
+    
+def deletar_conta_corretor(request, id):
+    user_only_a = request.user
+    if user_only_a.is_authenticated and user_only_a.admin:
+        user = User.objects.get(id=id)
+        messages.success(request, 'Usuário deletado com sucesso!')
+        user.delete()
+        corretor = Corretor.objects.get(id=user.corretor.id)
+        corretor.delete()
+        return redirect('/lista-corretor'+ '?msg=deleted')
+    else:
+         return redirect('/lista-corretor'+ '?msg=notpermission')
+     
+def deletar_conta_cliente(request, id):
+    user_only_a = request.user
+    if user_only_a.is_authenticated and user_only_a.admin:
+        user = User.objects.get(cliente_id=id)
+        messages.success(request, 'Usuário deletado com sucesso!')
+        user.delete()
+        corretor = Cliente.objects.get(id=id)
+        corretor.delete()
+        return redirect('/lista-cliente'+ '?msg=deleted')
+    else:
+         return redirect('/lista-cliente'+ '?msg=notpermission')
+     
+def editar_conta_corretor(request, id):
+    user_only_a = request.user
+    if user_only_a.is_authenticated and user_only_a.admin:
+        user = User.objects.get(id=id)
+        corretor = Corretor.objects.get(id=user.corretor.id)
+        if request.method == 'GET': 
+            contexto =  {
+                    "titulo": "Editar corretor",
+                    "user":user
+                }
+        else:
+                if request.POST.get('email_corretor'):
+                    user.email = request.POST.get('email_corretor')
+                if request.POST.get('nome_corretor'):
+                    corretor.nome_corretor =  request.POST.get('nome_corretor')
+                if request.POST.get('telefone_corretor'): 
+                    corretor.telefone_corretor =  request.POST.get('telefone_corretor')
+                if  request.POST.get('cpf_corretor'):
+                    corretor.cpf_corretor=  request.POST.get('cpf_corretor')
+                if request.POST.get('rg_corretor'):
+                    corretor.rg_corretor=  request.POST.get('rg_corretor')
+                if  request.FILES.get('foto_corretor'):
+                    corretor.foto_corretor=  request.FILES.get('foto_corretor')
+                user.save()
+                corretor.save()
+                msg = "Alterado com sucesso"
+                contexto =  {
+                    "titulo": "Editar corretor",
+                    "user":user,
+                    "msg": msg
+                }
+                return redirect('/lista-corretor'+ '?msg=edit')
 
+    return redirect('/lista-corretor'+ '?msg=notpermission')
+     
+def editar_conta_cliente(request, id):
+    user_only_a = request.user
+    if user_only_a.is_authenticated and user_only_a.admin:
+        user = User.objects.get(id=id)
+        cliente = Cliente.objects.get(id=user.cliente.id)
+        if request.method == 'GET': 
+            contexto =  {
+                    "titulo": "Editar corretor",
+                    "user":user,
+                    
+                }
+            return render(request, 'pages/portal/editar_conta_cliente.html', contexto)
+        else:
+                if request.POST.get('email_corretor'):
+                    user.email = request.POST.get('email_corretor')
+                if request.POST.get('nome_corretor'):
+                    cliente.nome_cliente =  request.POST.get('nome_corretor')
+                if request.POST.get('telefone_corretor'): 
+                    cliente.telefone_cliente =  request.POST.get('telefone_corretor')
+                if  request.FILES.get('foto_corretor'):
+                    cliente.foto_cliente=  request.FILES.get('foto_corretor')
+                user.save()
+                cliente.save()
+                msg = "Alterado com sucesso"
+                contexto =  {
+                    "titulo": "Editar corretor",
+                    "user":user,
+                    "msg": msg
+                }
+            
+                return redirect('/lista-cliente'+'?msg=editado')
+    return redirect('/lista-cliente'+ '?msg=notpermission')
     
 def lista_cliente_admin(request):
     user_a_c = request.user
@@ -476,7 +572,7 @@ def cadastro_corretor_admin(request):
             user = User.objects.create_user(email=email, password=senha, corretor=corretor)
             user.corretor = corretor #Os dados do email e senha vão para user
             corretor.save()
-            return render(request, 'pages/admin/dashboard.html')  # Redireciona para uma página de sucesso
+            return redirect('/'+'?msg=corretor' )
         else:
             return redirect("/") 
     return redirect('/')
@@ -514,19 +610,50 @@ def dashboard(request):
 #* Views orientadas ao cliente
 
 def homepage(request):
+    bairro = Endereco.objects.all()
+    tipo = TipoImovel.objects.all()
+
+
+# Criando um conjunto vazio para armazenar os endereços únicos
+    bairro_unicos = set()
+    cidade_unicos = set()
+
+# Iterando sobre cada objeto Endereco
+    for endereco in bairro:
+    # Convertendo o objeto Endereco em uma tupla para usar como chave no conjunto
+        bairro_tupla = (endereco.bairro_endereco)
+        cidade_tubla = (endereco.cidade_endereco)
+    # Adicionando a tupla ao conjunto
+        bairro_unicos.add(bairro_tupla)
+        cidade_unicos.add(cidade_tubla)
+# Convertendo o conjunto de volta para uma lista, se necessário
+    bairro_unicos_lista = list(bairro_unicos)
+    cidade_unicos_lista = list(cidade_unicos)
     if request.method == 'GET':
-        cidade = request.GET.get('cidade_imovel')
-        tipo = request.GET.get('tipo_imovel')
-        menor_valor = request.GET.get('menor_valor')
-        maior_valor = request.GET.get('maior_valor')
-        bairro = request.GET.get('bairro_imovel')
+        # endereco = Endereco.objects.values().distinct()
+
+        contexto =  {
+            "titulo": "DOMINUS — Página principal",
+            'bairros':bairro_unicos_lista,
+            'cidades':cidade_unicos_lista,
+            'tipos': tipo,
+        #    'imoveis_com_foto':page_obj
+    }
+    
+        return render(request, 'pages/portal/homepage.html', contexto) 
+    else:
+        cidade = request.POST.get('cidade_imovel')
+        tipo_s = request.POST.get('tipo_imovel')
+        menor_valor = request.POST.get('menor_valor')
+        maior_valor = request.POST.get('maior_valor')
+        bairro = request.POST.get('bairro_imovel')
         imoveis_list = Imovel.objects.all()  # Limit to 10 items for demonstration purposes
         if bairro:
             imoveis_list = imoveis_list.filter(fk_endereco__bairro_endereco=bairro)
         if cidade:
             imoveis_list = imoveis_list.filter(fk_endereco__cidade_endereco=cidade)
         if tipo:
-            imoveis_list = imoveis_list.filter(fk_subtipo_imovel__fk_tipo_imovel__nome_tipo_imovel=tipo)
+            imoveis_list = imoveis_list.filter(fk_subtipo_imovel__fk_tipo_imovel__nome_tipo_imovel=tipo_s)
         if menor_valor:
             menor_valor_number= re.sub(r'\D', '', menor_valor)
             menor_valor_validado=float(menor_valor_number)/100
@@ -547,27 +674,6 @@ def homepage(request):
         paginator = Paginator(imoveis_com_foto,10)  
         page_number = request.GET.get("page")
         page_obj = paginator.get_page(page_number)
-        # endereco = Endereco.objects.values().distinct()
-        bairro = Endereco.objects.all()
-        tipo = TipoImovel.objects.all()
-
-
-# Criando um conjunto vazio para armazenar os endereços únicos
-        bairro_unicos = set()
-        cidade_unicos = set()
-
-# Iterando sobre cada objeto Endereco
-        for endereco in bairro:
-    # Convertendo o objeto Endereco em uma tupla para usar como chave no conjunto
-            bairro_tupla = (endereco.bairro_endereco)
-            cidade_tubla = (endereco.cidade_endereco)
-    # Adicionando a tupla ao conjunto
-            bairro_unicos.add(bairro_tupla)
-            cidade_unicos.add(cidade_tubla)
-# Convertendo o conjunto de volta para uma lista, se necessário
-        bairro_unicos_lista = list(bairro_unicos)
-        cidade_unicos_lista = list(cidade_unicos)
-
         contexto =  {
             "titulo": "DOMINUS — Página principal",
             'bairros':bairro_unicos_lista,
@@ -575,8 +681,7 @@ def homepage(request):
             'tipos': tipo,
            'imoveis_com_foto':page_obj
     }
-    
-    return render(request, 'pages/portal/homepage.html', contexto)   
+        return render(request, 'pages/portal/pesquisa.html', contexto) 
 
 def portal_pesquisa(request):
     contexto =  {
@@ -678,14 +783,14 @@ def contato(request):
         
         return render(request, 'pages/portal/contato.html', contexto)
         
-        return render(request, 'pages/portal/contato.html', contexto)
+      
     
 def venda_conosco(request):
-    if request.method == 'GET':
-        
-        return
-    else:
-        return 
+        contexto = {
+            "titulo": "DOMINUS — Venda-conosco",
+        }
+        return render(request, 'pages/portal/venda_conosco.html', contexto)
+
 
 
 

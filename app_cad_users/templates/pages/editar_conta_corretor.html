@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/node_modules/bootstrap/dist/css/bootstrap.css' %}">
+    <script defer src="{% static 'js/mask.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <style>
+.form-container{
+    max-width: 300px;
+    padding: 1rem;
+}
+    </style>
+    <script src="{% static 'js/index.js' %}" defer></script>
+    <title>{{titulo}}</title>
+</head>
+<body class="bg-body-tertiary d-flex align-items-center text-center flex-column">
+    <header class="d-block">
+        <nav class="bg-white">
+            <menu class="nav">
+                <li class="nav-item"><a class="nav-link text-black" href="/">Home</a></li>
+
+            </menu> 
+        </nav>
+    </header>
+    <main class="w-100 m-auto form-container">
+      
+        <form action=""class="form-control" method="post" enctype="multipart/form-data"> {% csrf_token %}
+            <h1 class="h3 mb-3 fw-normal">Bem-vindo(a) ao [Sistema]</h1>
+            <input value="{{user.email}}" type="email" class="form-control my-3" placeholder="exemplo@gmail.com" name="email_corretor" required>
+            <input  value="{{user.corretor.nome_corretor}}" type="text" class="form-control my-3" placeholder="Nome corretor" name="nome_corretor" required>
+            <input  value="{{user.corretor.telefone_corretor}}" type="tel" class="form-control my-3" placeholder="(xx) xxxxx-xxxx" maxlength="15" oninput="this.value = mask(this.value, 'telefone')" name="telefone_corretor" required>
+            <input  value="{{user.corretor.cpf_corretor}}" type="text" class="form-control my-3" placeholder="xxx.xxx.xxx-xx" minlength="14" maxlength="14" oninput="this.value = mask(this.value, 'cpf')" name="cpf_corretor" required>
+            <input  value="{{user.corretor.rg_corretor}}" type="text" class="form-control my-3" placeholder="RG" name="rg_corretor" required>
+            <input  value="{{user.corretor}}" type="file" name="foto_corretor" id="fotos">
+            <label for=""><a href="">Esqueci a senha</a></label>
+            <button class="btn btn-primary w-30 m-4 ">Editar</button>
+            <script>
+                function show_disappear(elementId, message, timeout) {
+                $('#' + elementId).text(message).show();
+               setTimeout(function() {
+                  $('#' + elementId).hide();
+                    }, timeout);
+  }
+          </script>
+          {% if request.method == 'POST' %}
+      <script>
+          $(document).ready(function() {
+              show_disappear("msg", "{{msg}}", 5000);
+            });
+          </script>
+          <p id="msg"></p>
+          {% endif %}
+        </form>
+
+
+    </main>
+    
+
+</body>
+</html> 

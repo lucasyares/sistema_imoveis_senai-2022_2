@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
 {% endblock head %}
 
 {% comment %} {% block header %}
@@ -43,7 +44,7 @@
         </a>
         <menu class="homepage__nav__links list-unstyled d-inline-flex gap-5">
             <li class="align-self-center"><a class="text-decoration-none" href="/portal">Imóveis</a></li>
-            <li class="align-self-center"><a class="text-decoration-none" href="/portal">Venda conosco</a></li>
+            <li class="align-self-center"><a class="text-decoration-none" href="/venda-conosco">Venda conosco</a></li>
             <li class="align-self-center"><a class="text-decoration-none" href="/contato">Contato</a></li>
             <li class="align-self-center"><a class="text-decoration-none" href="/portal">Institucional</a></li>
         </menu>
@@ -65,13 +66,14 @@
 <div onclick="esconderMenuLateral();" id="menu-fundo"></div>
 
 
-
 <section class="cover d-flex justify-content-center">
-
-
+    
+    
     <div class="searchbox rounded-5 d-flex align-items-center flex-column py-4">
-        <h1 class="searchbox__h1 m-0">Encontre o imóvel dos seus sonhos</h1>
-        <form class="align-self-stretch mx-5" method="GET">
+
+    <h1 class="searchbox__h1 m-0">Encontre o imóvel dos seus sonhos</h1>
+        <form class="align-self-stretch mx-5" method="POST">
+            {% csrf_token %}
             <div class="row mt-3">
                 <div class="searchbox__select d-inline-flex col-6">
                     <label class="py-1 px-2" for="">Cidade</label>
@@ -109,17 +111,30 @@
                         <span class="col-2 align-middle">até</span>
                         <input class="col-5" type="text" id="preco-last-input" value="R$ 0,00" name="maior_valor" oninput="this.value = mask(this.value, 'money')">
                     </div>
+                    
                 </div>
             </div>
             <div class="row mt-5 justify-content-center">
+                {% if request.GET.msg == "cadastrado" %}
+                <script>
+                    
+                    show_disappear("msg", "Usuário deletado com sucesso!", 5000);
+                
+                </script>
+                    <div class="alert alert-success text-center" id="msg">
+                 <p>Usuário cadastrado com sucesso!</p>
+                    </div>
+                    {% endif %}
                 <button class="col-4 btn" id="btn-buscar" type="submit">Buscar</button>
+                
             </div>
+            
         </form>
     </div>
 
 </section>
 
-{% include "components/portal_lista_imovel.html" %}
+{% comment %} {% include "components/portal_lista_imovel.html" %} {% endcomment %}
 <script src="{% static 'js/nav_scroll_portal.js' %}"></script>
 
 {% endblock main %}

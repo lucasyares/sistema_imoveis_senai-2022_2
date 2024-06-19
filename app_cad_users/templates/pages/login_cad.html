@@ -21,7 +21,7 @@
         <nav class="bg-white">
             <menu class="nav">
                 <li class="nav-item"><a class="nav-link text-black" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link text-black" href="/auth_cad">Cadastrar</a></li>
+
             </menu> 
         </nav>
     </header>
@@ -38,8 +38,8 @@
             <h1 class="h3 mb-3 fw-normal">Bem-vindo(a) ao [Sistema]</h1>
             <input type="email" class="form-control my-3" placeholder="exemplo@gmail.com" name="email_corretor" required>
             <input type="text" class="form-control my-3" placeholder="Nome corretor" name="nome_corretor" required>
-            <input type="tel" class="form-control my-3" placeholder="(xx) xxxxx-xxxx" name="telefone_corretor" required>
-            <input type="text" class="form-control my-3" placeholder="xxx.xxx.xxx-xx" name="cpf_corretor" required>
+            <input type="tel" class="form-control my-3" placeholder="(xx) xxxxx-xxxx" maxlength="15" oninput="this.value = mask(this.value, 'telefone')" name="telefone_corretor" required>
+            <input type="text" class="form-control my-3" placeholder="xxx.xxx.xxx-xx" minlength="14" maxlength="14" oninput="this.value = mask(this.value, 'cpf')" name="cpf_corretor" required>
             <input type="text" class="form-control my-3" placeholder="RG" name="rg_corretor" required>
             <input type="password" class="form-control my-3" placeholder="senha" name="senha_corretor" required>
             <input type="file" name="foto_corretor" id="fotos">

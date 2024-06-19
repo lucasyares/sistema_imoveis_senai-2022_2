@@ -1,7 +1,29 @@
 {% extends "bases/base_admin.html" %} 
 
 {% block main %}
+{% if request.GET.msg == "adm" %}
+<script>
+    
+    show_disappear("msg", "Administrador cadastrado com sucesso!", 5000);
 
+</script>
+    <div class="alert alert-success text-center" id="msg">
+ <p>Administrador cadastrado com sucesso!</p>
+    </div>
+    {% endif %}
+{% if request.GET.msg == "corretor" %}
+<script>
+    
+    show_disappear("msg", "Administrador cadastrado com sucesso!", 5000);
+
+</script>
+    <div class="alert alert-success text-center" id="msg">
+ <p>Corretor cadastrado com sucesso!</p>
+    </div>
+    {% endif %}
+
+
+    
 <h1>Dashboard</h1>
 
 {% include "components/dashboard_section_cliente.html" %} {% include "components/dashboard_section_imovel.html" %} {% endblock main %}

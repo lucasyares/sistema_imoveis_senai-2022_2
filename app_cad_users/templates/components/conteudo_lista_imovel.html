@@ -1,7 +1,36 @@
 <!-- TODO 1 >> inserir um if para verificar se há imóveis; caso contrário exibir notificação -->
 <!-- TODO 2 >> usar um for para exibir os imóveis cadastrados -->
 <!-- TODO 3 >> exibir as informações do imóvel em cada item -->
+{% if request.GET.msg == "edit_cad" %}
+<script>
+    
+    show_disappear("msg", "Imovel editado com sucesso!", 5000);
 
+</script>
+    <div class="alert alert-success text-center" id="msg">
+ <p>Imovel editado com sucesso!</p>
+    </div>
+    {% endif %}
+    {% if request.GET.msg == "cad_imovel" %}
+<script>
+    
+    show_disappear("msg", "Imovel cadastrado com sucesso!", 5000);
+
+</script>
+    <div class="alert alert-success text-center" id="msg">
+ <p>Imovel cadastrado com sucesso!</p>
+    </div>
+    {% endif %}
+    {% if request.GET.msg == "delete_cad" %}
+<script>
+    
+    show_disappear("msg", "Imovel deletado com sucesso!", 5000);
+
+</script>
+    <div class="alert alert-success text-center" id="msg">
+ <p>Imovel deletado com sucesso!</p>
+    </div>
+    {% endif %}
 
 <!-- Seção da listagem dos imóveis -->
 <section class="d-flex flex-column">
@@ -40,10 +69,11 @@
                 <section class="col-7 flex-grow-1 px-3 py-1">
                     <header class="d-flex justify-content-between">
                         <span class="h3">{{imovel.fk_endereco.bairro_endereco}}</span>
-                        {% if user.corretor.id ==  imovel.fk_corretor.id or user.admin_id%}
+                        {% if user.corretor.id ==  imovel.fk_corretor.id or user.admin%}
                         <button class="btn">
-                         <a style="margin-right:20px;" href="/edicao/{{imovel.id}}"> <i class="fas fa-pencil-alt fa-2x text-secondary"></i></a>
-                            <a href="/deletar/{{imovel.id}}">  <i class="fas fa-trash-alt fa-2x text-secondary" ></i></a>  <!-- vou ver oq faço com isso aqui depois -->
+                        <a style="margin-right:20px;" href="/pesquisa/imovel/{{imovel.id}}"> <i class="fas fa-eye fa-2x text-secondary"></i></a>
+                        <a style="margin-right:20px;" href="/edicao/{{imovel.id}}"> <i class="fas fa-pencil-alt fa-2x text-secondary"></i></a>
+                        <a href="/deletar/{{imovel.id}}">  <i class="fas fa-trash-alt fa-2x text-secondary" ></i></a>  <!-- vou ver oq faço com isso aqui depois -->
                         </button>
                         {% endif %}
                     </header>

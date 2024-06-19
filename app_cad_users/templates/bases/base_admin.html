@@ -6,14 +6,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet" href="{% static 'node_modules/bootstrap/dist/css/bootstrap.css' %}">
+    
     <link rel="stylesheet" href="{% static 'css/style.css'%}"> {% block head %}{% endblock head %}
 
     <script src="{% static 'js/mask.js'%}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
     
-    <script>
+    <script defer>
+        
         function hide(elementId) {
         $('#' + elementId).hide();
     }
@@ -99,6 +102,7 @@
                     <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" type="button" id="dropdownMenuButton4">Conta</button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton4">
                         <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        <li><a class="dropdown-item" href="/auth_log">Trocar de conta</a></li>
                         {% if user.is_authenticated and user.admin %}
                         <li><a class="dropdown-item" href="/cadastro-admin">Cadastrar admin</a></li>
                         {% endif %}
@@ -106,9 +110,11 @@
                     </ul>
                 </div>
             </li>
-                <li>
-                    <a class="btn btn-secondary a-portal" href="/portal">Retornar ao Portal</a>
-                </li>
+            <li>
+                <a class="btn btn-secondary a-portal" href="/portal">Retornar ao Portal</a>
+            </li>
+            <li>Nível:{% if user.admin %} Administrador{% else %} Corretor {% endif %}</li>
+            <li>User:{% if user.admin %} {{user.admin.nome_admin}}{% else %} {{user.corretor.nome_corretor}} {% endif %}</li>
             </menu>
         </nav>
     </header>
@@ -118,7 +124,7 @@
     </main>
 
     <footer>
-        <a href="#">Login</a>
+        {% comment %} <a href="#">Login</a> {% endcomment %}
     </footer>
 
     <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.js' %}"></script>

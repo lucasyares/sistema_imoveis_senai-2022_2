@@ -11,7 +11,41 @@
     <input type="text" class="form-control" placeholder="Digite o nome do cliente..." aria-label="Pesquisar" name="clientee"aria-describedby="button-addon2">
    
 </form>
+{% block head %}
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+{% endblock head %}
+{% if request.GET.msg == "deleted" %}
+<script>
+    
+    show_disappear("msg", "Usuário deletado com sucesso!", 5000);
+
+</script>
+    <div class="alert alert-success" id="msg">
+ <p>Usuário deletado com sucesso!</p>
+    </div>
+{% endif %}
+{% if request.GET.msg == "notpermission" %}
+<script>
+    
+    show_disappear("msg", "Sem permissão", 5000);
+
+</script>
+    <div class="alert alert-warning" id="msg">
+ <p>Você não tem permissão suficiente! Apenas um usúario de nível administrador consegue realizar essa ação</p>
+    </div>
+{% endif %}
+{% if request.GET.msg == "editado" %}
+<script>
+    
+    show_disappear("msg", "Sem permissão", 5000);
+
+</script>
+    <div class="alert alert-success" id="msg">
+ <p>Cliente editado com sucesso</p>
+    </div>
+{% endif %}
 {% for user in users %}
 <br>
 {% if user.cliente %}
@@ -24,6 +58,12 @@
                 <section class="col-7 flex-grow-1 px-3 py-1">
                     <header class="d-flex justify-content-between">
                         <span class="h3">{{imovel.fk_endereco.bairro_endereco}}</span>
+                        <button class="btn">
+
+                        <a style="margin-right:20px;" href="/editar-conta-cliente/{{user.cliente.id}}"> <i class="fas fa-pencil-alt fa-2x text-secondary"></i></a>
+                        <a href="/deletar-cliente/{{user.cliente.id}}">  <i class="fas fa-trash-alt fa-2x text-secondary" ></i></a>  <!-- vou ver oq faço com isso aqui depois -->
+                        </button>
+
                     </header>
                     <div>
                         <p>ID: {{user.cliente.id}}</p>

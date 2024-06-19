@@ -16,9 +16,29 @@
     <script src="{% static 'js/mask.js'%}"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <script defer>
+    <script >
+        function hide(elementId) {
+        $('#' + elementId).hide();
+    }
+
+    // Função para mostrar o elemento
+    function show(elementId) {
+        $('#' + elementId).show();
+    }
+
+    // Função para mostrar o elemento por um tempo e depois ocultar
+    function show_disappear(elementId, message, timeout) {
+        $('#' + elementId).text(message).show();
+        setTimeout(function() {
+            $('#' + elementId).hide();
+        }, timeout);
+    }
         $(document).ready(function () {
             // Supondo que `mask` seja uma função que formata o valor monetário
+          
+                
+           
+              
 
             $('.imovel-preco').each(function () {
                 // Obtendo o preço do atributo data-preco
@@ -50,7 +70,7 @@
             </a>
             <menu class="homepage__nav__links list-unstyled d-inline-flex gap-5">
                 <li class="align-self-center"><a class="text-decoration-none" href="/portal">Imóveis</a></li>
-                <li class="align-self-center"><a class="text-decoration-none" href="/portal">Venda conosco</a></li>
+                <li class="align-self-center"><a class="text-decoration-none" href="/venda-conosco">Venda conosco</a></li>
                 <li class="align-self-center"><a class="text-decoration-none" href="/contato">Contato</a></li>
                 <li class="align-self-center"><a class="text-decoration-none" href="/portal">Institucional</a></li>
             </menu>

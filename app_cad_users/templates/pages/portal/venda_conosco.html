@@ -1,0 +1,136 @@
+{% extends "bases/base_portal.html" %}
+{% block main %}
+<div class="container">
+    <section id="venda-conosco">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 text-center">
+                <h1 class="mb-4">Por que vender conosco?</h1>
+                <p class="lead">
+                    Aqui destacamos várias razões convincentes para você considerar vender seu imóvel conosco. Somos especialistas no mercado imobiliário e garantimos um processo transparente e eficiente.
+                </p>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col">
+                <div id="carouselRazoes" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="text-center mb-4">
+                                        <img src="https://picsum.photos/300/300?random=1" alt="Razão 1" class="img-fluid rounded-circle">
+                                    </div>
+                                    <h3 class="text-center">Expertise no Mercado</h3>
+                                    <p class="text-center">Nossa equipe possui ampla experiência no mercado imobiliário, garantindo que seu imóvel seja vendido pelo melhor preço.</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center mb-4">
+                                        <img src="https://picsum.photos/300/300?random=2" alt="Razão 2" class="img-fluid rounded-circle">
+                                    </div>
+                                    <h3 class="text-center">Marketing Eficiente</h3>
+                                    <p class="text-center">Utilizamos estratégias de marketing modernas para alcançar potenciais compradores interessados no seu imóvel.</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center mb-4">
+                                        <img src="https://picsum.photos/300/300?random=3" alt="Razão 3" class="img-fluid rounded-circle">
+                                    </div>
+                                    <h3 class="text-center">Atendimento Personalizado</h3>
+                                    <p class="text-center">Oferecemos um atendimento personalizado para garantir que suas necessidades sejam atendidas ao longo de todo o processo de venda.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="text-center mb-4">
+                                        <img src="https://picsum.photos/300/300?random=4" alt="Razão 4" class="img-fluid rounded-circle">
+                                    </div>
+                                    <h3 class="text-center">Transparência Total</h3>
+                                    <p class="text-center">Nosso processo de venda é transparente e honesto, proporcionando tranquilidade e confiança durante toda a negociação.</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center mb-4">
+                                        <img src="https://picsum.photos/300/300?random=5" alt="Razão 5" class="img-fluid rounded-circle">
+                                    </div>
+                                    <h3 class="text-center">Networking de Qualidade</h3>
+                                    <p class="text-center">Possuímos uma vasta rede de contatos no mercado imobiliário, facilitando a busca por compradores qualificados para seu imóvel.</p>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-center mb-4">
+                                        <img src="https://picsum.photos/300/300?random=6" alt="Razão 6" class="img-fluid rounded-circle">
+                                    </div>
+                                    <h3 class="text-center">Negociação Favorável</h3>
+                                    <p class="text-center">Negociamos as melhores condições para você, garantindo um processo justo e vantajoso na venda do seu imóvel.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselRazoes" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Anterior</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselRazoes" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Próximo</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<section class="imovel-contato d-flex flex-wrap">
+    <form class="m-5 " method="POST" action="#">
+        {% csrf_token %}
+        <div class="d-flex">
+            <div class="col m-3 w-50 d-flex flex-column align-items-center justify-content-center">
+                <h2 class="mb-0">Quer vender conosco?</h2>
+                <p>Entre em contato!!</p>
+            </div>
+            <div class="col m-5 w-50">
+                <div class="d-inline-flex input-group mb-2 shadow">
+                    <label class="col-3 input-group-text" for="nome_contato">Nome</label>
+                    <input class="col-9 form-control" type="text" name="nome_contato">
+                </div>
+                <div class="d-inline-flex input-group mb-2 shadow">
+                    <label class="col-3 input-group-text" for="telefone_contato">Telefone</label>
+                    <input class="col-9 form-control" type="tel" name="telefone_contato">
+                </div>
+                <div class="d-inline-flex input-group shadow">
+                    <label class="col-3 input-group-text" for="email_contato">Email</label>
+                    <input class="col-9 form-control" type="email" name="email_contato">
+                </div>
+            </div>
+        </div>
+        <div class="mx-5 mb-4">
+            <div class="input-group shadow">
+                <label class="input-group-text" for="mensagem">Mensagem</label>
+                <textarea class="form-control" name="mensagem_contato" ></textarea>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <script>
+                  function show_disappear(elementId, message, timeout) {
+                  $('#' + elementId).text(message).show();
+                 setTimeout(function() {
+                    $('#' + elementId).hide();
+                      }, timeout);
+    }
+            </script>
+            {% if request.method == 'POST' %}
+        <script>
+            $(document).ready(function() {
+                show_disappear("msg", "{{msgs}}", 5000);
+              });
+            </script>
+            {% endif %}
+            <button class="btn btn-success">Enviar</button>
+        </div>
+        <p id="msg" style="color:green;"></p>
+    </form>
+</section>
+
+{% endblock  %}

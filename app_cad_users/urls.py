@@ -20,6 +20,10 @@ urlpatterns = [
     path('cadastro-cliente/', views.cadastro_cliente_admin, name='cadastro_cliente_admin'),
     path('lista-cliente/', views.lista_cliente_admin, name='lista_cliente_admin'),
     path('cadastro-admin/', views.cadastro_admin, name='cadastro-admin'),
+    path('editar-conta/<int:id>', views.editar_conta_corretor, name='editar-admin'),
+    path('editar-conta-cliente/<int:id>', views.editar_conta_cliente, name='editar-cliente-admin'),
+    path('deletar-conta/<int:id>', views.deletar_conta_corretor, name='deletar-admin'),
+    path('deletar-cliente/<int:id>', views.deletar_conta_cliente, name='deletar-admin'),
 
     path('cadastro-corretor/', views.cadastro_corretor_admin, name='cadastro_corretor_admin'),
     path('lista-corretor/', views.lista_corretor_admin, name='lista_corretor_admin'),
