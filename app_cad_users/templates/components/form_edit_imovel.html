@@ -154,13 +154,13 @@
 					<div class="d-flex align-items-center mb-2">
 						<label class="col-3 form-label px-2 m-0" for="bairro">Bairro</label>
 						<span class="col-4">
-							<input class="col-4 form-control" required type="text" name="bairro" id="bairro">
+							<input class="col-4 form-control" required type="text" name="bairro" id="bairro" value="{{imovel.fk_endereco.bairro_endereco}}">
 						</span>
 
 						<label class="col-3 form-label px-2 m-0" for="numero">Número</label>
 						<span class="col-2">
 							<input class="col-2 form-control" required type="number" name="numero" id="numero"
-								value="{{imovel.fk_endereco.bairro_endereco}}">
+								value="{{imovel.fk_endereco.numero_endereco}}">
 						</span>
 					</div>
 
@@ -283,7 +283,7 @@
 				<input class="form-control" type="file" name="fotos[]" id="fotos" multiple accept="image/*">
 				<div class="d-flex flex-column">
 				 {% for foto in imagem %}
-					<img src="{{ foto.url_foto_imovel.url }}" style="height:400px; width=300px;" alt="Foto do Imóvel">
+					<img src="{{ foto.url_foto_imovel.url }}" style="height:400px; width:300px;" alt="Foto do Imóvel">
 					<input type="checkbox" name="remover_foto[]" class="d-flex" value="{{ foto.id }}">Remover</input>
 					{% endfor %} 
 				</div>
