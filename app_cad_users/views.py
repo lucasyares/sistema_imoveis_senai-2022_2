@@ -466,6 +466,7 @@ def editar_conta_corretor(request, id):
                     "titulo": "Editar corretor",
                     "user":user
                 }
+            return render(request, 'pages/editar_conta_corretor.html', contexto)
         else:
                 if request.POST.get('email_corretor'):
                     user.email = request.POST.get('email_corretor')
